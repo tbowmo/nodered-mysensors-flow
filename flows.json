@@ -1428,8 +1428,8 @@
         ],
         "checkall": "true",
         "outputs": 3,
-        "x": 290,
-        "y": 180,
+        "x": 570,
+        "y": 200,
         "wires": [
             [
                 "fb869720.6c1818",
@@ -1451,8 +1451,8 @@
         "active": false,
         "console": "false",
         "complete": "true",
-        "x": 370,
-        "y": 80,
+        "x": 610,
+        "y": 100,
         "wires": []
     },
     {
@@ -1477,8 +1477,8 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 980,
-        "y": 40,
+        "x": 1220,
+        "y": 60,
         "wires": []
     },
     {
@@ -1502,8 +1502,8 @@
         ],
         "checkall": "true",
         "outputs": 2,
-        "x": 530,
-        "y": 140,
+        "x": 770,
+        "y": 160,
         "wires": [
             [
                 "99669749.b98da8"
@@ -1544,8 +1544,8 @@
         ],
         "checkall": "true",
         "outputs": 4,
-        "x": 760,
-        "y": 100,
+        "x": 1000,
+        "y": 120,
         "wires": [
             [
                 "2a7f64b.6d95a9c"
@@ -1583,8 +1583,8 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 960,
-        "y": 80,
+        "x": 1200,
+        "y": 100,
         "wires": []
     },
     {
@@ -1609,8 +1609,8 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 950,
-        "y": 120,
+        "x": 1190,
+        "y": 140,
         "wires": []
     },
     {
@@ -1635,8 +1635,8 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 970,
-        "y": 160,
+        "x": 1210,
+        "y": 180,
         "wires": []
     },
     {
@@ -1661,8 +1661,8 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 960,
-        "y": 220,
+        "x": 1200,
+        "y": 240,
         "wires": []
     },
     {
@@ -1681,8 +1681,8 @@
         ],
         "checkall": "true",
         "outputs": 1,
-        "x": 520,
-        "y": 180,
+        "x": 760,
+        "y": 200,
         "wires": [
             [
                 "4f7cb0eb.0d19a"
@@ -1705,8 +1705,8 @@
         ],
         "checkall": "true",
         "outputs": 1,
-        "x": 530,
-        "y": 220,
+        "x": 770,
+        "y": 240,
         "wires": [
             [
                 "5115f872.4620e8"
@@ -1735,8 +1735,8 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 960,
-        "y": 260,
+        "x": 1200,
+        "y": 280,
         "wires": []
     },
     {
@@ -1761,8 +1761,8 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 950,
-        "y": 300,
+        "x": 1190,
+        "y": 320,
         "wires": []
     },
     {
@@ -2455,8 +2455,8 @@
         "topic": "dashboard/#",
         "qos": "2",
         "broker": "4798f2b0.5d747c",
-        "x": 110,
-        "y": 320,
+        "x": 210,
+        "y": 200,
         "wires": [
             [
                 "25accb7f.45d714"
@@ -2724,8 +2724,8 @@
         "z": "36f02452.2e99bc",
         "name": "",
         "mqtt": true,
-        "x": 350,
-        "y": 320,
+        "x": 380,
+        "y": 200,
         "wires": [
             [
                 "a6385d79.e244f"
@@ -3066,7 +3066,7 @@
         "type": "function",
         "z": "d9d4d547.6a9438",
         "name": "set lights",
-        "func": "var avctrl = flow.get(\"avctrl\") || \"OFF\";\nvar daylight = Number(flow.get('daylight') || 0);\n\nif ((avctrl === \"Stream Video\") && (daylight === 0)) {\n    if (msg.payload === 'PLAYING') {\n        msg.payload = 5;\n        return msg;\n    }\n    if (msg.payload == 'PAUSE' || msg.payload=== 'STOPPED') {\n        msg.payload = 100;\n        return msg;\n    }\n}\nreturn null;",
+        "func": "var avctrl = flow.get(\"avctrl\") || \"OFF\";\nvar daylight = Number(flow.get('daylight') || 0);\n\nif ((avctrl === \"Stream Video\") && (daylight === 0)) {\n    if (msg.payload === 'PLAYING') {\n        msg.payload = 5;\n        return msg;\n    }\n    if (msg.payload == 'PAUSED' || msg.payload=== 'STOPPED') {\n        msg.payload = 100;\n        return msg;\n    }\n}\nreturn null;",
         "outputs": 1,
         "noerr": 0,
         "x": 340,
@@ -3083,7 +3083,7 @@
         "id": "c7a4cf85.bac8a",
         "type": "mysencap",
         "z": "d9d4d547.6a9438",
-        "name": "",
+        "name": "Sofa LED",
         "nodeid": "14",
         "childid": "1",
         "subtype": "3",
@@ -3096,7 +3096,7 @@
         "fullpresentation": false,
         "firmwarename": "",
         "firmwareversion": "",
-        "x": 800,
+        "x": 700,
         "y": 60,
         "wires": [
             [
@@ -3108,10 +3108,10 @@
         "id": "743ac734.623e78",
         "type": "mysencode",
         "z": "d9d4d547.6a9438",
-        "name": "",
+        "name": "mys-out",
         "mqtt": true,
         "mqtttopic": "mys-out",
-        "x": 990,
+        "x": 860,
         "y": 100,
         "wires": [
             [
@@ -3129,7 +3129,7 @@
         "qos": "2",
         "retain": "false",
         "broker": "4798f2b0.5d747c",
-        "x": 1210,
+        "x": 1010,
         "y": 180,
         "wires": []
     },
@@ -3141,8 +3141,8 @@
         "active": false,
         "console": "false",
         "complete": "false",
-        "x": 510,
-        "y": 20,
+        "x": 530,
+        "y": 140,
         "wires": []
     },
     {
@@ -3155,7 +3155,7 @@
         "console": false,
         "tostatus": false,
         "complete": "true",
-        "x": 1210,
+        "x": 1010,
         "y": 100,
         "wires": []
     },
@@ -3163,7 +3163,7 @@
         "id": "2c89a82a.ecab58",
         "type": "mysencap",
         "z": "d9d4d547.6a9438",
-        "name": "",
+        "name": "Fjernsyn LED",
         "nodeid": "13",
         "childid": "1",
         "subtype": "3",
@@ -3176,7 +3176,7 @@
         "fullpresentation": false,
         "firmwarename": "",
         "firmwareversion": "",
-        "x": 600,
+        "x": 540,
         "y": 100,
         "wires": [
             [
@@ -3193,8 +3193,8 @@
         "tosidebar": true,
         "console": false,
         "complete": "true",
-        "x": 990,
-        "y": 260,
+        "x": 1010,
+        "y": 240,
         "wires": []
     },
     {
@@ -3231,7 +3231,7 @@
         "func": "var d = new Date();\n// Get seconds since epoch\nvar secs = Math.round(d.getTime()/1000);\n// Add local time offset\nsecs = secs - d.getTimezoneOffset() * 60;\nmsg.payload = secs;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 500,
+        "x": 520,
         "y": 240,
         "wires": [
             [
@@ -3245,7 +3245,7 @@
         "z": "d9d4d547.6a9438",
         "name": "",
         "mqtt": true,
-        "x": 340,
+        "x": 360,
         "y": 240,
         "wires": [
             [
@@ -3257,10 +3257,10 @@
         "id": "6634c6de.6bfbd8",
         "type": "mysencode",
         "z": "d9d4d547.6a9438",
-        "name": "",
+        "name": "mys-out",
         "mqtt": true,
         "mqtttopic": "mys-out",
-        "x": 690,
+        "x": 860,
         "y": 240,
         "wires": [
             [
@@ -4191,25 +4191,6 @@
         "wires": []
     },
     {
-        "id": "33625364.7b3bbc",
-        "type": "ui_template",
-        "z": "36f02452.2e99bc",
-        "group": "a88c1c22.0c1b9",
-        "name": "",
-        "order": 0,
-        "width": 0,
-        "height": 0,
-        "format": "<div ng-bind-html=\"msg.payload\"></div>",
-        "storeOutMessages": true,
-        "fwdInMessages": true,
-        "templateScope": "local",
-        "x": 800,
-        "y": 420,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "8503dfc2.61257",
         "type": "ui_button",
         "z": "36f02452.2e99bc",
@@ -4304,7 +4285,7 @@
         "type": "debug",
         "z": "d9d4d547.6a9438",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -4524,11 +4505,11 @@
         "id": "dbe26677.cae0b8",
         "type": "function",
         "z": "d9d4d547.6a9438",
-        "name": "check if light is on",
+        "name": "is sofa light on",
         "func": "light = Number(flow.get('sensor14_1_3') || 0);\nif (light >0 ) {\n    return msg;\n}\n",
         "outputs": 1,
         "noerr": 0,
-        "x": 530,
+        "x": 540,
         "y": 60,
         "wires": [
             [
@@ -4561,9 +4542,9 @@
         "wires": []
     },
     {
-        "id": "332d5c7a.ccb904",
+        "id": "db904d85.7d009",
         "type": "ui_template",
-        "z": "d9d4d547.6a9438",
+        "z": "36f02452.2e99bc",
         "group": "a88c1c22.0c1b9",
         "name": "",
         "order": 0,
@@ -4573,42 +4554,52 @@
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",
-        "x": 460,
-        "y": 760,
+        "x": 454,
+        "y": 311,
         "wires": [
             []
         ]
     },
     {
-        "id": "d38993bc.3b368",
+        "id": "25b45c5b.842d14",
         "type": "mqtt in",
-        "z": "d9d4d547.6a9438",
+        "z": "36f02452.2e99bc",
         "name": "",
         "topic": "chromecast/+/media",
         "qos": "2",
         "broker": "4798f2b0.5d747c",
-        "x": 140,
-        "y": 760,
+        "x": 124,
+        "y": 311,
         "wires": [
             [
-                "67c25225.42b44c"
+                "657ac035.5f877"
             ]
         ]
     },
     {
-        "id": "67c25225.42b44c",
+        "id": "657ac035.5f877",
         "type": "json",
-        "z": "d9d4d547.6a9438",
+        "z": "36f02452.2e99bc",
         "name": "",
         "property": "payload",
         "action": "obj",
         "pretty": false,
-        "x": 310,
-        "y": 760,
+        "x": 304,
+        "y": 311,
         "wires": [
             [
-                "332d5c7a.ccb904"
+                "db904d85.7d009"
             ]
         ]
+    },
+    {
+        "id": "640e3456.6fb06c",
+        "type": "comment",
+        "z": "d9d4d547.6a9438",
+        "name": "Movie theatre lights",
+        "info": "",
+        "x": 130,
+        "y": 60,
+        "wires": []
     }
 ]
