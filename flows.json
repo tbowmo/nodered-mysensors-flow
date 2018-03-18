@@ -42,13 +42,22 @@
     {
         "id": "29d73028.74b4a",
         "type": "tab",
-        "label": "BBQ UI"
+        "label": "UI: BBQ",
+        "disabled": false,
+        "info": ""
     },
     {
         "id": "1c8e2559.87cbfb",
         "type": "tab",
         "label": "mysensors-old",
         "disabled": true,
+        "info": ""
+    },
+    {
+        "id": "ca4f572b.274038",
+        "type": "tab",
+        "label": "UI: Varme system",
+        "disabled": false,
         "info": ""
     },
     {
@@ -63,10 +72,6 @@
                 "y": 220,
                 "wires": [
                     {
-                        "id": "11f1e54.721221b",
-                        "port": 0
-                    },
-                    {
                         "id": "f9b89df5.06476",
                         "port": 0
                     },
@@ -79,7 +84,17 @@
                         "port": 0
                     },
                     {
-                        "id": "985078ce.c384e8",
+                        "id": "11f1e54.721221b",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 340,
+                "y": 380,
+                "wires": [
+                    {
+                        "id": "12db17ce.ed24e8",
                         "port": 0
                     }
                 ]
@@ -167,9 +182,74 @@
                     {
                         "id": "55204322.aadfbc",
                         "port": 2
+                    },
+                    {
+                        "id": "55204322.aadfbc",
+                        "port": 0
+                    },
+                    {
+                        "id": "55204322.aadfbc",
+                        "port": 1
                     }
                 ]
             }
+        ]
+    },
+    {
+        "id": "8bc8753a.1ea768",
+        "type": "subflow",
+        "name": "mqtt thermometer",
+        "info": "",
+        "in": [
+            {
+                "x": 120,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "c4285cac.b7dcb"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 660,
+                "y": 40,
+                "wires": [
+                    {
+                        "id": "a133b28e.29844",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 660,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "a133b28e.29844",
+                        "port": 1
+                    }
+                ]
+            },
+            {
+                "x": 660,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "a133b28e.29844",
+                        "port": 2
+                    }
+                ]
+            }
+        ],
+        "inputLabels": [
+            "MQTT input"
+        ],
+        "outputLabels": [
+            "Temperature",
+            "Humidity",
+            "Barometric"
         ]
     },
     {
@@ -277,15 +357,17 @@
         "id": "6c5b47d3.832458",
         "type": "ui_tab",
         "z": "",
-        "name": "Home",
-        "icon": "dashboard"
+        "name": "Stuen",
+        "icon": "dashboard",
+        "order": 1
     },
     {
         "id": "9f6b85e1.adc7d8",
         "type": "ui_group",
         "z": "",
-        "name": "Fjernvarme",
-        "tab": "6c5b47d3.832458",
+        "name": "Fjernvarme målere",
+        "tab": "6255c082.fdb72",
+        "order": 1,
         "disp": true,
         "width": "6",
         "collapse": false
@@ -363,9 +445,9 @@
             }
         },
         "site": {
-            "name": "Node-RED Dashboard",
+            "name": "Bowman Mørch",
             "hideToolbar": "false",
-            "allowSwipe": "true",
+            "allowSwipe": "false",
             "dateFormat": "DD/MM/YYYY",
             "sizes": {
                 "sx": 48,
@@ -383,8 +465,9 @@
         "id": "d9490c52.897ce",
         "type": "ui_group",
         "z": "",
-        "name": "Gulvvarme",
+        "name": "Stuen",
         "tab": "6c5b47d3.832458",
+        "order": 2,
         "disp": true,
         "width": "6",
         "collapse": false
@@ -395,8 +478,10 @@
         "z": "",
         "name": "Udendørs",
         "tab": "6c5b47d3.832458",
+        "order": 3,
         "disp": true,
-        "width": "6"
+        "width": "6",
+        "collapse": false
     },
     {
         "id": "4798f2b0.5d747c",
@@ -422,6 +507,7 @@
         "z": "",
         "name": "Grill",
         "tab": "1fa739cf.db0f66",
+        "order": 1,
         "disp": true,
         "width": "6"
     },
@@ -430,7 +516,8 @@
         "type": "ui_tab",
         "z": "",
         "name": "Grill",
-        "icon": "dashboard"
+        "icon": "dashboard",
+        "order": 3
     },
     {
         "id": "cc7bc1b6.f6635",
@@ -438,6 +525,7 @@
         "z": "",
         "name": "Aktuel temperatur",
         "tab": "1fa739cf.db0f66",
+        "order": 2,
         "disp": true,
         "width": "6"
     },
@@ -447,6 +535,7 @@
         "z": "",
         "name": "Mål temperatur",
         "tab": "1fa739cf.db0f66",
+        "order": 3,
         "disp": true,
         "width": "6",
         "collapse": false
@@ -493,7 +582,8 @@
         "z": "",
         "name": "Scene",
         "tab": "6c5b47d3.832458",
-        "disp": false,
+        "order": 4,
+        "disp": true,
         "width": "6",
         "collapse": false
     },
@@ -502,20 +592,77 @@
         "type": "ui_group",
         "z": "",
         "name": "Settings",
+        "tab": "ac7edd37.5c008",
+        "order": 4,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "ac7edd37.5c008",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Settings",
+        "icon": "dashboard",
+        "order": 4
+    },
+    {
+        "id": "6255c082.fdb72",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Huset",
+        "icon": "dashboard",
+        "order": 2
+    },
+    {
+        "id": "bf3de794.50d788",
+        "type": "ui_group",
+        "z": "",
+        "name": "Lys",
         "tab": "6c5b47d3.832458",
         "disp": true,
         "width": "6",
         "collapse": false
     },
     {
-        "id": "a88c1c22.0c1b9",
+        "id": "165c814.4d5267f",
         "type": "ui_group",
         "z": "",
-        "name": "Group",
-        "tab": "6c5b47d3.832458",
-        "order": null,
-        "disp": false,
-        "width": "9",
+        "name": "Varme settings",
+        "tab": "6255c082.fdb72",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "e11ff54d.12ad78",
+        "type": "ui_group",
+        "z": "",
+        "name": "Badeværelse",
+        "tab": "6255c082.fdb72",
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "1215f3be.8c080c",
+        "type": "ui_group",
+        "z": "",
+        "name": "Soveværelse",
+        "tab": "6255c082.fdb72",
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "58bcd57b.789b2c",
+        "type": "ui_group",
+        "z": "",
+        "name": "Kontor",
+        "tab": "6255c082.fdb72",
+        "disp": true,
+        "width": "6",
         "collapse": false
     },
     {
@@ -525,7 +672,7 @@
         "name": "Mysensors NRF",
         "serial": "821a7286.7de59",
         "x": 200,
-        "y": 280,
+        "y": 260,
         "wires": [
             [
                 "8cb827f.b90b8d8",
@@ -717,7 +864,7 @@
         "id": "f9b89df5.06476",
         "type": "mysencap",
         "z": "2257718.fdda88e",
-        "name": "V_KWH node 99",
+        "name": "",
         "nodeid": "99",
         "childid": "1",
         "subtype": "18",
@@ -725,12 +872,12 @@
         "ack": false,
         "msgtype": "1",
         "presentation": true,
-        "presentationtype": "13",
+        "presentationtype": "14",
         "presentationtext": "Kwh",
         "fullpresentation": true,
         "firmwarename": "MeterNode",
         "firmwareversion": "0.1",
-        "x": 570,
+        "x": 620,
         "y": 200,
         "wires": [
             []
@@ -755,7 +902,7 @@
             ],
             [
                 "dfd92894.2026d8",
-                "11f1e54.721221b"
+                "985078ce.c384e8"
             ]
         ]
     },
@@ -768,8 +915,8 @@
         "appendNewline": true,
         "createDir": false,
         "overwriteFile": "true",
-        "x": 480,
-        "y": 300,
+        "x": 600,
+        "y": 280,
         "wires": []
     },
     {
@@ -843,9 +990,7 @@
         "x": 190,
         "y": 680,
         "wires": [
-            [
-                "9e471178.61b8f"
-            ]
+            []
         ]
     },
     {
@@ -866,7 +1011,7 @@
         "type": "function",
         "z": "9b272654.9ad688",
         "name": "Influx conditioner",
-        "func": "msg_env = null;\nmsg_utility = null;\nmsg_debug = null;\nst = msg.subType;\nif (msg.messageType == 1 && (st === 0 || st == 1 || st == 2 || st == 4 || st == 17)) {\n    var tags = {};var data = {}\n    tags.node = msg.nodeId.toString();\n    tags.sensor = msg.childSensorId.toString();\n    data.value=parseFloat(msg.payload);\n    switch (st) {\n        case 0 : type = \"temperature\";break;\n        case 1 : type = \"humidity\"; break;\n        case 2 : type = \"status\"; break;\n        case 4 : type = \"barometer\"; break;\n        case 17: type = \"electricity\"; break;\n    }\n    msg.payload = [data, tags];\n    msg.measurement = type;\n    msg_debug = msg;\n    if (msg.subType==17) \n        msg_utility = msg;\n    else \n        msg_env = msg;\n} \nelse \n    msg = null;\nreturn [msg_debug, msg_env, msg_utility];",
+        "func": "msg_env = null;\nmsg_utility = null;\nst = msg.subType;\nif (msg.messageType == 1 && (st === 0 || st == 1 || st == 2 || st == 4 || st == 17)) {\n    var tags = {};var data = {}\n    tags.node = msg.nodeId.toString();\n    tags.sensor = msg.childSensorId.toString();\n    data.value=parseFloat(msg.payload);\n    if (!isNaN(data.value)) {\n        switch (st) {\n            case 0 : type = \"temperature\";break;\n            case 1 : type = \"humidity\"; break;\n            case 2 : type = \"status\"; break;\n            case 4 : type = \"barometer\"; break;\n            case 17: type = \"electricity\"; break;\n        }\n        msg.payload = [data, tags];\n        msg.measurement = type;\n        if (msg.subType==17) {\n            msg_utility = msg;\n        }\n        else {\n            msg_env = msg;\n        }\n    }\n} \n\nreturn [msg, msg_env, msg_utility];",
         "outputs": "3",
         "noerr": 0,
         "x": 410,
@@ -926,7 +1071,8 @@
         "z": "67deb464.98214c",
         "name": "",
         "active": false,
-        "console": "false",
+        "tosidebar": true,
+        "console": false,
         "complete": "true",
         "x": 790,
         "y": 500,
@@ -938,8 +1084,8 @@
         "z": "2257718.fdda88e",
         "name": "",
         "nodeid": "99",
-        "childid": "10",
-        "subtype": "24",
+        "childid": "2",
+        "subtype": "17",
         "internal": 0,
         "ack": false,
         "msgtype": "1",
@@ -949,11 +1095,11 @@
         "fullpresentation": false,
         "firmwarename": "",
         "firmwareversion": "",
-        "x": 630,
+        "x": 860,
         "y": 240,
         "wires": [
             [
-                "985078ce.c384e8"
+                "693564ba.928f4c"
             ]
         ]
     },
@@ -965,8 +1111,8 @@
         "active": true,
         "console": "false",
         "complete": "payload",
-        "x": 980,
-        "y": 120,
+        "x": 960,
+        "y": 100,
         "wires": []
     },
     {
@@ -989,77 +1135,6 @@
         "x": 390,
         "y": 400,
         "wires": []
-    },
-    {
-        "id": "74fa053.083c8fc",
-        "type": "inject",
-        "z": "d10deed0.f94c",
-        "name": "",
-        "topic": "",
-        "payload": "{\"func\":\"camaction\",\"camera\":\"2\"}",
-        "payloadType": "json",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "x": 270,
-        "y": 260,
-        "wires": [
-            [
-                "995edf3b.84ce8"
-            ]
-        ]
-    },
-    {
-        "id": "fd689c8e.8f9cc",
-        "type": "function",
-        "z": "d10deed0.f94c",
-        "name": "file_extractor",
-        "func": "var camera = msg.payload.camera;\nvar cam = {1:\"8\", 2:\"5\"}\nx = cam[msg.payload.camera];\nmsg = {camera:camera, url: \"http://192.168.0.12/zm/cgi-bin/nph-zms?mode=single&monitor=\"+x+\"&scale=100&user=view&pass=viewer\", payload : \"\"};\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 590,
-        "y": 260,
-        "wires": [
-            [
-                "233039ac.dbd976",
-                "2a71122.f4af9ee"
-            ]
-        ]
-    },
-    {
-        "id": "233039ac.dbd976",
-        "type": "http request",
-        "z": "d10deed0.f94c",
-        "name": "",
-        "method": "GET",
-        "ret": "bin",
-        "url": "",
-        "tls": "",
-        "x": 790,
-        "y": 260,
-        "wires": [
-            [
-                "752dec5d.15a1d4",
-                "8fae6cf9.b57eb"
-            ]
-        ]
-    },
-    {
-        "id": "752dec5d.15a1d4",
-        "type": "function",
-        "z": "d10deed0.f94c",
-        "name": "Slack prep",
-        "func": "var boundaryKey = Math.random().toString(16);\nmsg.token = \"xoxb-93817565314-CM19x5qrKKpBBOruTdmCbMwC\";\nmsg.cam = \"CAM\"+msg.camera;\nmsg.headers = {\n     \"Content-type\" : 'multipart/form-data; boundary=\"' + boundaryKey + '\"'\n};\n\npayload = '--' + boundaryKey + '\\r\\n';\npayload +='Content-Type: image/jpeg\\r\\n';\npayload +='Content-Disposition: form-data; name=\"file\"; filename=\"test.jpg\"\\r\\n';\npayload +='Content-Transfer-Encoding: base64\\r\\n\\r\\n';\n\nvar result = Buffer.concat([\n    Buffer.from(\n        '--' + boundaryKey + '\\r\\n' + \n        'Content-Type: image/jpeg\\r\\n' +\n        'Content-Disposition: form-data; name=\"file\"; filename=\"test.jpg\"\\r\\n'+\n        'Content-Transfer-Encoding: base64\\r\\n\\r\\n'\n    ), \n    msg.payload, \n    Buffer.from('\\r\\n--'+boundaryKey+'--')]);\nmsg.payload = result;\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 970,
-        "y": 260,
-        "wires": [
-            [
-                "8afa0907.a17708",
-                "124d5aec.3413f5"
-            ]
-        ]
     },
     {
         "id": "33eb5fc9.991eb",
@@ -1113,8 +1188,7 @@
         "y": 420,
         "wires": [
             [
-                "9611fc27.e021c",
-                "995edf3b.84ce8"
+                "9611fc27.e021c"
             ],
             [
                 "b1e8baa7.2f09e8"
@@ -1176,35 +1250,6 @@
         ]
     },
     {
-        "id": "8afa0907.a17708",
-        "type": "http request",
-        "z": "d10deed0.f94c",
-        "name": "",
-        "method": "POST",
-        "ret": "txt",
-        "url": "https://slack.com/api/files.upload?token={{{token}}}&filename={{{cam}}}&channels=C2RPSMCCF",
-        "tls": "",
-        "x": 1150,
-        "y": 260,
-        "wires": [
-            [
-                "29835f70.824de"
-            ]
-        ]
-    },
-    {
-        "id": "29835f70.824de",
-        "type": "debug",
-        "z": "d10deed0.f94c",
-        "name": "",
-        "active": false,
-        "console": "false",
-        "complete": "false",
-        "x": 1330,
-        "y": 260,
-        "wires": []
-    },
-    {
         "id": "26f8f71a.1eb498",
         "type": "debug",
         "z": "d10deed0.f94c",
@@ -1215,27 +1260,6 @@
         "x": 275,
         "y": 380,
         "wires": []
-    },
-    {
-        "id": "995edf3b.84ce8",
-        "type": "trigger",
-        "z": "d10deed0.f94c",
-        "op1": "{\"camera\":1}",
-        "op2": "{\"camera\":2}",
-        "op1type": "json",
-        "op2type": "json",
-        "duration": "5",
-        "extend": false,
-        "units": "s",
-        "reset": "",
-        "name": "cameras",
-        "x": 420,
-        "y": 260,
-        "wires": [
-            [
-                "fd689c8e.8f9cc"
-            ]
-        ]
     },
     {
         "id": "e78d46ee.fa0f98",
@@ -1331,42 +1355,6 @@
         ]
     },
     {
-        "id": "2a71122.f4af9ee",
-        "type": "debug",
-        "z": "d10deed0.f94c",
-        "name": "",
-        "active": false,
-        "console": "false",
-        "complete": "url",
-        "x": 780,
-        "y": 220,
-        "wires": []
-    },
-    {
-        "id": "8fae6cf9.b57eb",
-        "type": "debug",
-        "z": "d10deed0.f94c",
-        "name": "",
-        "active": false,
-        "console": "false",
-        "complete": "true",
-        "x": 950,
-        "y": 220,
-        "wires": []
-    },
-    {
-        "id": "124d5aec.3413f5",
-        "type": "debug",
-        "z": "d10deed0.f94c",
-        "name": "",
-        "active": false,
-        "console": "false",
-        "complete": "true",
-        "x": 1130,
-        "y": 220,
-        "wires": []
-    },
-    {
         "id": "ea57b38e.eecb5",
         "type": "debug",
         "z": "67deb464.98214c",
@@ -1403,255 +1391,18 @@
         "wires": []
     },
     {
-        "id": "a6385d79.e244f",
-        "type": "switch",
-        "z": "36f02452.2e99bc",
-        "name": "subTypeSplit",
-        "property": "subType",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "0",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "1",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "9",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "outputs": 3,
-        "x": 570,
-        "y": 200,
-        "wires": [
-            [
-                "fb869720.6c1818",
-                "7bc2b67f.aa1298"
-            ],
-            [
-                "4c5d6807.c8ffd8"
-            ],
-            [
-                "991cfdf1.583f"
-            ]
-        ]
-    },
-    {
-        "id": "7bc2b67f.aa1298",
-        "type": "debug",
-        "z": "36f02452.2e99bc",
-        "name": "",
-        "active": false,
-        "console": "false",
-        "complete": "true",
-        "x": 610,
-        "y": 100,
-        "wires": []
-    },
-    {
-        "id": "2a7f64b.6d95a9c",
-        "type": "ui_gauge",
-        "z": "36f02452.2e99bc",
-        "name": "",
-        "group": "d9490c52.897ce",
-        "order": 0,
-        "width": "0",
-        "height": "0",
-        "gtype": "gage",
-        "title": "Gulv temperatur",
-        "label": "units",
-        "format": "{{value}}",
-        "min": "20",
-        "max": "35",
-        "colors": [
-            "#00b500",
-            "#e6e600",
-            "#ca3838"
-        ],
-        "seg1": "",
-        "seg2": "",
-        "x": 1220,
-        "y": 60,
-        "wires": []
-    },
-    {
-        "id": "fb869720.6c1818",
-        "type": "switch",
-        "z": "36f02452.2e99bc",
-        "name": "Temperatur",
-        "property": "nodeId",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "20",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "11",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "outputs": 2,
-        "x": 770,
-        "y": 160,
-        "wires": [
-            [
-                "99669749.b98da8"
-            ],
-            [
-                "ad8c0dc6.4f64a"
-            ]
-        ]
-    },
-    {
-        "id": "99669749.b98da8",
-        "type": "switch",
-        "z": "36f02452.2e99bc",
-        "name": "Varmesystem",
-        "property": "childSensorId",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "0",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "1",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "2",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "3",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "outputs": 4,
-        "x": 1000,
-        "y": 120,
-        "wires": [
-            [
-                "2a7f64b.6d95a9c"
-            ],
-            [
-                "925bda6f.051748"
-            ],
-            [
-                "c5856079.a4b5a"
-            ],
-            [
-                "22859f1b.c3a99"
-            ]
-        ]
-    },
-    {
-        "id": "925bda6f.051748",
-        "type": "ui_gauge",
-        "z": "36f02452.2e99bc",
-        "name": "",
-        "group": "9f6b85e1.adc7d8",
-        "order": 0,
-        "width": "3",
-        "height": "3",
-        "gtype": "gage",
-        "title": "Fremløb",
-        "label": "units",
-        "format": "{{value}}",
-        "min": "40",
-        "max": "70",
-        "colors": [
-            "#00b500",
-            "#e6e600",
-            "#ca3838"
-        ],
-        "seg1": "",
-        "seg2": "",
-        "x": 1200,
-        "y": 100,
-        "wires": []
-    },
-    {
-        "id": "c5856079.a4b5a",
-        "type": "ui_gauge",
-        "z": "36f02452.2e99bc",
-        "name": "",
-        "group": "9f6b85e1.adc7d8",
-        "order": 0,
-        "width": "3",
-        "height": "3",
-        "gtype": "gage",
-        "title": "Retur",
-        "label": "units",
-        "format": "{{value}}",
-        "min": "30",
-        "max": "60",
-        "colors": [
-            "#00b500",
-            "#e6e600",
-            "#ca3838"
-        ],
-        "seg1": "",
-        "seg2": "",
-        "x": 1190,
-        "y": 140,
-        "wires": []
-    },
-    {
-        "id": "22859f1b.c3a99",
-        "type": "ui_gauge",
-        "z": "36f02452.2e99bc",
-        "name": "",
-        "group": "9f6b85e1.adc7d8",
-        "order": 0,
-        "width": "3",
-        "height": "3",
-        "gtype": "gage",
-        "title": "Varmt vand",
-        "label": "units",
-        "format": "{{value}}",
-        "min": "40",
-        "max": "50",
-        "colors": [
-            "#00b500",
-            "#e6e600",
-            "#ca3838"
-        ],
-        "seg1": "",
-        "seg2": "",
-        "x": 1210,
-        "y": 180,
-        "wires": []
-    },
-    {
         "id": "ad8c0dc6.4f64a",
         "type": "ui_gauge",
         "z": "36f02452.2e99bc",
-        "name": "Udendørs",
+        "name": "",
         "group": "85f5cfaa.42289",
-        "order": 0,
+        "order": 1,
         "width": "3",
         "height": "3",
         "gtype": "gage",
         "title": "Temperatur",
         "label": "C",
-        "format": "{{value}}",
+        "format": "{{value}}°",
         "min": "-10",
         "max": "30",
         "colors": [
@@ -1661,71 +1412,23 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 1200,
-        "y": 240,
+        "x": 510,
+        "y": 60,
         "wires": []
-    },
-    {
-        "id": "4c5d6807.c8ffd8",
-        "type": "switch",
-        "z": "36f02452.2e99bc",
-        "name": "Humidity",
-        "property": "nodeId",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "11",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "outputs": 1,
-        "x": 760,
-        "y": 200,
-        "wires": [
-            [
-                "4f7cb0eb.0d19a"
-            ]
-        ]
-    },
-    {
-        "id": "991cfdf1.583f",
-        "type": "switch",
-        "z": "36f02452.2e99bc",
-        "name": "Barometric",
-        "property": "nodeId",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "11",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "outputs": 1,
-        "x": 770,
-        "y": 240,
-        "wires": [
-            [
-                "5115f872.4620e8"
-            ]
-        ]
     },
     {
         "id": "4f7cb0eb.0d19a",
         "type": "ui_gauge",
         "z": "36f02452.2e99bc",
-        "name": "Udendørs",
+        "name": "",
         "group": "85f5cfaa.42289",
-        "order": 0,
+        "order": 3,
         "width": "3",
         "height": "3",
         "gtype": "gage",
         "title": "Fugtighed",
-        "label": "RH%",
-        "format": "{{value}}",
+        "label": "RH",
+        "format": "{{value}}%",
         "min": "40",
         "max": "100",
         "colors": [
@@ -1735,8 +1438,8 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 1200,
-        "y": 280,
+        "x": 500,
+        "y": 140,
         "wires": []
     },
     {
@@ -1745,11 +1448,11 @@
         "z": "36f02452.2e99bc",
         "name": "",
         "group": "85f5cfaa.42289",
-        "order": 0,
+        "order": 5,
         "width": "3",
         "height": "3",
         "gtype": "gage",
-        "title": "Gauge",
+        "title": "Barometer",
         "label": "units",
         "format": "{{value}}",
         "min": 0,
@@ -1761,8 +1464,8 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 1190,
-        "y": 320,
+        "x": 510,
+        "y": 220,
         "wires": []
     },
     {
@@ -2405,7 +2108,7 @@
         "retain": "true",
         "broker": "4798f2b0.5d747c",
         "x": 590,
-        "y": 700,
+        "y": 780,
         "wires": []
     },
     {
@@ -2430,7 +2133,7 @@
         "to": "",
         "reg": false,
         "x": 390,
-        "y": 700,
+        "y": 780,
         "wires": [
             [
                 "e8d9e345.f59cb"
@@ -2444,7 +2147,7 @@
         "name": "Rebroadcast for dashboard",
         "info": "Below is rebroadcasting sensor data (set commands) to the dashboard, with retention bit set to true",
         "x": 230,
-        "y": 660,
+        "y": 740,
         "wires": []
     },
     {
@@ -2452,14 +2155,14 @@
         "type": "mqtt in",
         "z": "36f02452.2e99bc",
         "name": "",
-        "topic": "dashboard/#",
+        "topic": "dashboard/11/#",
         "qos": "2",
         "broker": "4798f2b0.5d747c",
-        "x": 210,
-        "y": 200,
+        "x": 160,
+        "y": 160,
         "wires": [
             [
-                "25accb7f.45d714"
+                "beb834aa.730368"
             ]
         ]
     },
@@ -2468,14 +2171,14 @@
         "type": "function",
         "z": "2257718.fdda88e",
         "name": "Watt/Hour calculator",
-        "func": "/* Takes input on subType 24, calculates difference\n   from last time, if around 60 seconds have passed\n   since last report.\n   It passes the value on as subType 17, and\n   childSensorId 2 */\n   \nif ((Number(msg.subType)===24) && (Number(msg.nodeId)===99)) {\n    var uTime = Math.floor(Date.now()/60000);\n    var lastTime = context.get('lastTime')||0;\n    if (lastTime === 0) {\n        context.set('lastTime', uTime);\n        context.set('lastCount', Number(msg.payload));\n    } else {\n        if (uTime != lastTime) {\n            lastCount = context.get('lastCount');\n            currentCount = Number(msg.payload);\n            context.set('lastTime', uTime);\n            context.set('lastCount', currentCount)\n            msg.subType = 17;\n            msg.childSensorId = \"2\";\n            msg.payload = currentCount - lastCount;\n            return msg;\n        }\n    }\n}",
+        "func": "/* Takes input on subType 24, calculates difference\n   from last time, if around 60 seconds have passed\n   since last report.\n   It passes the value on as subType 17, and\n   childSensorId 2 */\n   \nvar uTime = Math.floor(Date.now()/60000);\nvar lastTime = context.get('lastTime')||0;\nif (lastTime === 0) {\n    context.set('lastTime', uTime);\n    context.set('lastCount', Number(msg.payload));\n} else {\n    if (uTime != lastTime) {\n        lastCount = context.get('lastCount');\n        currentCount = Number(msg.payload);\n        context.set('lastTime', uTime);\n        context.set('lastCount', currentCount)\n        msg.payload = currentCount - lastCount;\n        return msg;\n    }\n}\nreturn null",
         "outputs": 1,
         "noerr": 0,
-        "x": 920,
-        "y": 280,
+        "x": 580,
+        "y": 240,
         "wires": [
             [
-                "693564ba.928f4c"
+                "11f1e54.721221b"
             ]
         ]
     },
@@ -2489,14 +2192,14 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "payload[0].sum",
+                "to": "payload[0].sum/1000",
                 "tot": "msg"
             },
             {
                 "t": "set",
                 "p": "subType",
                 "pt": "msg",
-                "to": "25",
+                "to": "18",
                 "tot": "num"
             }
         ],
@@ -2519,7 +2222,7 @@
         "func": "if (msg.nodeId == 99 & msg.subType==17) {\nvar d = new Date();\nd.setHours(0,0,0,0);\nmsg.time = (1 * d.getTime())/1000;\nmsg.time = d.toISOString(); //ISODateString(d);\nmsg.query = \"select sum(value) from electricity where node='99' and sensor='2' and time>'\"+msg.time+\"'\"; //+msg.time;\nreturn msg;\n}\n",
         "outputs": 1,
         "noerr": 0,
-        "x": 850,
+        "x": 870,
         "y": 40,
         "wires": [
             [
@@ -2549,12 +2252,15 @@
         "id": "ff440b2.89fc2f8",
         "type": "subflow:2257718.fdda88e",
         "z": "67deb464.98214c",
-        "x": 430,
+        "x": 190,
         "y": 320,
         "wires": [
             [
                 "44592b43.bba6d4",
                 "7535eff3.37e22"
+            ],
+            [
+                "84a7ac1f.0f84a"
             ]
         ]
     },
@@ -2719,20 +2425,6 @@
         ]
     },
     {
-        "id": "25accb7f.45d714",
-        "type": "mysdecode",
-        "z": "36f02452.2e99bc",
-        "name": "",
-        "mqtt": true,
-        "x": 380,
-        "y": 200,
-        "wires": [
-            [
-                "a6385d79.e244f"
-            ]
-        ]
-    },
-    {
         "id": "7e24cbb9.731f94",
         "type": "mqtt out",
         "z": "67deb464.98214c",
@@ -2766,11 +2458,11 @@
         "type": "debug",
         "z": "d2be3a2a.67d4b8",
         "name": "",
-        "active": true,
+        "active": false,
         "console": "false",
         "complete": "true",
         "x": 570,
-        "y": 460,
+        "y": 660,
         "wires": []
     },
     {
@@ -2778,11 +2470,11 @@
         "type": "function",
         "z": "d2be3a2a.67d4b8",
         "name": "Translate",
-        "func": "switch(msg.payload.activityId) {\n    case \"21395657\":\n        activity = \"Stream Audio\";\n        break;\n    case \"24516381\":\n        activity = \"CD\";\n        break;\n    case \"20795082\":\n        activity = \"Radio\";\n        break;\n    case \"20800253\":\n        activity = \"DVD\";\n        break;\n    case \"20800328\":\n        activity = \"WII\";\n        break;        \n    case \"20800334\":\n        activity = \"Stream Video\";\n        break;\n    case \"-1\":\n        activity = \"OFF\";\n        break;\n    default:\n        activity = msg.payload.activityId;\n        break;\n}\n\nmsg.payload.activityName = activity;\n\nreturn msg;\n",
+        "func": "switch(msg.payload.activityId) {\n    case \"20800334\":\n        activity = \"Stream Video\";\n        break;\n    case \"21395657\":\n        activity = \"Stream Audio\";\n        break;\n    case \"24516381\":\n        activity = \"CD\";\n        flow.set('device', 'dvd');\n        break;\n    case \"20795082\":\n        activity = \"Radio\";\n        break;\n    case \"20800253\":\n        activity = \"DVD\";\n        break;\n    case \"20800328\":\n        activity = \"WII\";\n        break;        \n    case \"20800510\":\n        activity = \"TV\";\n        break;\n    case \"-1\":\n        activity = \"OFF\";\n        break;\n    default:\n        activity = msg.payload.activityId;\n        break;\n}\n\nmsg.payload.activityName = activity;\n\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
         "x": 380,
-        "y": 500,
+        "y": 700,
         "wires": [
             [
                 "399d6b35.892e74",
@@ -2800,7 +2492,7 @@
         "retain": "true",
         "broker": "4798f2b0.5d747c",
         "x": 600,
-        "y": 500,
+        "y": 700,
         "wires": []
     },
     {
@@ -2886,12 +2578,23 @@
                 "t": "eq",
                 "v": "off",
                 "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "tv",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "dvd",
+                "vt": "str"
             }
         ],
         "checkall": "true",
-        "outputs": 4,
+        "repair": false,
+        "outputs": 6,
         "x": 370,
-        "y": 140,
+        "y": 180,
         "wires": [
             [
                 "6b273a3.c572dc4"
@@ -2904,6 +2607,12 @@
             ],
             [
                 "4bef3015.f4a8b"
+            ],
+            [
+                "c1263114.4ef3f"
+            ],
+            [
+                "541a6418.f052ec"
             ]
         ]
     },
@@ -2916,7 +2625,7 @@
         "qos": "2",
         "broker": "4798f2b0.5d747c",
         "x": 190,
-        "y": 140,
+        "y": 180,
         "wires": [
             [
                 "a5649af7.74fca8"
@@ -2933,24 +2642,28 @@
         "rules": [
             {
                 "t": "eq",
-                "v": "volup",
+                "v": "volumeup",
                 "vt": "str"
             },
             {
                 "t": "eq",
-                "v": "voldown",
+                "v": "volumedown",
                 "vt": "str"
             },
             {
                 "t": "eq",
                 "v": "mute",
                 "vt": "str"
+            },
+            {
+                "t": "else"
             }
         ],
-        "checkall": "true",
-        "outputs": 3,
+        "checkall": "false",
+        "repair": false,
+        "outputs": 4,
         "x": 370,
-        "y": 340,
+        "y": 460,
         "wires": [
             [
                 "f5568b5f.898cc8"
@@ -2960,6 +2673,9 @@
             ],
             [
                 "c70cb7be.595738"
+            ],
+            [
+                "fc2bd7be.c40148"
             ]
         ]
     },
@@ -2974,11 +2690,9 @@
         "command": "%7B%22command%22::%22VolumeUp%22,%22type%22::%22IRCommand%22,%22deviceId%22::%2237008441%22%7D",
         "repeat": "1",
         "x": 590,
-        "y": 300,
+        "y": 360,
         "wires": [
-            [
-                "b6012b31.ece2d8"
-            ]
+            []
         ]
     },
     {
@@ -2987,40 +2701,26 @@
         "z": "d2be3a2a.67d4b8",
         "name": "Volume DOWN",
         "server": "56b003cf.93c9bc",
-        "activity": "20800334",
-        "label": "Chromecast TV",
+        "activity": "21395657",
+        "label": "Chromecast Audio",
         "command": "%7B%22command%22::%22VolumeDown%22,%22type%22::%22IRCommand%22,%22deviceId%22::%2237008441%22%7D",
         "repeat": "1",
         "x": 600,
-        "y": 340,
+        "y": 400,
         "wires": [
-            [
-                "b6012b31.ece2d8"
-            ]
+            []
         ]
-    },
-    {
-        "id": "b6012b31.ece2d8",
-        "type": "debug",
-        "z": "d2be3a2a.67d4b8",
-        "name": "status",
-        "active": true,
-        "console": "false",
-        "complete": "true",
-        "x": 780,
-        "y": 340,
-        "wires": []
     },
     {
         "id": "1bb38ed7.f57a81",
         "type": "mqtt in",
         "z": "d2be3a2a.67d4b8",
         "name": "",
-        "topic": "avctrl/in/function",
+        "topic": "avctrl/in/control",
         "qos": "2",
         "broker": "4798f2b0.5d747c",
         "x": 200,
-        "y": 340,
+        "y": 460,
         "wires": [
             [
                 "2c73477.9c149b8"
@@ -3031,18 +2731,16 @@
         "id": "c70cb7be.595738",
         "type": "H command",
         "z": "d2be3a2a.67d4b8",
-        "name": "",
+        "name": "Mute",
         "server": "56b003cf.93c9bc",
         "activity": "21395657",
         "label": "Chromecast TV",
         "command": "%7B%22command%22::%22Mute%22,%22type%22::%22IRCommand%22,%22deviceId%22::%2237008441%22%7D",
         "repeat": "1",
-        "x": 590,
-        "y": 380,
+        "x": 570,
+        "y": 440,
         "wires": [
-            [
-                "b6012b31.ece2d8"
-            ]
+            []
         ]
     },
     {
@@ -3066,7 +2764,7 @@
         "type": "function",
         "z": "d9d4d547.6a9438",
         "name": "set lights",
-        "func": "var avctrl = flow.get(\"avctrl\") || \"OFF\";\nvar daylight = Number(flow.get('daylight') || 0);\n\nif ((avctrl === \"Stream Video\") && (daylight === 0)) {\n    if (msg.payload === 'PLAYING') {\n        msg.payload = 5;\n        return msg;\n    }\n    if (msg.payload == 'PAUSED' || msg.payload=== 'STOPPED') {\n        msg.payload = 100;\n        return msg;\n    }\n}\nreturn null;",
+        "func": "var avctrl = flow.get(\"avctrl\") || \"OFF\";\nvar daylight = Number(flow.get('daylight') || 0);\nvar msgOut = null\nvar currentLight = Number(flow.get('sensor14_1_3') || 0);\nif ((avctrl === \"Stream Video\") && \n    (daylight === 0)) {\n\n    if (msg.payload === 'PLAYING') {\n        msgOut = {payload : 5};\n    }\n    if (msg.payload == 'PAUSED' || msg.payload=== 'STOPPED') {\n        msgOut = {payload: 100};\n    }\n    if (msgOut !== null && msgOut.payload !== currentLight) {\n        return msgOut;\n    }\n}\nreturn null;",
         "outputs": 1,
         "noerr": 0,
         "x": 340,
@@ -3130,7 +2828,7 @@
         "retain": "false",
         "broker": "4798f2b0.5d747c",
         "x": 1010,
-        "y": 180,
+        "y": 120,
         "wires": []
     },
     {
@@ -3156,7 +2854,7 @@
         "tostatus": false,
         "complete": "true",
         "x": 1010,
-        "y": 100,
+        "y": 80,
         "wires": []
     },
     {
@@ -3183,19 +2881,6 @@
                 "743ac734.623e78"
             ]
         ]
-    },
-    {
-        "id": "8cea0e9c.b798a",
-        "type": "debug",
-        "z": "d9d4d547.6a9438",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "complete": "true",
-        "x": 1010,
-        "y": 240,
-        "wires": []
     },
     {
         "id": "2b16448.ec468bc",
@@ -3235,7 +2920,7 @@
         "y": 240,
         "wires": [
             [
-                "6634c6de.6bfbd8"
+                "743ac734.623e78"
             ]
         ]
     },
@@ -3254,32 +2939,17 @@
         ]
     },
     {
-        "id": "6634c6de.6bfbd8",
-        "type": "mysencode",
-        "z": "d9d4d547.6a9438",
-        "name": "mys-out",
-        "mqtt": true,
-        "mqtttopic": "mys-out",
-        "x": 860,
-        "y": 240,
-        "wires": [
-            [
-                "8cea0e9c.b798a",
-                "229fa356.e7c70c"
-            ]
-        ]
-    },
-    {
         "id": "7f194889.4cf208",
         "type": "H observe",
         "z": "d2be3a2a.67d4b8",
         "name": "",
         "server": "56b003cf.93c9bc",
         "x": 180,
-        "y": 500,
+        "y": 700,
         "wires": [
             [
-                "cc0c0e63.6b405"
+                "cc0c0e63.6b405",
+                "399d6b35.892e74"
             ]
         ]
     },
@@ -3292,7 +2962,7 @@
         "qos": "2",
         "broker": "4798f2b0.5d747c",
         "x": 190,
-        "y": 700,
+        "y": 780,
         "wires": [
             [
                 "678ceac0.ee37c4"
@@ -3739,7 +3409,8 @@
             [
                 "47701ad7.67b3a4",
                 "c6bfc9ca.cc36b8"
-            ]
+            ],
+            []
         ]
     },
     {
@@ -3978,8 +3649,7 @@
         "y": 580,
         "wires": [
             [
-                "7acdfaa3.794f44",
-                "4755dfb8.b8aa2"
+                "7acdfaa3.794f44"
             ]
         ]
     },
@@ -3992,7 +3662,7 @@
         "qos": "2",
         "broker": "4798f2b0.5d747c",
         "x": 130,
-        "y": 400,
+        "y": 360,
         "wires": [
             [
                 "e1cbaf9b.7c245"
@@ -4032,8 +3702,8 @@
         "payload": "video",
         "payloadType": "str",
         "topic": "avctrl/in/scene",
-        "x": 410,
-        "y": 540,
+        "x": 1090,
+        "y": 300,
         "wires": [
             [
                 "dc02a5c9.b595a8"
@@ -4049,8 +3719,8 @@
         "qos": "2",
         "retain": "false",
         "broker": "4798f2b0.5d747c",
-        "x": 630,
-        "y": 620,
+        "x": 1490,
+        "y": 380,
         "wires": []
     },
     {
@@ -4070,8 +3740,8 @@
         "payload": "audio",
         "payloadType": "str",
         "topic": "avctrl/in/scene",
-        "x": 410,
-        "y": 580,
+        "x": 1090,
+        "y": 340,
         "wires": [
             [
                 "dc02a5c9.b595a8"
@@ -4084,7 +3754,7 @@
         "z": "36f02452.2e99bc",
         "name": "off",
         "group": "940310ee.5c533",
-        "order": 4,
+        "order": 6,
         "width": "1",
         "height": "1",
         "passthru": false,
@@ -4095,8 +3765,8 @@
         "payload": "off",
         "payloadType": "str",
         "topic": "avctrl/in/scene",
-        "x": 410,
-        "y": 620,
+        "x": 1090,
+        "y": 380,
         "wires": [
             [
                 "dc02a5c9.b595a8"
@@ -4108,9 +3778,9 @@
         "type": "ui_switch",
         "z": "36f02452.2e99bc",
         "name": "",
-        "label": "switch",
-        "group": "9f6b85e1.adc7d8",
-        "order": 0,
+        "label": "Sofa",
+        "group": "bf3de794.50d788",
+        "order": 1,
         "width": 0,
         "height": 0,
         "passthru": true,
@@ -4125,11 +3795,11 @@
         "offvalueType": "str",
         "officon": "",
         "offcolor": "",
-        "x": 410,
-        "y": 700,
+        "x": 1090,
+        "y": 500,
         "wires": [
             [
-                "dc02a5c9.b595a8"
+                "7e85add0.c89414"
             ]
         ]
     },
@@ -4164,33 +3834,6 @@
         ]
     },
     {
-        "id": "42eb33b8.49ff3c",
-        "type": "ui_ui_control",
-        "z": "36f02452.2e99bc",
-        "name": "",
-        "x": 420,
-        "y": 420,
-        "wires": [
-            [
-                "e59955e4.78da58"
-            ]
-        ]
-    },
-    {
-        "id": "e59955e4.78da58",
-        "type": "debug",
-        "z": "36f02452.2e99bc",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "x": 600,
-        "y": 420,
-        "wires": []
-    },
-    {
         "id": "8503dfc2.61257",
         "type": "ui_button",
         "z": "36f02452.2e99bc",
@@ -4207,8 +3850,8 @@
         "payload": "wii",
         "payloadType": "str",
         "topic": "avctrl/in/scene",
-        "x": 410,
-        "y": 660,
+        "x": 1090,
+        "y": 420,
         "wires": [
             [
                 "dc02a5c9.b595a8"
@@ -4225,7 +3868,7 @@
         "start": "goldenHourEnd",
         "end": "goldenHour",
         "x": 110,
-        "y": 600,
+        "y": 480,
         "wires": [
             [
                 "6dddda3a.8da344"
@@ -4244,7 +3887,7 @@
         "tostatus": false,
         "complete": "true",
         "x": 310,
-        "y": 660,
+        "y": 540,
         "wires": []
     },
     {
@@ -4256,11 +3899,12 @@
         "qos": "2",
         "broker": "4798f2b0.5d747c",
         "x": 120,
-        "y": 660,
+        "y": 540,
         "wires": [
             [
                 "6dddda3a.8da344",
-                "57cfb9f2.fb6488"
+                "57cfb9f2.fb6488",
+                "7067eb38.1ac8a4"
             ]
         ]
     },
@@ -4273,7 +3917,7 @@
         "outputs": 1,
         "noerr": 0,
         "x": 310,
-        "y": 620,
+        "y": 500,
         "wires": [
             [
                 "da5bbafd.b06ae8"
@@ -4291,7 +3935,7 @@
         "tostatus": false,
         "complete": "false",
         "x": 530,
-        "y": 620,
+        "y": 500,
         "wires": []
     },
     {
@@ -4309,8 +3953,8 @@
         "min": 0,
         "max": "100",
         "step": 1,
-        "x": 1130,
-        "y": 420,
+        "x": 1150,
+        "y": 860,
         "wires": [
             []
         ]
@@ -4330,8 +3974,8 @@
         "min": 0,
         "max": "100",
         "step": 1,
-        "x": 1140,
-        "y": 480,
+        "x": 1160,
+        "y": 900,
         "wires": [
             []
         ]
@@ -4341,15 +3985,15 @@
         "type": "ui_text",
         "z": "36f02452.2e99bc",
         "group": "940310ee.5c533",
-        "order": 0,
-        "width": 0,
-        "height": 0,
+        "order": 7,
+        "width": "3",
+        "height": "1",
         "name": "",
-        "label": "Medie: ",
+        "label": "AV Status",
         "format": "{{msg.payload.activityName}}",
-        "layout": "row-right",
-        "x": 770,
-        "y": 760,
+        "layout": "col-center",
+        "x": 1140,
+        "y": 120,
         "wires": []
     },
     {
@@ -4360,8 +4004,8 @@
         "topic": "avctrl/out/scene",
         "qos": "2",
         "broker": "4798f2b0.5d747c",
-        "x": 440,
-        "y": 760,
+        "x": 820,
+        "y": 120,
         "wires": [
             [
                 "90f38ada.5c9208"
@@ -4376,8 +4020,8 @@
         "property": "payload",
         "action": "obj",
         "pretty": false,
-        "x": 610,
-        "y": 760,
+        "x": 990,
+        "y": 120,
         "wires": [
             [
                 "cfbf2086.d37c7"
@@ -4389,11 +4033,11 @@
         "type": "mqtt in",
         "z": "36f02452.2e99bc",
         "name": "",
-        "topic": "mys-in/14/1/1/+/2",
+        "topic": "dashboard/sensors/14/1/1/+/2",
         "qos": "2",
         "broker": "4798f2b0.5d747c",
-        "x": 120,
-        "y": 700,
+        "x": 840,
+        "y": 500,
         "wires": [
             [
                 "fb4b92ff.085b3"
@@ -4416,7 +4060,7 @@
         "randomUnits": "seconds",
         "drop": false,
         "x": 640,
-        "y": 380,
+        "y": 340,
         "wires": [
             [
                 "500d2e4.d03e5d"
@@ -4428,11 +4072,11 @@
         "type": "function",
         "z": "d9d4d547.6a9438",
         "name": "Auto power on / off av center",
-        "func": "// Store app for the current device in context\n// So we can retrieve it in other functions\nconst regex = /chromecast\\/(.*)\\//g;\nvar app = msg.payload || 'None'\nm = regex.exec(msg.topic)\ndevice = m[1];\nflow.set(device + \"_app\", app);\n\n// Get current app on the \"other\" chromecast\nother_device = 'audio';\nif (device === 'audio') {\n    other_device = 'cast';\n}\nother_app = flow.get(other_device + '_app') || 'None';\n\n// Start power off countdown if no activity\nif ((app === 'None' || app === 'Backdrop') && \n    (other_app ==='None' || other_app === 'Backdrop')) {\n    msg1 = {payload: \"off\"};\n} else {\n    msg1 = {reset: \"YES\"};\n}\n\n// If the other chromecast is iddle, then we can start our \"thing\"\nif (other_app === 'None' || other_app === 'Backdrop') {\n    if ((app !== 'None') && (app !== 'Backdrop')) {\n        if (device === 'cast') {\n            msg2 = {payload: 'video'};\n        } else {\n            msg2 = {payload: 'audio'};\n        }\n    }   \n} else {\n    msg2 = null;\n}\n\nreturn [msg1, msg2];",
+        "func": "// Store app for the current device in context\n// So we can retrieve it in other functions\nconst regex = /chromecast\\/(.*)\\//g;\nvar app = msg.payload || 'None'\nm = regex.exec(msg.topic)\ndevice = m[1];\nflow.set(device + \"_app\", app);\nvar avctrl = flow.get(\"avctrl\") || \"OFF\";\n\nmsg1 = null;\nmsg2 = null;\n\n// Get current app on the \"other\" chromecast\nother_device = 'audio';\nif (device === 'audio') {\n    other_device = 'cast';\n}\nother_app = flow.get(other_device + '_app') || 'None';\n\n// Start power off countdown if no activity\nif ((app === 'None' || app === 'Backdrop') && \n    (other_app ==='None' || other_app === 'Backdrop') &&\n    avctrl.includes('Stream')) {\n    msg1 = {payload: \"off\"};\n} else {\n    msg1 = {reset: \"YES\"};\n}\n\n// If the other chromecast is iddle, then we can start our \"thing\"\nif (other_app === 'None' || other_app === 'Backdrop') {\n    if ((app !== 'None') && (app !== 'Backdrop')) {\n        if (device === 'cast') {\n            msg2 = {payload: 'video'};\n        } else {\n            msg2 = {payload: 'audio'};\n        }\n    }   \n} \n\nreturn [msg1, msg2];",
         "outputs": 2,
         "noerr": 0,
         "x": 400,
-        "y": 400,
+        "y": 360,
         "wires": [
             [
                 "9f7173a5.0857"
@@ -4452,7 +4096,7 @@
         "retain": "false",
         "broker": "4798f2b0.5d747c",
         "x": 820,
-        "y": 420,
+        "y": 360,
         "wires": []
     },
     {
@@ -4464,7 +4108,7 @@
         "qos": "2",
         "broker": "4798f2b0.5d747c",
         "x": 140,
-        "y": 520,
+        "y": 420,
         "wires": [
             [
                 "1faad09a.219b4f"
@@ -4480,7 +4124,7 @@
         "outputs": 1,
         "noerr": 0,
         "x": 590,
-        "y": 520,
+        "y": 420,
         "wires": [
             [
                 "dbf120d6.901e8"
@@ -4494,7 +4138,7 @@
         "name": "",
         "mqtt": true,
         "x": 360,
-        "y": 520,
+        "y": 420,
         "wires": [
             [
                 "b809b24d.95ec2"
@@ -4528,7 +4172,7 @@
         "tostatus": false,
         "complete": "false",
         "x": 810,
-        "y": 520,
+        "y": 420,
         "wires": []
     },
     {
@@ -4538,24 +4182,24 @@
         "name": "Chromecast turn AV on/off automatically",
         "info": "",
         "x": 190,
-        "y": 360,
+        "y": 320,
         "wires": []
     },
     {
         "id": "db904d85.7d009",
         "type": "ui_template",
         "z": "36f02452.2e99bc",
-        "group": "a88c1c22.0c1b9",
+        "group": "940310ee.5c533",
         "name": "",
-        "order": 0,
-        "width": "0",
-        "height": "0",
+        "order": 8,
+        "width": "6",
+        "height": "2",
         "format": "<div ng-bind-html=\"msg.payload.title\"></div>\n<div ng-bind-html=\"msg.payload.artist\"></div>",
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",
-        "x": 454,
-        "y": 311,
+        "x": 1140,
+        "y": 200,
         "wires": [
             []
         ]
@@ -4568,8 +4212,8 @@
         "topic": "chromecast/+/media",
         "qos": "2",
         "broker": "4798f2b0.5d747c",
-        "x": 124,
-        "y": 311,
+        "x": 830,
+        "y": 200,
         "wires": [
             [
                 "657ac035.5f877"
@@ -4584,8 +4228,8 @@
         "property": "payload",
         "action": "obj",
         "pretty": false,
-        "x": 304,
-        "y": 311,
+        "x": 990,
+        "y": 200,
         "wires": [
             [
                 "db904d85.7d009"
@@ -4600,6 +4244,1791 @@
         "info": "",
         "x": 130,
         "y": 60,
+        "wires": []
+    },
+    {
+        "id": "d62cabb4.b9d228",
+        "type": "ui_gauge",
+        "z": "36f02452.2e99bc",
+        "name": "",
+        "group": "d9490c52.897ce",
+        "order": 1,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "Temperatur",
+        "label": "C",
+        "format": "{{value| number:1}}°",
+        "min": "15",
+        "max": "25",
+        "colors": [
+            "#430ca9",
+            "#04e10a",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 510,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "4865b18a.983f4",
+        "type": "ui_gauge",
+        "z": "36f02452.2e99bc",
+        "name": "",
+        "group": "d9490c52.897ce",
+        "order": 2,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "Fugt",
+        "label": "rH",
+        "format": "{{value}}%",
+        "min": "40",
+        "max": "60",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 490,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "ae8620c1.e8d8",
+        "type": "ui_chart",
+        "z": "36f02452.2e99bc",
+        "name": "",
+        "group": "85f5cfaa.42289",
+        "order": 2,
+        "width": "3",
+        "height": "3",
+        "label": "Temperatur",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "86400",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "x": 510,
+        "y": 100,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "8e62a7b6.c90208",
+        "type": "ui_chart",
+        "z": "36f02452.2e99bc",
+        "name": "",
+        "group": "85f5cfaa.42289",
+        "order": 4,
+        "width": "3",
+        "height": "3",
+        "label": "Fugt",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "86400",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "x": 490,
+        "y": 180,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "6982d022.1b695",
+        "type": "ui_chart",
+        "z": "36f02452.2e99bc",
+        "name": "",
+        "group": "85f5cfaa.42289",
+        "order": 6,
+        "width": "3",
+        "height": "3",
+        "label": "Baro",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "86400",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "x": 490,
+        "y": 260,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "7d8661eb.8739e",
+        "type": "ui_slider",
+        "z": "36f02452.2e99bc",
+        "name": "",
+        "label": "slider",
+        "group": "bf3de794.50d788",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "mys-out/14/1/1/0/3",
+        "min": 0,
+        "max": "100",
+        "step": 1,
+        "x": 1090,
+        "y": 540,
+        "wires": [
+            [
+                "7e85add0.c89414"
+            ]
+        ]
+    },
+    {
+        "id": "637df737.fe84e8",
+        "type": "mqtt in",
+        "z": "36f02452.2e99bc",
+        "name": "",
+        "topic": "dashboard/sensors/14/1/1/0/3",
+        "qos": "2",
+        "broker": "4798f2b0.5d747c",
+        "x": 840,
+        "y": 540,
+        "wires": [
+            [
+                "7d8661eb.8739e"
+            ]
+        ]
+    },
+    {
+        "id": "3206bfff.039d5",
+        "type": "debug",
+        "z": "36f02452.2e99bc",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 1370,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "7e85add0.c89414",
+        "type": "function",
+        "z": "36f02452.2e99bc",
+        "name": "",
+        "func": "if (msg.retain === undefined)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1230,
+        "y": 520,
+        "wires": [
+            [
+                "3206bfff.039d5",
+                "f14dc53c.d72c78"
+            ]
+        ]
+    },
+    {
+        "id": "f14dc53c.d72c78",
+        "type": "delay",
+        "z": "36f02452.2e99bc",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "x": 1350,
+        "y": 460,
+        "wires": [
+            [
+                "dc02a5c9.b595a8"
+            ]
+        ]
+    },
+    {
+        "id": "399d793b.1368f6",
+        "type": "ui_text",
+        "z": "36f02452.2e99bc",
+        "group": "940310ee.5c533",
+        "order": 9,
+        "width": "3",
+        "height": "1",
+        "name": "",
+        "label": "Chrome",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "x": 1140,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "b251136c.d33d",
+        "type": "mqtt in",
+        "z": "36f02452.2e99bc",
+        "name": "",
+        "topic": "chromecast/+/app",
+        "qos": "2",
+        "broker": "4798f2b0.5d747c",
+        "x": 830,
+        "y": 160,
+        "wires": [
+            [
+                "399d793b.1368f6"
+            ]
+        ]
+    },
+    {
+        "id": "d0491803.13e098",
+        "type": "ui_gauge",
+        "z": "ca4f572b.274038",
+        "name": "",
+        "group": "d9490c52.897ce",
+        "order": 3,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "Gulv temperatur",
+        "label": "C",
+        "format": "{{value}}°",
+        "min": "20",
+        "max": "35",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 1020,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "249b235c.4b97ec",
+        "type": "switch",
+        "z": "ca4f572b.274038",
+        "name": "Varmesystem",
+        "property": "childSensorId",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "2",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "3",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 4,
+        "x": 800,
+        "y": 220,
+        "wires": [
+            [
+                "d0491803.13e098",
+                "5380ea70.734c84"
+            ],
+            [
+                "353691c2.45d69e"
+            ],
+            [
+                "51e7d896.9b0928"
+            ],
+            [
+                "dee43e87.5c92b"
+            ]
+        ]
+    },
+    {
+        "id": "353691c2.45d69e",
+        "type": "ui_gauge",
+        "z": "ca4f572b.274038",
+        "name": "",
+        "group": "9f6b85e1.adc7d8",
+        "order": 1,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "Fremløb",
+        "label": "C",
+        "format": "{{value}}°",
+        "min": "40",
+        "max": "70",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 1000,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "51e7d896.9b0928",
+        "type": "ui_gauge",
+        "z": "ca4f572b.274038",
+        "name": "",
+        "group": "9f6b85e1.adc7d8",
+        "order": 2,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "Retur",
+        "label": "C",
+        "format": "{{value}}°",
+        "min": "30",
+        "max": "60",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 990,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "dee43e87.5c92b",
+        "type": "ui_gauge",
+        "z": "ca4f572b.274038",
+        "name": "",
+        "group": "9f6b85e1.adc7d8",
+        "order": 4,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "Varmt vand",
+        "label": "C",
+        "format": "{{value}}°",
+        "min": "40",
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 1010,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "5380ea70.734c84",
+        "type": "ui_gauge",
+        "z": "ca4f572b.274038",
+        "name": "",
+        "group": "9f6b85e1.adc7d8",
+        "order": 3,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "Gulv temperatur",
+        "label": "units",
+        "format": "{{value}}°",
+        "min": "20",
+        "max": "35",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 1020,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "6119f7dd.4fddb8",
+        "type": "mqtt in",
+        "z": "ca4f572b.274038",
+        "name": "",
+        "topic": "dashboard/sensors/20/+/+/0/0",
+        "qos": "2",
+        "broker": "4798f2b0.5d747c",
+        "x": 380,
+        "y": 220,
+        "wires": [
+            [
+                "52fb9a86.3b9fc4"
+            ]
+        ]
+    },
+    {
+        "id": "52fb9a86.3b9fc4",
+        "type": "mysdecode",
+        "z": "ca4f572b.274038",
+        "name": "",
+        "mqtt": true,
+        "x": 620,
+        "y": 220,
+        "wires": [
+            [
+                "249b235c.4b97ec"
+            ]
+        ]
+    },
+    {
+        "id": "83740ef.6f27df",
+        "type": "ui_switch",
+        "z": "ca4f572b.274038",
+        "name": "",
+        "label": "Sommer mode",
+        "group": "165c814.4d5267f",
+        "order": 1,
+        "width": "3",
+        "height": "1",
+        "passthru": true,
+        "decouple": "false",
+        "topic": "mys-out/20/8/1/1/2",
+        "style": "",
+        "onvalue": "1",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "0",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "x": 620,
+        "y": 480,
+        "wires": [
+            [
+                "d162a55c.dbd7a8"
+            ]
+        ]
+    },
+    {
+        "id": "59025281.1f294c",
+        "type": "ui_switch",
+        "z": "ca4f572b.274038",
+        "name": "",
+        "label": "Ventil",
+        "group": "165c814.4d5267f",
+        "order": 2,
+        "width": "3",
+        "height": "1",
+        "passthru": true,
+        "decouple": "false",
+        "topic": "mys-out/20/6/1/1/2",
+        "style": "",
+        "onvalue": "1",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "0",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "x": 590,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ca75c2fb.c0421",
+        "type": "ui_numeric",
+        "z": "ca4f572b.274038",
+        "name": "",
+        "label": "Gulvvarme termostat",
+        "group": "165c814.4d5267f",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "mys-out/20/0/1/1/45",
+        "format": "{{value}}&deg;C",
+        "min": "25",
+        "max": "35",
+        "step": "0.5",
+        "x": 640,
+        "y": 400,
+        "wires": [
+            [
+                "d162a55c.dbd7a8"
+            ]
+        ]
+    },
+    {
+        "id": "23d7ab5a.c27aa4",
+        "type": "mqtt in",
+        "z": "ca4f572b.274038",
+        "name": "",
+        "topic": "dashboard/sensors/20/0/1/+/45",
+        "qos": "2",
+        "broker": "4798f2b0.5d747c",
+        "x": 390,
+        "y": 400,
+        "wires": [
+            [
+                "ca75c2fb.c0421"
+            ]
+        ]
+    },
+    {
+        "id": "b242c4b5.45fff8",
+        "type": "mqtt out",
+        "z": "ca4f572b.274038",
+        "name": "",
+        "topic": "",
+        "qos": "2",
+        "retain": "false",
+        "broker": "4798f2b0.5d747c",
+        "x": 950,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "22cfe514.e2f19a",
+        "type": "ui_numeric",
+        "z": "ca4f572b.274038",
+        "name": "",
+        "label": "Indløbs temperatur til hent varme",
+        "group": "165c814.4d5267f",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "mys-out/20/1/1/0/45",
+        "format": "{{value}}&deg;C",
+        "min": "25",
+        "max": "40",
+        "step": "0.5",
+        "x": 680,
+        "y": 440,
+        "wires": [
+            [
+                "d162a55c.dbd7a8"
+            ]
+        ]
+    },
+    {
+        "id": "e6bb190c.909188",
+        "type": "mqtt in",
+        "z": "ca4f572b.274038",
+        "name": "",
+        "topic": "dashboard/sensors/20/1/1/+/45",
+        "qos": "2",
+        "broker": "4798f2b0.5d747c",
+        "x": 390,
+        "y": 440,
+        "wires": [
+            [
+                "22cfe514.e2f19a"
+            ]
+        ]
+    },
+    {
+        "id": "769f0ea5.e6752",
+        "type": "mqtt in",
+        "z": "ca4f572b.274038",
+        "name": "",
+        "topic": "dashboard/sensors/20/8/1/+/2",
+        "qos": "2",
+        "broker": "4798f2b0.5d747c",
+        "x": 380,
+        "y": 480,
+        "wires": [
+            [
+                "83740ef.6f27df"
+            ]
+        ]
+    },
+    {
+        "id": "1df4132c.a2329d",
+        "type": "mqtt in",
+        "z": "ca4f572b.274038",
+        "name": "",
+        "topic": "dashboard/sensors/20/6/1/+/2",
+        "qos": "2",
+        "broker": "4798f2b0.5d747c",
+        "x": 380,
+        "y": 520,
+        "wires": [
+            [
+                "59025281.1f294c"
+            ]
+        ]
+    },
+    {
+        "id": "f71208eb.1e1808",
+        "type": "mqtt in",
+        "z": "ca4f572b.274038",
+        "name": "",
+        "topic": "dashboard/sensors/20/7/1/+/2",
+        "qos": "2",
+        "broker": "4798f2b0.5d747c",
+        "x": 380,
+        "y": 560,
+        "wires": [
+            [
+                "1f8b5b93.7bbc84"
+            ]
+        ]
+    },
+    {
+        "id": "1f8b5b93.7bbc84",
+        "type": "ui_switch",
+        "z": "ca4f572b.274038",
+        "name": "",
+        "label": "Pumpe",
+        "group": "165c814.4d5267f",
+        "order": 3,
+        "width": "3",
+        "height": "1",
+        "passthru": true,
+        "decouple": "false",
+        "topic": "mys-out/20/7/1/1/2",
+        "style": "",
+        "onvalue": "1",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "0",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "x": 600,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "90261eb0.1dda9",
+        "type": "ui_switch",
+        "z": "ca4f572b.274038",
+        "name": "",
+        "label": "Hent varme",
+        "group": "165c814.4d5267f",
+        "order": 4,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "decouple": "true",
+        "topic": "mys-out/20/6/1/1/2",
+        "style": "",
+        "onvalue": "1",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "0",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "x": 610,
+        "y": 600,
+        "wires": [
+            [
+                "d162a55c.dbd7a8"
+            ]
+        ]
+    },
+    {
+        "id": "16053676.c1723a",
+        "type": "mqtt in",
+        "z": "ca4f572b.274038",
+        "name": "",
+        "topic": "dashboard/sensors/20/5/1/+/2",
+        "qos": "2",
+        "broker": "4798f2b0.5d747c",
+        "x": 380,
+        "y": 600,
+        "wires": [
+            [
+                "90261eb0.1dda9"
+            ]
+        ]
+    },
+    {
+        "id": "d162a55c.dbd7a8",
+        "type": "function",
+        "z": "ca4f572b.274038",
+        "name": "",
+        "func": "if (msg.retain === undefined)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 810,
+        "y": 500,
+        "wires": [
+            [
+                "b242c4b5.45fff8"
+            ]
+        ]
+    },
+    {
+        "id": "84a7ac1f.0f84a",
+        "type": "debug",
+        "z": "67deb464.98214c",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 430,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "d4c611b2.4c162",
+        "type": "ui_gauge",
+        "z": "36f02452.2e99bc",
+        "name": "Elforbrug aktuelt",
+        "group": "d9490c52.897ce",
+        "order": 2,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "Elforbrug",
+        "label": "W",
+        "format": "{{value| number:1}}",
+        "min": "40",
+        "max": "4000",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "1000",
+        "seg2": "2000",
+        "x": 1100,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "b060140e.6e11f8",
+        "type": "ui_button",
+        "z": "36f02452.2e99bc",
+        "name": "dvd",
+        "group": "940310ee.5c533",
+        "order": 4,
+        "width": "1",
+        "height": "1",
+        "passthru": false,
+        "label": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "fa-film",
+        "payload": "dvd",
+        "payloadType": "str",
+        "topic": "avctrl/in/scene",
+        "x": 1090,
+        "y": 460,
+        "wires": [
+            [
+                "dc02a5c9.b595a8"
+            ]
+        ]
+    },
+    {
+        "id": "b3e6a596.add9a8",
+        "type": "ui_gauge",
+        "z": "36f02452.2e99bc",
+        "name": "",
+        "group": "e11ff54d.12ad78",
+        "order": 1,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "Temperatur",
+        "label": "C",
+        "format": "{{value}}°",
+        "min": "15",
+        "max": "25",
+        "colors": [
+            "#430ca9",
+            "#04e10a",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 510,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "68de03bf.382d8c",
+        "type": "ui_gauge",
+        "z": "36f02452.2e99bc",
+        "name": "",
+        "group": "e11ff54d.12ad78",
+        "order": 2,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "Fugt",
+        "label": "rH",
+        "format": "{{value}}%",
+        "min": "40",
+        "max": "60",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 490,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "c4285cac.b7dcb",
+        "type": "mysdecode",
+        "z": "8bc8753a.1ea768",
+        "name": "",
+        "mqtt": true,
+        "x": 340,
+        "y": 80,
+        "wires": [
+            [
+                "a133b28e.29844"
+            ]
+        ]
+    },
+    {
+        "id": "a133b28e.29844",
+        "type": "switch",
+        "z": "8bc8753a.1ea768",
+        "name": "subTypeSplit",
+        "property": "subType",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "9",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 3,
+        "x": 510,
+        "y": 80,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "fc3093dc.9405",
+        "type": "subflow:8bc8753a.1ea768",
+        "z": "36f02452.2e99bc",
+        "name": "badeværelse",
+        "x": 330,
+        "y": 360,
+        "wires": [
+            [
+                "b3e6a596.add9a8"
+            ],
+            [
+                "68de03bf.382d8c"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "c998ff2f.d3ebf",
+        "type": "mqtt in",
+        "z": "36f02452.2e99bc",
+        "name": "",
+        "topic": "dashboard/9/#",
+        "qos": "2",
+        "broker": "4798f2b0.5d747c",
+        "x": 150,
+        "y": 360,
+        "wires": [
+            [
+                "fc3093dc.9405"
+            ]
+        ]
+    },
+    {
+        "id": "beb834aa.730368",
+        "type": "subflow:8bc8753a.1ea768",
+        "z": "36f02452.2e99bc",
+        "name": "udendørs",
+        "x": 320,
+        "y": 160,
+        "wires": [
+            [
+                "ae8620c1.e8d8",
+                "ad8c0dc6.4f64a"
+            ],
+            [
+                "4f7cb0eb.0d19a",
+                "8e62a7b6.c90208"
+            ],
+            [
+                "5115f872.4620e8",
+                "6982d022.1b695"
+            ]
+        ]
+    },
+    {
+        "id": "b1641b7d.068c98",
+        "type": "ui_gauge",
+        "z": "36f02452.2e99bc",
+        "name": "",
+        "group": "1215f3be.8c080c",
+        "order": 1,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "Temperatur",
+        "label": "C",
+        "format": "{{value}}",
+        "min": "15",
+        "max": "25",
+        "colors": [
+            "#430ca9",
+            "#04e10a",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 510,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "f7105844.05c978",
+        "type": "ui_gauge",
+        "z": "36f02452.2e99bc",
+        "name": "",
+        "group": "1215f3be.8c080c",
+        "order": 2,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "Fugt",
+        "label": "rH",
+        "format": "{{value}}%",
+        "min": "40",
+        "max": "60",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 490,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "a41abb3e.268738",
+        "type": "subflow:8bc8753a.1ea768",
+        "z": "36f02452.2e99bc",
+        "name": "soveværelse",
+        "x": 330,
+        "y": 460,
+        "wires": [
+            [
+                "b1641b7d.068c98"
+            ],
+            [
+                "f7105844.05c978"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "83463fd1.5897a",
+        "type": "mqtt in",
+        "z": "36f02452.2e99bc",
+        "name": "",
+        "topic": "dashboard/6/#",
+        "qos": "2",
+        "broker": "4798f2b0.5d747c",
+        "x": 150,
+        "y": 460,
+        "wires": [
+            [
+                "a41abb3e.268738"
+            ]
+        ]
+    },
+    {
+        "id": "134815a.88ef3ea",
+        "type": "ui_gauge",
+        "z": "36f02452.2e99bc",
+        "name": "",
+        "group": "58bcd57b.789b2c",
+        "order": 1,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "Temperatur",
+        "label": "C",
+        "format": "{{value}}°",
+        "min": "15",
+        "max": "25",
+        "colors": [
+            "#430ca9",
+            "#04e10a",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 510,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "b984d89e.c852d8",
+        "type": "ui_gauge",
+        "z": "36f02452.2e99bc",
+        "name": "",
+        "group": "58bcd57b.789b2c",
+        "order": 2,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "Fugt",
+        "label": "rH",
+        "format": "{{value}}%",
+        "min": "40",
+        "max": "60",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 490,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "489cf0ec.b2982",
+        "type": "subflow:8bc8753a.1ea768",
+        "z": "36f02452.2e99bc",
+        "name": "kontor",
+        "x": 310,
+        "y": 560,
+        "wires": [
+            [
+                "134815a.88ef3ea"
+            ],
+            [
+                "b984d89e.c852d8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "7934a9ec.850148",
+        "type": "mqtt in",
+        "z": "36f02452.2e99bc",
+        "name": "",
+        "topic": "dashboard/200/#",
+        "qos": "2",
+        "broker": "4798f2b0.5d747c",
+        "x": 160,
+        "y": 560,
+        "wires": [
+            [
+                "489cf0ec.b2982"
+            ]
+        ]
+    },
+    {
+        "id": "a95f8a61.33e438",
+        "type": "mqtt in",
+        "z": "36f02452.2e99bc",
+        "name": "",
+        "topic": "dashboard/sensors/99/1/1/0/17",
+        "qos": "2",
+        "broker": "4798f2b0.5d747c",
+        "x": 850,
+        "y": 660,
+        "wires": [
+            [
+                "d4c611b2.4c162"
+            ]
+        ]
+    },
+    {
+        "id": "92832c3a.b6a5f",
+        "type": "mqtt in",
+        "z": "36f02452.2e99bc",
+        "name": "",
+        "topic": "dashboard/sensors/99/2/1/0/25",
+        "qos": "2",
+        "broker": "4798f2b0.5d747c",
+        "x": 850,
+        "y": 620,
+        "wires": [
+            [
+                "c8597b8b.0581b8"
+            ]
+        ]
+    },
+    {
+        "id": "753ad95b.7df9c8",
+        "type": "ui_gauge",
+        "z": "36f02452.2e99bc",
+        "name": "Elforbrug dagligt",
+        "group": "d9490c52.897ce",
+        "order": 2,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "Elforbrug",
+        "label": "kWh",
+        "format": "{{value| number:1}}",
+        "min": "0",
+        "max": "30",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "20",
+        "x": 1240,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "c1263114.4ef3f",
+        "type": "H activity",
+        "z": "d2be3a2a.67d4b8",
+        "name": "TV",
+        "server": "56b003cf.93c9bc",
+        "activity": "20800510",
+        "label": "TV",
+        "x": 570,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "541a6418.f052ec",
+        "type": "H activity",
+        "z": "d2be3a2a.67d4b8",
+        "name": "DVD",
+        "server": "56b003cf.93c9bc",
+        "activity": "20800253",
+        "label": "DVD",
+        "x": 570,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "92f38886.7219b8",
+        "type": "ui_button",
+        "z": "36f02452.2e99bc",
+        "name": "tv",
+        "group": "940310ee.5c533",
+        "order": 5,
+        "width": "1",
+        "height": "1",
+        "passthru": false,
+        "label": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "fa-tv",
+        "payload": "tv",
+        "payloadType": "str",
+        "topic": "avctrl/in/scene",
+        "x": 1090,
+        "y": 260,
+        "wires": [
+            [
+                "dc02a5c9.b595a8"
+            ]
+        ]
+    },
+    {
+        "id": "d1b30c8f.d3354",
+        "type": "subflow:8bc8753a.1ea768",
+        "z": "36f02452.2e99bc",
+        "name": "stuen",
+        "x": 310,
+        "y": 660,
+        "wires": [
+            [
+                "d62cabb4.b9d228"
+            ],
+            [
+                "4865b18a.983f4"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "8712ec41.562cf",
+        "type": "mqtt in",
+        "z": "36f02452.2e99bc",
+        "name": "",
+        "topic": "dashboard/10/#",
+        "qos": "2",
+        "broker": "4798f2b0.5d747c",
+        "x": 160,
+        "y": 660,
+        "wires": [
+            [
+                "d1b30c8f.d3354"
+            ]
+        ]
+    },
+    {
+        "id": "54523664.167d58",
+        "type": "comment",
+        "z": "36f02452.2e99bc",
+        "name": "AV / Chromecast status display",
+        "info": "",
+        "x": 870,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "c8597b8b.0581b8",
+        "type": "function",
+        "z": "36f02452.2e99bc",
+        "name": "",
+        "func": "msg.payload = Number(msg.payload)/1000;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1070,
+        "y": 620,
+        "wires": [
+            [
+                "753ad95b.7df9c8"
+            ]
+        ]
+    },
+    {
+        "id": "72deec12.552de4",
+        "type": "mqtt in",
+        "z": "d9d4d547.6a9438",
+        "name": "",
+        "topic": "chromecast/play",
+        "qos": "2",
+        "broker": "4798f2b0.5d747c",
+        "x": 120,
+        "y": 660,
+        "wires": [
+            [
+                "4a07510a.6045c"
+            ]
+        ]
+    },
+    {
+        "id": "4a07510a.6045c",
+        "type": "json",
+        "z": "d9d4d547.6a9438",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 310,
+        "y": 660,
+        "wires": [
+            [
+                "8e575061.cab32"
+            ]
+        ]
+    },
+    {
+        "id": "8e575061.cab32",
+        "type": "function",
+        "z": "d9d4d547.6a9438",
+        "name": "",
+        "func": "let p = msg.payload;\nlet chrome = 'audio';\nif (p.media === 'video/mp4') {\n    chrome = 'cast';\n}\n\nmsg.topic = 'chromecast/' + chrome + '/control/play';\nmsg.payload = p.id;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 450,
+        "y": 660,
+        "wires": [
+            [
+                "f22d88d1.d2efe8",
+                "a639123a.3ddbd"
+            ]
+        ]
+    },
+    {
+        "id": "f22d88d1.d2efe8",
+        "type": "debug",
+        "z": "d9d4d547.6a9438",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 590,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "a639123a.3ddbd",
+        "type": "mqtt out",
+        "z": "d9d4d547.6a9438",
+        "name": "",
+        "topic": "",
+        "qos": "2",
+        "retain": "false",
+        "broker": "4798f2b0.5d747c",
+        "x": 590,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "fc2bd7be.c40148",
+        "type": "switch",
+        "z": "d2be3a2a.67d4b8",
+        "name": "",
+        "property": "device",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "dvd",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "cd",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "audio",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "cast",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 4,
+        "x": 570,
+        "y": 540,
+        "wires": [
+            [
+                "25273a45.75e776"
+            ],
+            [
+                "25273a45.75e776"
+            ],
+            [
+                "e0cb35b0.2bf4a8"
+            ],
+            [
+                "fef6e906.107c58"
+            ]
+        ]
+    },
+    {
+        "id": "e0cb35b0.2bf4a8",
+        "type": "change",
+        "z": "d2be3a2a.67d4b8",
+        "name": "audio",
+        "rules": [
+            {
+                "t": "change",
+                "p": "topic",
+                "pt": "msg",
+                "from": "avctrl/in",
+                "fromt": "str",
+                "to": "chromecast/audio",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 710,
+        "y": 560,
+        "wires": [
+            [
+                "15cbe8a1.e953e7"
+            ]
+        ]
+    },
+    {
+        "id": "fef6e906.107c58",
+        "type": "change",
+        "z": "d2be3a2a.67d4b8",
+        "name": "video",
+        "rules": [
+            {
+                "t": "change",
+                "p": "topic",
+                "pt": "msg",
+                "from": "avctrl/in",
+                "fromt": "str",
+                "to": "chromecast/cast",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 710,
+        "y": 600,
+        "wires": [
+            [
+                "15cbe8a1.e953e7"
+            ]
+        ]
+    },
+    {
+        "id": "15cbe8a1.e953e7",
+        "type": "mqtt out",
+        "z": "d2be3a2a.67d4b8",
+        "name": "",
+        "topic": "",
+        "qos": "2",
+        "retain": "false",
+        "broker": "4798f2b0.5d747c",
+        "x": 850,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "e0abd2fd.18e44",
+        "type": "mqtt in",
+        "z": "d2be3a2a.67d4b8",
+        "name": "",
+        "topic": "avctrl/out/scene",
+        "qos": "2",
+        "broker": "4798f2b0.5d747c",
+        "x": 920,
+        "y": 100,
+        "wires": [
+            [
+                "44d205ee.d67d5c"
+            ]
+        ]
+    },
+    {
+        "id": "44d205ee.d67d5c",
+        "type": "function",
+        "z": "d2be3a2a.67d4b8",
+        "name": "Set current play device",
+        "func": "p = msg.payload.toString().toLowerCase();\nflow.set('device', p);\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1130,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "25273a45.75e776",
+        "type": "switch",
+        "z": "d2be3a2a.67d4b8",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "pause",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "play",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "next",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "previous",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "stop",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 5,
+        "x": 710,
+        "y": 500,
+        "wires": [
+            [
+                "c29005a6.029498"
+            ],
+            [
+                "aa76e025.eb137"
+            ],
+            [],
+            [],
+            [
+                "a73cb364.f49ab"
+            ]
+        ]
+    },
+    {
+        "id": "c29005a6.029498",
+        "type": "H command",
+        "z": "d2be3a2a.67d4b8",
+        "name": "Pausse",
+        "server": "56b003cf.93c9bc",
+        "activity": "20800253",
+        "label": "DVD",
+        "command": "%7B%22command%22::%22Pause%22,%22type%22::%22IRCommand%22,%22deviceId%22::%2237008443%22%7D",
+        "repeat": "1",
+        "x": 860,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "aa76e025.eb137",
+        "type": "H command",
+        "z": "d2be3a2a.67d4b8",
+        "name": "Play",
+        "server": "56b003cf.93c9bc",
+        "activity": "20800253",
+        "label": "DVD",
+        "command": "%7B%22command%22::%22Play%22,%22type%22::%22IRCommand%22,%22deviceId%22::%2237008443%22%7D",
+        "repeat": "1",
+        "x": 850,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a73cb364.f49ab",
+        "type": "H command",
+        "z": "d2be3a2a.67d4b8",
+        "name": "Stop",
+        "server": "56b003cf.93c9bc",
+        "activity": "20800253",
+        "label": "DVD",
+        "command": "%7B%22command%22::%22Stop%22,%22type%22::%22IRCommand%22,%22deviceId%22::%2237008443%22%7D",
+        "repeat": "1",
+        "x": 850,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7067eb38.1ac8a4",
+        "type": "switch",
+        "z": "d9d4d547.6a9438",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "Stream",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 470,
+        "y": 560,
+        "wires": [
+            [],
+            [
+                "5add2962.a44778",
+                "3f59c476.b9f49c"
+            ]
+        ]
+    },
+    {
+        "id": "5add2962.a44778",
+        "type": "change",
+        "z": "d9d4d547.6a9438",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "chromecast/audio/control/stop",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 650,
+        "y": 580,
+        "wires": [
+            [
+                "6c0576fd.05c4e8"
+            ]
+        ]
+    },
+    {
+        "id": "3f59c476.b9f49c",
+        "type": "change",
+        "z": "d9d4d547.6a9438",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "chromecast/cast/control/stop",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 650,
+        "y": 540,
+        "wires": [
+            [
+                "6c0576fd.05c4e8"
+            ]
+        ]
+    },
+    {
+        "id": "6c0576fd.05c4e8",
+        "type": "mqtt out",
+        "z": "d9d4d547.6a9438",
+        "name": "",
+        "topic": "",
+        "qos": "2",
+        "retain": "false",
+        "broker": "4798f2b0.5d747c",
+        "x": 900,
+        "y": 560,
         "wires": []
     }
 ]

@@ -9,7 +9,8 @@
         "node-red-contrib-slackbot": "1.0.3",
         "node-red-dashboard": "2.8.2",
         "node-red-node-serialport": "0.6.5",
-        "node-red-node-twitter": "0.1.12"
+        "node-red-node-twitter": "0.1.12",
+        "node-red-node-suncalc": "0.0.10"
     },
     "node-red": {
         "settings": {
