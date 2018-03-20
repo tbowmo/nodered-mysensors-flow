@@ -5897,7 +5897,7 @@
         "command": "%7B%22command%22::%22Pause%22,%22type%22::%22IRCommand%22,%22deviceId%22::%2237008443%22%7D",
         "repeat": "1",
         "x": 860,
-        "y": 440,
+        "y": 460,
         "wires": [
             []
         ]
@@ -5913,7 +5913,7 @@
         "command": "%7B%22command%22::%22Play%22,%22type%22::%22IRCommand%22,%22deviceId%22::%2237008443%22%7D",
         "repeat": "1",
         "x": 850,
-        "y": 480,
+        "y": 500,
         "wires": [
             []
         ]
@@ -5929,7 +5929,7 @@
         "command": "%7B%22command%22::%22Stop%22,%22type%22::%22IRCommand%22,%22deviceId%22::%2237008443%22%7D",
         "repeat": "1",
         "x": 850,
-        "y": 520,
+        "y": 540,
         "wires": [
             []
         ]
@@ -5959,35 +5959,8 @@
         "wires": [
             [],
             [
-                "5add2962.a44778",
-                "3f59c476.b9f49c"
-            ]
-        ]
-    },
-    {
-        "id": "5add2962.a44778",
-        "type": "change",
-        "z": "d9d4d547.6a9438",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "topic",
-                "pt": "msg",
-                "to": "chromecast/audio/control/stop",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 650,
-        "y": 580,
-        "wires": [
-            [
-                "6c0576fd.05c4e8"
+                "3f59c476.b9f49c",
+                "61349c46.da30c4"
             ]
         ]
     },
@@ -5995,13 +5968,20 @@
         "id": "3f59c476.b9f49c",
         "type": "change",
         "z": "d9d4d547.6a9438",
-        "name": "",
+        "name": "quit video",
         "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "quit",
+                "tot": "str"
+            },
             {
                 "t": "set",
                 "p": "topic",
                 "pt": "msg",
-                "to": "chromecast/cast/control/stop",
+                "to": "chromecast/cast/control",
                 "tot": "str"
             }
         ],
@@ -6010,7 +5990,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 650,
+        "x": 640,
         "y": 540,
         "wires": [
             [
@@ -6027,8 +6007,42 @@
         "qos": "2",
         "retain": "false",
         "broker": "4798f2b0.5d747c",
-        "x": 900,
+        "x": 790,
         "y": 560,
         "wires": []
+    },
+    {
+        "id": "61349c46.da30c4",
+        "type": "change",
+        "z": "d9d4d547.6a9438",
+        "name": "quit audio",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "quit",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "chromecast/audio/control",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 640,
+        "y": 580,
+        "wires": [
+            [
+                "6c0576fd.05c4e8"
+            ]
+        ]
     }
 ]
