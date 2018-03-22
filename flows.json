@@ -80,21 +80,21 @@
                         "port": 0
                     },
                     {
-                        "id": "f8477377.66ad",
+                        "id": "11f1e54.721221b",
                         "port": 0
                     },
                     {
-                        "id": "11f1e54.721221b",
+                        "id": "eb3757ff.ff8dd8",
                         "port": 0
                     }
                 ]
             },
             {
-                "x": 340,
-                "y": 380,
+                "x": 1240,
+                "y": 500,
                 "wires": [
                     {
-                        "id": "12db17ce.ed24e8",
+                        "id": "eb3757ff.ff8dd8",
                         "port": 0
                     }
                 ]
@@ -1098,9 +1098,7 @@
         "x": 860,
         "y": 240,
         "wires": [
-            [
-                "693564ba.928f4c"
-            ]
+            []
         ]
     },
     {
@@ -1412,7 +1410,7 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 510,
+        "x": 550,
         "y": 60,
         "wires": []
     },
@@ -1438,7 +1436,7 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 500,
+        "x": 540,
         "y": 140,
         "wires": []
     },
@@ -1464,7 +1462,7 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 510,
+        "x": 550,
         "y": 220,
         "wires": []
     },
@@ -2107,8 +2105,8 @@
         "qos": "0",
         "retain": "true",
         "broker": "4798f2b0.5d747c",
-        "x": 590,
-        "y": 780,
+        "x": 830,
+        "y": 860,
         "wires": []
     },
     {
@@ -2133,9 +2131,10 @@
         "to": "",
         "reg": false,
         "x": 390,
-        "y": 780,
+        "y": 860,
         "wires": [
             [
+                "ad5e16dd.343278",
                 "e8d9e345.f59cb"
             ]
         ]
@@ -2144,10 +2143,10 @@
         "id": "9d5f373e.bb1788",
         "type": "comment",
         "z": "d2be3a2a.67d4b8",
-        "name": "Rebroadcast for dashboard",
+        "name": "Rebroadcast for dashboard and enrich with timestamp",
         "info": "Below is rebroadcasting sensor data (set commands) to the dashboard, with retention bit set to true",
-        "x": 230,
-        "y": 740,
+        "x": 320,
+        "y": 820,
         "wires": []
     },
     {
@@ -2155,10 +2154,10 @@
         "type": "mqtt in",
         "z": "36f02452.2e99bc",
         "name": "",
-        "topic": "dashboard/11/#",
+        "topic": "dashboard/sensors/11/+/+/+/+",
         "qos": "2",
         "broker": "4798f2b0.5d747c",
-        "x": 160,
+        "x": 140,
         "y": 160,
         "wires": [
             [
@@ -2183,47 +2182,15 @@
         ]
     },
     {
-        "id": "f8477377.66ad",
-        "type": "change",
-        "z": "2257718.fdda88e",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "payload[0].sum/1000",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "subType",
-                "pt": "msg",
-                "to": "18",
-                "tot": "num"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1200,
-        "y": 40,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "693564ba.928f4c",
         "type": "function",
         "z": "2257718.fdda88e",
         "name": "create query",
-        "func": "if (msg.nodeId == 99 & msg.subType==17) {\nvar d = new Date();\nd.setHours(0,0,0,0);\nmsg.time = (1 * d.getTime())/1000;\nmsg.time = d.toISOString(); //ISODateString(d);\nmsg.query = \"select sum(value) from electricity where node='99' and sensor='2' and time>'\"+msg.time+\"'\"; //+msg.time;\nreturn msg;\n}\n",
+        "func": "var d = new Date();\nd.setHours(0,0,0,0);\nmsg.time = (1 * d.getTime())/1000;\nmsg.time = d.toISOString(); //ISODateString(d);\nmsg.query = \"select sum(value) from electricity where node='99' and sensor='2' and time>'\"+msg.time+\"'\"; //+msg.time;\nmsg.payload = '';\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
-        "x": 870,
-        "y": 40,
+        "x": 430,
+        "y": 400,
         "wires": [
             [
                 "fe2ccdc0.ecce8"
@@ -2240,11 +2207,11 @@
         "rawOutput": false,
         "precision": "",
         "retentionPolicy": "",
-        "x": 1030,
-        "y": 40,
+        "x": 610,
+        "y": 400,
         "wires": [
             [
-                "f8477377.66ad"
+                "a712352f.7d7f28"
             ]
         ]
     },
@@ -2962,7 +2929,7 @@
         "qos": "2",
         "broker": "4798f2b0.5d747c",
         "x": 190,
-        "y": 780,
+        "y": 860,
         "wires": [
             [
                 "678ceac0.ee37c4"
@@ -2974,12 +2941,12 @@
         "type": "debug",
         "z": "67deb464.98214c",
         "name": "",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "topic",
-        "x": 420,
+        "complete": "true",
+        "x": 410,
         "y": 120,
         "wires": []
     },
@@ -4104,10 +4071,10 @@
         "type": "mqtt in",
         "z": "d9d4d547.6a9438",
         "name": "",
-        "topic": "dashboard/sensors/#",
+        "topic": "dashboard/sensors/+/+/+/+/+",
         "qos": "2",
         "broker": "4798f2b0.5d747c",
-        "x": 140,
+        "x": 160,
         "y": 420,
         "wires": [
             [
@@ -4120,7 +4087,7 @@
         "type": "function",
         "z": "d9d4d547.6a9438",
         "name": "store sensordata",
-        "func": "var path = 'sensor'+msg.nodeId+'_'+msg.childSensorId+'_'+msg.subType;\nflow.set(path, msg.payload);\nmsg.payload = path + \"::\" + msg.payload\nreturn msg;",
+        "func": "var path = 'sensor'+msg.nodeId+'_'+msg.childSensorId+'_'+msg.subType;\ndata = msg.payload\nflow.set(path, data);\nmsg.payload = path + \"::\" + data\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 590,
@@ -4137,7 +4104,7 @@
         "z": "d9d4d547.6a9438",
         "name": "",
         "mqtt": true,
-        "x": 360,
+        "x": 380,
         "y": 420,
         "wires": [
             [
@@ -4166,12 +4133,12 @@
         "type": "debug",
         "z": "d9d4d547.6a9438",
         "name": "",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
         "complete": "false",
-        "x": 810,
+        "x": 790,
         "y": 420,
         "wires": []
     },
@@ -4268,7 +4235,7 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 510,
+        "x": 550,
         "y": 620,
         "wires": []
     },
@@ -4294,7 +4261,7 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 490,
+        "x": 530,
         "y": 660,
         "wires": []
     },
@@ -4333,7 +4300,7 @@
             "#c5b0d5"
         ],
         "useOldStyle": false,
-        "x": 510,
+        "x": 550,
         "y": 100,
         "wires": [
             [],
@@ -4375,7 +4342,7 @@
             "#c5b0d5"
         ],
         "useOldStyle": false,
-        "x": 490,
+        "x": 530,
         "y": 180,
         "wires": [
             [],
@@ -4417,7 +4384,7 @@
             "#c5b0d5"
         ],
         "useOldStyle": false,
-        "x": 490,
+        "x": 530,
         "y": 260,
         "wires": [
             [],
@@ -4637,7 +4604,7 @@
         "title": "Fremløb",
         "label": "C",
         "format": "{{value}}°",
-        "min": "40",
+        "min": "30",
         "max": "70",
         "colors": [
             "#00b500",
@@ -4664,7 +4631,7 @@
         "label": "C",
         "format": "{{value}}°",
         "min": "30",
-        "max": "60",
+        "max": "70",
         "colors": [
             "#00b500",
             "#e6e600",
@@ -4736,7 +4703,7 @@
         "topic": "dashboard/sensors/20/+/+/0/0",
         "qos": "2",
         "broker": "4798f2b0.5d747c",
-        "x": 380,
+        "x": 360,
         "y": 220,
         "wires": [
             [
@@ -4848,7 +4815,7 @@
         "topic": "dashboard/sensors/20/0/1/+/45",
         "qos": "2",
         "broker": "4798f2b0.5d747c",
-        "x": 390,
+        "x": 370,
         "y": 400,
         "wires": [
             [
@@ -4865,7 +4832,7 @@
         "qos": "2",
         "retain": "false",
         "broker": "4798f2b0.5d747c",
-        "x": 950,
+        "x": 1090,
         "y": 500,
         "wires": []
     },
@@ -4901,7 +4868,7 @@
         "topic": "dashboard/sensors/20/1/1/+/45",
         "qos": "2",
         "broker": "4798f2b0.5d747c",
-        "x": 390,
+        "x": 370,
         "y": 440,
         "wires": [
             [
@@ -4917,7 +4884,7 @@
         "topic": "dashboard/sensors/20/8/1/+/2",
         "qos": "2",
         "broker": "4798f2b0.5d747c",
-        "x": 380,
+        "x": 360,
         "y": 480,
         "wires": [
             [
@@ -4933,7 +4900,7 @@
         "topic": "dashboard/sensors/20/6/1/+/2",
         "qos": "2",
         "broker": "4798f2b0.5d747c",
-        "x": 380,
+        "x": 360,
         "y": 520,
         "wires": [
             [
@@ -4949,7 +4916,7 @@
         "topic": "dashboard/sensors/20/7/1/+/2",
         "qos": "2",
         "broker": "4798f2b0.5d747c",
-        "x": 380,
+        "x": 360,
         "y": 560,
         "wires": [
             [
@@ -5023,7 +4990,7 @@
         "topic": "dashboard/sensors/20/5/1/+/2",
         "qos": "2",
         "broker": "4798f2b0.5d747c",
-        "x": 380,
+        "x": 360,
         "y": 600,
         "wires": [
             [
@@ -5039,7 +5006,7 @@
         "func": "if (msg.retain === undefined)\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 810,
+        "x": 950,
         "y": 500,
         "wires": [
             [
@@ -5056,9 +5023,9 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "payload",
-        "x": 430,
-        "y": 380,
+        "complete": "true",
+        "x": 410,
+        "y": 360,
         "wires": []
     },
     {
@@ -5134,7 +5101,7 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 510,
+        "x": 550,
         "y": 320,
         "wires": []
     },
@@ -5160,7 +5127,7 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 490,
+        "x": 530,
         "y": 360,
         "wires": []
     },
@@ -5217,7 +5184,7 @@
         "type": "subflow:8bc8753a.1ea768",
         "z": "36f02452.2e99bc",
         "name": "badeværelse",
-        "x": 330,
+        "x": 370,
         "y": 360,
         "wires": [
             [
@@ -5234,10 +5201,10 @@
         "type": "mqtt in",
         "z": "36f02452.2e99bc",
         "name": "",
-        "topic": "dashboard/9/#",
+        "topic": "dashboard/sensors/9/+/+/+/+",
         "qos": "2",
         "broker": "4798f2b0.5d747c",
-        "x": 150,
+        "x": 140,
         "y": 360,
         "wires": [
             [
@@ -5250,7 +5217,7 @@
         "type": "subflow:8bc8753a.1ea768",
         "z": "36f02452.2e99bc",
         "name": "udendørs",
-        "x": 320,
+        "x": 360,
         "y": 160,
         "wires": [
             [
@@ -5289,7 +5256,7 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 510,
+        "x": 550,
         "y": 420,
         "wires": []
     },
@@ -5315,7 +5282,7 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 490,
+        "x": 530,
         "y": 460,
         "wires": []
     },
@@ -5324,7 +5291,7 @@
         "type": "subflow:8bc8753a.1ea768",
         "z": "36f02452.2e99bc",
         "name": "soveværelse",
-        "x": 330,
+        "x": 370,
         "y": 460,
         "wires": [
             [
@@ -5341,10 +5308,10 @@
         "type": "mqtt in",
         "z": "36f02452.2e99bc",
         "name": "",
-        "topic": "dashboard/6/#",
+        "topic": "dashboard/sensors/6/+/+/+/+",
         "qos": "2",
         "broker": "4798f2b0.5d747c",
-        "x": 150,
+        "x": 140,
         "y": 460,
         "wires": [
             [
@@ -5374,7 +5341,7 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 510,
+        "x": 550,
         "y": 520,
         "wires": []
     },
@@ -5400,7 +5367,7 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 490,
+        "x": 530,
         "y": 560,
         "wires": []
     },
@@ -5409,7 +5376,7 @@
         "type": "subflow:8bc8753a.1ea768",
         "z": "36f02452.2e99bc",
         "name": "kontor",
-        "x": 310,
+        "x": 350,
         "y": 560,
         "wires": [
             [
@@ -5426,10 +5393,10 @@
         "type": "mqtt in",
         "z": "36f02452.2e99bc",
         "name": "",
-        "topic": "dashboard/200/#",
+        "topic": "dashboard/sensors/200/+/+/+/+",
         "qos": "2",
         "broker": "4798f2b0.5d747c",
-        "x": 160,
+        "x": 150,
         "y": 560,
         "wires": [
             [
@@ -5553,7 +5520,7 @@
         "type": "subflow:8bc8753a.1ea768",
         "z": "36f02452.2e99bc",
         "name": "stuen",
-        "x": 310,
+        "x": 350,
         "y": 660,
         "wires": [
             [
@@ -5570,10 +5537,10 @@
         "type": "mqtt in",
         "z": "36f02452.2e99bc",
         "name": "",
-        "topic": "dashboard/10/#",
+        "topic": "dashboard/sensors/10/+/+/+/+",
         "qos": "2",
         "broker": "4798f2b0.5d747c",
-        "x": 160,
+        "x": 140,
         "y": 660,
         "wires": [
             [
@@ -6044,5 +6011,106 @@
                 "6c0576fd.05c4e8"
             ]
         ]
+    },
+    {
+        "id": "eb3757ff.ff8dd8",
+        "type": "mysencap",
+        "z": "2257718.fdda88e",
+        "name": "",
+        "nodeid": "99",
+        "childid": "2",
+        "subtype": "18",
+        "internal": 0,
+        "ack": false,
+        "msgtype": "1",
+        "presentation": false,
+        "presentationtype": 0,
+        "presentationtext": "",
+        "fullpresentation": false,
+        "firmwarename": "",
+        "firmwareversion": "",
+        "x": 1020,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "984a2195.3bad",
+        "type": "inject",
+        "z": "2257718.fdda88e",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "5",
+        "x": 250,
+        "y": 400,
+        "wires": [
+            [
+                "693564ba.928f4c"
+            ]
+        ]
+    },
+    {
+        "id": "a712352f.7d7f28",
+        "type": "change",
+        "z": "2257718.fdda88e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[0].sum",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 780,
+        "y": 400,
+        "wires": [
+            [
+                "eb3757ff.ff8dd8"
+            ]
+        ]
+    },
+    {
+        "id": "ad5e16dd.343278",
+        "type": "function",
+        "z": "d2be3a2a.67d4b8",
+        "name": "add new timestamp topic",
+        "func": "msg.topic = msg.topic + '/time'\nmsg.payload = Math.round(Date.now()/1000);\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 610,
+        "y": 840,
+        "wires": [
+            [
+                "e8d9e345.f59cb",
+                "47f33b61.3523a4"
+            ]
+        ]
+    },
+    {
+        "id": "47f33b61.3523a4",
+        "type": "debug",
+        "z": "d2be3a2a.67d4b8",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 810,
+        "y": 820,
+        "wires": []
     }
 ]
