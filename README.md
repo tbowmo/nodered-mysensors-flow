@@ -15,3 +15,8 @@ chromecast control (python script)
 Currently I'm using a mySensors serial gateway, so the first flows on the Mysensors subflow, is converting the serial gateway to MQTT and back again
 
 the rest is running with mqtt as transport layer for all the different parts of the system
+
+See also the following repositories, for other parts of the system:
+
+https://github.com/tbowmo/angularweatherstation
+https://github.com/tbowmo/chromecastcontrol
