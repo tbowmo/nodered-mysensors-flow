@@ -7,6 +7,13 @@
         "info": ""
     },
     {
+        "id": "9292e51b.eaf788",
+        "type": "tab",
+        "label": "Software sensors",
+        "disabled": false,
+        "info": ""
+    },
+    {
         "id": "d2be3a2a.67d4b8",
         "type": "tab",
         "label": "AV Center flows",
@@ -40,13 +47,6 @@
         "info": ""
     },
     {
-        "id": "9292e51b.eaf788",
-        "type": "tab",
-        "label": "Webservices",
-        "disabled": false,
-        "info": ""
-    },
-    {
         "id": "d10deed0.f94c",
         "type": "tab",
         "label": "Slack",
@@ -59,47 +59,6 @@
         "label": "Domoticz",
         "disabled": true,
         "info": "Handles domoticz in / out via a dummy serial port\n\nuse the following shell command to start socat.\n\n```\nsocat PTY,link=/dev/ttyS80,mode=666,group=dialout,raw PTY,link=/dev/ttyUSB20,mode=666,group=dialout,raw &\n```\n\nAttach domoticz to the /dev/ttyUSBxx endpoint, and nodered to /dev/ttySxx endpoint\n\n\nThe above can probably be done with MQTT as well, but it was a legacy setup when I inserted nodered between domoticz and a serial MySensors gateway\n"
-    },
-    {
-        "id": "2257718.fdda88e",
-        "type": "subflow",
-        "name": "Energy meter",
-        "info": "Converts input from arduino sketch, to a \nMysensors compatible protocol format, usable\nfor injecting into the message stream from\nnormal Mysensors nodes\n\nOutputs data as nodeId 99.",
-        "in": [],
-        "out": [
-            {
-                "x": 1180,
-                "y": 200,
-                "wires": [
-                    {
-                        "id": "f9b89df5.06476",
-                        "port": 0
-                    },
-                    {
-                        "id": "1dcfb48.fe2304c",
-                        "port": 0
-                    },
-                    {
-                        "id": "11f1e54.721221b",
-                        "port": 0
-                    },
-                    {
-                        "id": "eb3757ff.ff8dd8",
-                        "port": 0
-                    }
-                ]
-            },
-            {
-                "x": 1180,
-                "y": 400,
-                "wires": [
-                    {
-                        "id": "eb3757ff.ff8dd8",
-                        "port": 0
-                    }
-                ]
-            }
-        ]
     },
     {
         "id": "8bc8753a.1ea768",
@@ -573,115 +532,7 @@
         "name": "Mysensors NRF",
         "serial": "821a7286.7de59",
         "x": 1020,
-        "y": 180,
-        "wires": []
-    },
-    {
-        "id": "12db17ce.ed24e8",
-        "type": "serial in",
-        "z": "2257718.fdda88e",
-        "name": "Meter input",
-        "serial": "acfe3226.5301d",
-        "x": 160,
-        "y": 200,
-        "wires": [
-            [
-                "e56f30b7.1a90d"
-            ]
-        ]
-    },
-    {
-        "id": "1dcfb48.fe2304c",
-        "type": "mysencap",
-        "z": "2257718.fdda88e",
-        "name": "",
-        "nodeid": "99",
-        "childid": "1",
-        "subtype": "17",
-        "internal": "0",
-        "ack": false,
-        "msgtype": "1",
-        "presentation": false,
-        "presentationtype": "13",
-        "presentationtext": "Watt",
-        "fullpresentation": false,
-        "firmwarename": "",
-        "firmwareversion": "",
-        "x": 620,
         "y": 160,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "f9b89df5.06476",
-        "type": "mysencap",
-        "z": "2257718.fdda88e",
-        "name": "",
-        "nodeid": "99",
-        "childid": "1",
-        "subtype": "18",
-        "internal": "0",
-        "ack": false,
-        "msgtype": "1",
-        "presentation": true,
-        "presentationtype": "14",
-        "presentationtext": "Kwh",
-        "fullpresentation": true,
-        "firmwarename": "MeterNode",
-        "firmwareversion": "0.1",
-        "x": 620,
-        "y": 200,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "e56f30b7.1a90d",
-        "type": "function",
-        "z": "2257718.fdda88e",
-        "name": "Split meter data",
-        "func": "var m=msg.payload.split(';');\n// Filtering away unrealistic high usage above 50KW\nif (Number(m[0]) < 50000) {\n    var msg1 = {payload:m[0]};\n    var msg2 = {payload:m[1]/1000};\n    var msg3 = {payload:m[1]};\n    return [msg1, msg2, msg3];\n}\n",
-        "outputs": "3",
-        "noerr": 0,
-        "x": 340,
-        "y": 200,
-        "wires": [
-            [
-                "1dcfb48.fe2304c"
-            ],
-            [
-                "f9b89df5.06476"
-            ],
-            [
-                "dfd92894.2026d8",
-                "985078ce.c384e8"
-            ]
-        ]
-    },
-    {
-        "id": "dfd92894.2026d8",
-        "type": "file",
-        "z": "2257718.fdda88e",
-        "name": "meter counter output to file",
-        "filename": "/var/tmp/meascache.txt",
-        "appendNewline": true,
-        "createDir": false,
-        "overwriteFile": "true",
-        "x": 600,
-        "y": 280,
-        "wires": []
-    },
-    {
-        "id": "44592b43.bba6d4",
-        "type": "debug",
-        "z": "67deb464.98214c",
-        "name": "Energy meter output",
-        "active": false,
-        "console": "false",
-        "complete": "true",
-        "x": 660,
-        "y": 360,
         "wires": []
     },
     {
@@ -710,29 +561,6 @@
         "wires": []
     },
     {
-        "id": "11f1e54.721221b",
-        "type": "mysencap",
-        "z": "2257718.fdda88e",
-        "name": "",
-        "nodeid": "99",
-        "childid": "2",
-        "subtype": "17",
-        "internal": 0,
-        "ack": false,
-        "msgtype": "1",
-        "presentation": false,
-        "presentationtype": 0,
-        "presentationtext": "",
-        "fullpresentation": false,
-        "firmwarename": "",
-        "firmwareversion": "",
-        "x": 860,
-        "y": 240,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "932ebb67.4968d8",
         "type": "debug",
         "z": "67deb464.98214c",
@@ -741,7 +569,7 @@
         "console": "false",
         "complete": "payload",
         "x": 900,
-        "y": 120,
+        "y": 100,
         "wires": []
     },
     {
@@ -753,7 +581,7 @@
         "console": "false",
         "complete": "payload",
         "x": 360,
-        "y": 260,
+        "y": 240,
         "wires": []
     },
     {
@@ -761,8 +589,8 @@
         "type": "http response",
         "z": "9292e51b.eaf788",
         "name": "",
-        "x": 450,
-        "y": 420,
+        "x": 350,
+        "y": 400,
         "wires": []
     },
     {
@@ -992,7 +820,7 @@
         "console": "false",
         "complete": "true",
         "x": 610,
-        "y": 280,
+        "y": 240,
         "wires": []
     },
     {
@@ -1004,7 +832,7 @@
         "console": "false",
         "complete": "true",
         "x": 610,
-        "y": 140,
+        "y": 120,
         "wires": []
     },
     {
@@ -1590,8 +1418,8 @@
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 250,
-        "y": 460,
+        "x": 150,
+        "y": 440,
         "wires": [
             [
                 "74bc6004.618bc",
@@ -1605,11 +1433,11 @@
         "type": "debug",
         "z": "9292e51b.eaf788",
         "name": "",
-        "active": true,
+        "active": false,
         "console": "false",
         "complete": "true",
-        "x": 770,
-        "y": 600,
+        "x": 670,
+        "y": 580,
         "wires": []
     },
     {
@@ -1629,12 +1457,12 @@
         "fullpresentation": false,
         "firmwarename": "",
         "firmwareversion": "",
-        "x": 800,
-        "y": 460,
+        "x": 700,
+        "y": 440,
         "wires": [
             [
                 "82170263.03901",
-                "1326302d.ebc2f"
+                "53c8aa80.0c7564"
             ]
         ]
     },
@@ -1646,8 +1474,8 @@
         "func": "payload = msg.payload;\nif (payload.arbjede === \"Ankommet\") {\n    payload = 1;\n} else {\n    payload = 0;\n}\nmsg.payload = payload;\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
-        "x": 570,
-        "y": 460,
+        "x": 470,
+        "y": 440,
         "wires": [
             [
                 "7d1c7516.71802c",
@@ -1665,7 +1493,7 @@
         "retain": "false",
         "broker": "4798f2b0.5d747c",
         "x": 910,
-        "y": 320,
+        "y": 280,
         "wires": []
     },
     {
@@ -1677,7 +1505,7 @@
         "qos": "2",
         "broker": "4798f2b0.5d747c",
         "x": 120,
-        "y": 180,
+        "y": 160,
         "wires": [
             [
                 "ed4c6e39.bacbd",
@@ -1712,7 +1540,7 @@
         "tostatus": false,
         "complete": "true",
         "x": 920,
-        "y": 280,
+        "y": 240,
         "wires": []
     },
     {
@@ -1785,79 +1613,13 @@
         ]
     },
     {
-        "id": "985078ce.c384e8",
-        "type": "function",
-        "z": "2257718.fdda88e",
-        "name": "Watt/Hour calculator",
-        "func": "/* Takes input on subType 24, calculates difference\n   from last time, if around 60 seconds have passed\n   since last report.\n   It passes the value on as subType 17, and\n   childSensorId 2 */\n   \nvar uTime = Math.floor(Date.now()/60000);\nvar lastTime = context.get('lastTime')||0;\nif (lastTime === 0) {\n    context.set('lastTime', uTime);\n    context.set('lastCount', Number(msg.payload));\n} else {\n    if (uTime != lastTime) {\n        lastCount = context.get('lastCount');\n        currentCount = Number(msg.payload);\n        context.set('lastTime', uTime);\n        context.set('lastCount', currentCount)\n        msg.payload = currentCount - lastCount;\n        return msg;\n    }\n}\nreturn null",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 580,
-        "y": 240,
-        "wires": [
-            [
-                "11f1e54.721221b"
-            ]
-        ]
-    },
-    {
-        "id": "693564ba.928f4c",
-        "type": "function",
-        "z": "2257718.fdda88e",
-        "name": "create query",
-        "func": "var d = new Date();\nd.setHours(0,0,0,0);\nmsg.time = (1 * d.getTime())/1000;\nmsg.time = d.toISOString(); //ISODateString(d);\nmsg.query = \"select sum(value) from electricity where node='99' and sensor='2' and time>'\"+msg.time+\"'\"; //+msg.time;\nmsg.payload = '';\nreturn msg;\n",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 350,
-        "y": 400,
-        "wires": [
-            [
-                "fe2ccdc0.ecce8"
-            ]
-        ]
-    },
-    {
-        "id": "fe2ccdc0.ecce8",
-        "type": "influxdb in",
-        "z": "2257718.fdda88e",
-        "influxdb": "9d8c74dc.570ca8",
-        "name": "influx lookup",
-        "query": "",
-        "rawOutput": false,
-        "precision": "",
-        "retentionPolicy": "",
-        "x": 530,
-        "y": 400,
-        "wires": [
-            [
-                "a712352f.7d7f28"
-            ]
-        ]
-    },
-    {
-        "id": "ff440b2.89fc2f8",
-        "type": "subflow:2257718.fdda88e",
-        "z": "67deb464.98214c",
-        "x": 130,
-        "y": 340,
-        "wires": [
-            [
-                "44592b43.bba6d4",
-                "7535eff3.37e22"
-            ],
-            [
-                "84a7ac1f.0f84a"
-            ]
-        ]
-    },
-    {
         "id": "25982c9c.c32ed4",
         "type": "mysdecode",
         "z": "67deb464.98214c",
         "name": "",
         "mqtt": false,
         "x": 390,
-        "y": 300,
+        "y": 280,
         "wires": [
             [
                 "ea57b38e.eecb5",
@@ -1888,7 +1650,7 @@
         "mqtt": true,
         "mqtttopic": "mys-in",
         "x": 670,
-        "y": 320,
+        "y": 280,
         "wires": [
             [
                 "a4e0701b.c1765",
@@ -1903,7 +1665,7 @@
         "name": "",
         "mqtt": true,
         "x": 380,
-        "y": 180,
+        "y": 160,
         "wires": [
             [
                 "a3d33992.a66ae8",
@@ -1918,7 +1680,7 @@
         "name": "",
         "mqtt": false,
         "x": 650,
-        "y": 180,
+        "y": 160,
         "wires": [
             [
                 "932ebb67.4968d8",
@@ -1931,11 +1693,11 @@
         "type": "debug",
         "z": "d2be3a2a.67d4b8",
         "name": "",
-        "active": false,
+        "active": true,
         "console": "false",
         "complete": "true",
-        "x": 1110,
-        "y": 140,
+        "x": 1030,
+        "y": 120,
         "wires": []
     },
     {
@@ -1943,7 +1705,7 @@
         "type": "function",
         "z": "d2be3a2a.67d4b8",
         "name": "Translate",
-        "func": "if (msg.payload.activityStatus === 2) {\n    switch(msg.payload.activityId) {\n        case \"20800334\":\n            activity = \"Stream Video\";\n            break;\n        case \"21395657\":\n            activity = \"Stream Audio\";\n            break;\n        case \"24516381\":\n            activity = \"CD\";\n            flow.set('device', 'dvd');\n            break;\n        case \"20795082\":\n            activity = \"Radio\";\n            break;\n        case \"20800253\":\n            activity = \"DVD\";\n            break;\n        case \"20800328\":\n            activity = \"WII\";\n            break;        \n        case \"20800510\":\n            activity = \"TV\";\n            break;\n        case \"-1\":\n            activity = \"OFF\";\n            break;\n        default:\n            activity = msg.payload.activityId;\n            break;\n    }\n    \n    msg.payload.activityName = activity;\n    \n    return msg;\n}",
+        "func": "switch(msg.payload.activityId) {\n    case \"20800334\":\n        activity = \"Stream Video\";\n        break;\n    case \"21395657\":\n        activity = \"Stream Audio\";\n        break;\n    case \"24516381\":\n        activity = \"CD\";\n        flow.set('device', 'dvd');\n        break;\n    case \"20795082\":\n        activity = \"Radio\";\n        break;\n    case \"20800253\":\n        activity = \"DVD\";\n        break;\n    case \"20800328\":\n        activity = \"WII\";\n        break;        \n    case \"20800510\":\n        activity = \"TV\";\n        break;\n    case \"-1\":\n        activity = \"OFF\";\n        break;\n    default:\n        activity = msg.payload.activityId;\n        break;\n}\n\nmsg.payload.activityName = activity;\n\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
         "x": 920,
@@ -2019,7 +1781,7 @@
         "activity": "-1",
         "label": "PowerOff",
         "x": 450,
-        "y": 200,
+        "y": 280,
         "wires": [
             []
         ]
@@ -2049,17 +1811,17 @@
             },
             {
                 "t": "eq",
-                "v": "off",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
                 "v": "tv",
                 "vt": "str"
             },
             {
                 "t": "eq",
                 "v": "dvd",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "off",
                 "vt": "str"
             }
         ],
@@ -2079,13 +1841,13 @@
                 "2889457c.b0268a"
             ],
             [
-                "4bef3015.f4a8b"
-            ],
-            [
                 "c1263114.4ef3f"
             ],
             [
                 "541a6418.f052ec"
+            ],
+            [
+                "4bef3015.f4a8b"
             ]
         ]
     },
@@ -2454,7 +2216,7 @@
         "tostatus": false,
         "complete": "true",
         "x": 350,
-        "y": 140,
+        "y": 120,
         "wires": []
     },
     {
@@ -2464,35 +2226,7 @@
         "name": "Mysensors Serial <-> MQTT transformation",
         "info": "",
         "x": 620,
-        "y": 100,
-        "wires": []
-    },
-    {
-        "id": "1326302d.ebc2f",
-        "type": "mysencode",
-        "z": "9292e51b.eaf788",
-        "name": "",
-        "mqtt": true,
-        "mqtttopic": "mys-in",
-        "x": 1090,
-        "y": 460,
-        "wires": [
-            [
-                "cb5d627.ebd99a"
-            ]
-        ]
-    },
-    {
-        "id": "cb5d627.ebd99a",
-        "type": "mqtt out",
-        "z": "9292e51b.eaf788",
-        "name": "",
-        "topic": "",
-        "qos": "2",
-        "retain": "false",
-        "broker": "4798f2b0.5d747c",
-        "x": 1270,
-        "y": 460,
+        "y": 80,
         "wires": []
     },
     {
@@ -2519,8 +2253,8 @@
         "property": "payload",
         "action": "obj",
         "pretty": false,
-        "x": 450,
-        "y": 460,
+        "x": 350,
+        "y": 440,
         "wires": [
             [
                 "8eb060c5.65dd"
@@ -2654,7 +2388,7 @@
         "outputs": 1,
         "noerr": 0,
         "x": 860,
-        "y": 180,
+        "y": 160,
         "wires": [
             [
                 "47b5936e.b84a6c"
@@ -2699,24 +2433,10 @@
         "y": 540,
         "wires": [
             [
-                "6dddda3a.8da344"
+                "69fde5be.6464bc"
             ],
             []
         ]
-    },
-    {
-        "id": "57cfb9f2.fb6488",
-        "type": "debug",
-        "z": "d9d4d547.6a9438",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "x": 310,
-        "y": 600,
-        "wires": []
     },
     {
         "id": "2a217e70.aac6f2",
@@ -2727,12 +2447,10 @@
         "qos": "2",
         "broker": "4798f2b0.5d747c",
         "x": 120,
-        "y": 600,
+        "y": 660,
         "wires": [
             [
-                "6dddda3a.8da344",
-                "57cfb9f2.fb6488",
-                "7067eb38.1ac8a4"
+                "d2cb106b.f2fd"
             ]
         ]
     },
@@ -2740,31 +2458,15 @@
         "id": "6dddda3a.8da344",
         "type": "function",
         "z": "d9d4d547.6a9438",
-        "name": "",
-        "func": "if (msg.topic == 'sun') {\n    flow.set(\"daylight\", msg.payload);\n}\nif (msg.topic.includes('avctrl')) {\n    flow.set(\"avctrl\", JSON.parse(msg.payload).activityName);\n}\n\nmsg.payload = flow.get('avctrl') + \":\" + flow.get('daylight');\nreturn msg;",
+        "name": "store scene in flow.avctrl",
+        "func": "flow.set(\"avctrl\", msg.payload.activityName);\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 310,
-        "y": 560,
+        "x": 470,
+        "y": 740,
         "wires": [
-            [
-                "da5bbafd.b06ae8"
-            ]
+            []
         ]
-    },
-    {
-        "id": "da5bbafd.b06ae8",
-        "type": "debug",
-        "z": "d9d4d547.6a9438",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 530,
-        "y": 560,
-        "wires": []
     },
     {
         "id": "3e41fa8d.6fbaa6",
@@ -2951,7 +2653,7 @@
         "func": "var path = 'sensor'+msg.nodeId+'_'+msg.childSensorId+'_'+msg.subType;\ndata = msg.payload\nflow.set(path, data);\nmsg.payload = path + \"::\" + data\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 590,
+        "x": 550,
         "y": 460,
         "wires": [
             [
@@ -2965,7 +2667,7 @@
         "z": "d9d4d547.6a9438",
         "name": "",
         "mqtt": true,
-        "x": 380,
+        "x": 360,
         "y": 460,
         "wires": [
             [
@@ -2999,7 +2701,7 @@
         "console": false,
         "tostatus": false,
         "complete": "false",
-        "x": 790,
+        "x": 730,
         "y": 460,
         "wires": []
     },
@@ -3876,20 +3578,6 @@
         ]
     },
     {
-        "id": "84a7ac1f.0f84a",
-        "type": "debug",
-        "z": "67deb464.98214c",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "x": 350,
-        "y": 380,
-        "wires": []
-    },
-    {
         "id": "d4c611b2.4c162",
         "type": "ui_gauge",
         "z": "36f02452.2e99bc",
@@ -4286,7 +3974,7 @@
         "type": "mqtt in",
         "z": "36f02452.2e99bc",
         "name": "",
-        "topic": "dashboard/sensors/99/2/1/0/25",
+        "topic": "dashboard/sensors/99/2/1/0/18",
         "qos": "2",
         "broker": "4798f2b0.5d747c",
         "x": 850,
@@ -4332,7 +4020,7 @@
         "activity": "20800510",
         "label": "TV",
         "x": 450,
-        "y": 240,
+        "y": 200,
         "wires": [
             []
         ]
@@ -4346,7 +4034,7 @@
         "activity": "20800253",
         "label": "DVD",
         "x": 450,
-        "y": 280,
+        "y": 240,
         "wires": [
             []
         ]
@@ -4551,8 +4239,8 @@
         "qos": "2",
         "retain": "false",
         "broker": "4798f2b0.5d747c",
-        "x": 750,
-        "y": 580,
+        "x": 770,
+        "y": 620,
         "wires": []
     },
     {
@@ -4563,7 +4251,7 @@
         "topic": "avctrl/out/scene",
         "qos": "2",
         "broker": "4798f2b0.5d747c",
-        "x": 860,
+        "x": 880,
         "y": 760,
         "wires": [
             [
@@ -4579,7 +4267,7 @@
         "func": "p = msg.payload.toString().toLowerCase();\nflow.set('device', p);\n",
         "outputs": 1,
         "noerr": 0,
-        "x": 1070,
+        "x": 1090,
         "y": 760,
         "wires": [
             []
@@ -4631,8 +4319,12 @@
             [
                 "aa76e025.eb137"
             ],
-            [],
-            [],
+            [
+                "b3ccceab.07286"
+            ],
+            [
+                "a0ecd37f.01d88"
+            ],
             [
                 "a73cb364.f49ab"
             ]
@@ -4648,8 +4340,8 @@
         "label": "DVD",
         "command": "%7B%22command%22::%22Pause%22,%22type%22::%22IRCommand%22,%22deviceId%22::%2237008443%22%7D",
         "repeat": "1",
-        "x": 760,
-        "y": 460,
+        "x": 780,
+        "y": 420,
         "wires": [
             []
         ]
@@ -4664,8 +4356,8 @@
         "label": "DVD",
         "command": "%7B%22command%22::%22Play%22,%22type%22::%22IRCommand%22,%22deviceId%22::%2237008443%22%7D",
         "repeat": "1",
-        "x": 750,
-        "y": 500,
+        "x": 770,
+        "y": 460,
         "wires": [
             []
         ]
@@ -4680,8 +4372,8 @@
         "label": "DVD",
         "command": "%7B%22command%22::%22Stop%22,%22type%22::%22IRCommand%22,%22deviceId%22::%2237008443%22%7D",
         "repeat": "1",
-        "x": 750,
-        "y": 540,
+        "x": 770,
+        "y": 580,
         "wires": [
             []
         ]
@@ -4691,7 +4383,7 @@
         "type": "switch",
         "z": "d9d4d547.6a9438",
         "name": "",
-        "property": "payload",
+        "property": "payload.activityName",
         "propertyType": "msg",
         "rules": [
             {
@@ -4706,8 +4398,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 470,
-        "y": 620,
+        "x": 410,
+        "y": 660,
         "wires": [
             [],
             [
@@ -4742,8 +4434,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 640,
-        "y": 600,
+        "x": 560,
+        "y": 640,
         "wires": [
             [
                 "6c0576fd.05c4e8"
@@ -4759,8 +4451,8 @@
         "qos": "2",
         "retain": "false",
         "broker": "4798f2b0.5d747c",
-        "x": 790,
-        "y": 620,
+        "x": 690,
+        "y": 660,
         "wires": []
     },
     {
@@ -4789,81 +4481,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 640,
-        "y": 640,
+        "x": 560,
+        "y": 680,
         "wires": [
             [
                 "6c0576fd.05c4e8"
-            ]
-        ]
-    },
-    {
-        "id": "eb3757ff.ff8dd8",
-        "type": "mysencap",
-        "z": "2257718.fdda88e",
-        "name": "",
-        "nodeid": "99",
-        "childid": "2",
-        "subtype": "18",
-        "internal": 0,
-        "ack": false,
-        "msgtype": "1",
-        "presentation": false,
-        "presentationtype": 0,
-        "presentationtext": "",
-        "fullpresentation": false,
-        "firmwarename": "",
-        "firmwareversion": "",
-        "x": 940,
-        "y": 400,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "984a2195.3bad",
-        "type": "inject",
-        "z": "2257718.fdda88e",
-        "name": "",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "repeat": "60",
-        "crontab": "",
-        "once": true,
-        "onceDelay": "5",
-        "x": 170,
-        "y": 400,
-        "wires": [
-            [
-                "693564ba.928f4c"
-            ]
-        ]
-    },
-    {
-        "id": "a712352f.7d7f28",
-        "type": "change",
-        "z": "2257718.fdda88e",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "payload[0].sum",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 700,
-        "y": 400,
-        "wires": [
-            [
-                "eb3757ff.ff8dd8"
             ]
         ]
     },
@@ -5351,7 +4973,7 @@
         "property": "payload",
         "action": "obj",
         "pretty": false,
-        "x": 310,
+        "x": 290,
         "y": 760,
         "wires": [
             [
@@ -5367,7 +4989,7 @@
         "func": "let p = msg.payload;\nlet chrome = 'audio';\nif (p.media === 'video/mp4') {\n    chrome = 'cast';\n}\n\nmsg.topic = 'chromecast/' + chrome + '/control/play';\nmsg.payload = p.id;\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
-        "x": 450,
+        "x": 470,
         "y": 760,
         "wires": [
             [
@@ -5386,7 +5008,7 @@
         "console": false,
         "tostatus": false,
         "complete": "true",
-        "x": 590,
+        "x": 610,
         "y": 740,
         "wires": []
     },
@@ -5399,7 +5021,7 @@
         "qos": "2",
         "retain": "false",
         "broker": "4798f2b0.5d747c",
-        "x": 590,
+        "x": 610,
         "y": 780,
         "wires": []
     },
@@ -5419,7 +5041,7 @@
         "z": "d2be3a2a.67d4b8",
         "name": "Set a flow variable to current scene",
         "info": "Using MQTT as storage engine, (retain set to true in the emitting node)\n",
-        "x": 920,
+        "x": 940,
         "y": 720,
         "wires": []
     },
@@ -5431,6 +5053,369 @@
         "info": "",
         "x": 170,
         "y": 380,
+        "wires": []
+    },
+    {
+        "id": "b3ccceab.07286",
+        "type": "H command",
+        "z": "d2be3a2a.67d4b8",
+        "name": "Skip fwd",
+        "server": "56b003cf.93c9bc",
+        "activity": "20800253",
+        "label": "DVD",
+        "command": "%7B%22command%22::%22ChapterNext%22,%22type%22::%22IRCommand%22,%22deviceId%22::%2237008443%22%7D",
+        "repeat": "1",
+        "x": 780,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a0ecd37f.01d88",
+        "type": "H command",
+        "z": "d2be3a2a.67d4b8",
+        "name": "Skip back",
+        "server": "56b003cf.93c9bc",
+        "activity": "20800253",
+        "label": "DVD",
+        "command": "%7B%22command%22::%22ChapterPrev%22,%22type%22::%22IRCommand%22,%22deviceId%22::%2237008443%22%7D",
+        "repeat": "1",
+        "x": 780,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "69fde5be.6464bc",
+        "type": "function",
+        "z": "d9d4d547.6a9438",
+        "name": "store sunrise in flow.dayLight",
+        "func": "flow.set(\"daylight\", msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 360,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d2cb106b.f2fd",
+        "type": "json",
+        "z": "d9d4d547.6a9438",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 270,
+        "y": 660,
+        "wires": [
+            [
+                "7067eb38.1ac8a4",
+                "6dddda3a.8da344"
+            ]
+        ]
+    },
+    {
+        "id": "93db9480.3ed028",
+        "type": "debug",
+        "z": "9292e51b.eaf788",
+        "name": "Energy",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 1320,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "38e6a224.5938ee",
+        "type": "serial in",
+        "z": "9292e51b.eaf788",
+        "name": "Meter input",
+        "serial": "acfe3226.5301d",
+        "x": 120,
+        "y": 180,
+        "wires": [
+            [
+                "15fc2499.4a078b"
+            ]
+        ]
+    },
+    {
+        "id": "365e7716.b78748",
+        "type": "mysencap",
+        "z": "9292e51b.eaf788",
+        "name": "",
+        "nodeid": "99",
+        "childid": "1",
+        "subtype": "17",
+        "internal": "0",
+        "ack": false,
+        "msgtype": "1",
+        "presentation": false,
+        "presentationtype": "13",
+        "presentationtext": "Watt",
+        "fullpresentation": false,
+        "firmwarename": "",
+        "firmwareversion": "",
+        "x": 880,
+        "y": 140,
+        "wires": [
+            [
+                "53c8aa80.0c7564"
+            ]
+        ]
+    },
+    {
+        "id": "88801b19.982088",
+        "type": "mysencap",
+        "z": "9292e51b.eaf788",
+        "name": "",
+        "nodeid": "99",
+        "childid": "1",
+        "subtype": "18",
+        "internal": "0",
+        "ack": false,
+        "msgtype": "1",
+        "presentation": true,
+        "presentationtype": "14",
+        "presentationtext": "Kwh",
+        "fullpresentation": true,
+        "firmwarename": "MeterNode",
+        "firmwareversion": "0.1",
+        "x": 880,
+        "y": 180,
+        "wires": [
+            [
+                "53c8aa80.0c7564"
+            ]
+        ]
+    },
+    {
+        "id": "15fc2499.4a078b",
+        "type": "function",
+        "z": "9292e51b.eaf788",
+        "name": "Split meter data",
+        "func": "var m=msg.payload.split(';');\n// Filtering away unrealistic high usage above 50KW\nif (Number(m[0]) < 50000) {\n    var msg1 = {payload:m[0]};\n    var msg2 = {payload:m[1]/1000};\n    var msg3 = {payload:m[1]};\n    return [msg1, msg2, msg3];\n}\n",
+        "outputs": 3,
+        "noerr": 0,
+        "x": 300,
+        "y": 180,
+        "wires": [
+            [
+                "365e7716.b78748"
+            ],
+            [
+                "88801b19.982088"
+            ],
+            [
+                "961f161b.00d288",
+                "367d442c.25478c"
+            ]
+        ]
+    },
+    {
+        "id": "961f161b.00d288",
+        "type": "file",
+        "z": "9292e51b.eaf788",
+        "name": "meter counter output to file",
+        "filename": "/var/tmp/meascache.txt",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "x": 560,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "21c196cd.d0a07a",
+        "type": "mysencap",
+        "z": "9292e51b.eaf788",
+        "name": "",
+        "nodeid": "99",
+        "childid": "2",
+        "subtype": "17",
+        "internal": 0,
+        "ack": false,
+        "msgtype": "1",
+        "presentation": false,
+        "presentationtype": 0,
+        "presentationtext": "",
+        "fullpresentation": false,
+        "firmwarename": "",
+        "firmwareversion": "",
+        "x": 880,
+        "y": 220,
+        "wires": [
+            [
+                "53c8aa80.0c7564"
+            ]
+        ]
+    },
+    {
+        "id": "367d442c.25478c",
+        "type": "function",
+        "z": "9292e51b.eaf788",
+        "name": "Watt/Hour calculator",
+        "func": "/* Takes input on subType 24, calculates difference\n   from last time, if around 60 seconds have passed\n   since last report.\n   It passes the value on as subType 17, and\n   childSensorId 2 */\n   \nvar uTime = Math.floor(Date.now()/60000);\nvar lastTime = context.get('lastTime')||0;\nif (lastTime === 0) {\n    context.set('lastTime', uTime);\n    context.set('lastCount', Number(msg.payload));\n} else {\n    if (uTime != lastTime) {\n        lastCount = context.get('lastCount');\n        currentCount = Number(msg.payload);\n        context.set('lastTime', uTime);\n        context.set('lastCount', currentCount)\n        msg.payload = currentCount - lastCount;\n        return msg;\n    }\n}\nreturn null",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 540,
+        "y": 220,
+        "wires": [
+            [
+                "21c196cd.d0a07a"
+            ]
+        ]
+    },
+    {
+        "id": "877c9a2a.f2b718",
+        "type": "function",
+        "z": "9292e51b.eaf788",
+        "name": "create query",
+        "func": "var d = new Date();\nd.setHours(0,0,0,0);\nmsg.time = (1 * d.getTime())/1000;\nmsg.time = d.toISOString(); //ISODateString(d);\nmsg.query = \"select sum(value) from electricity where node='99' and sensor='2' and time>'\"+msg.time+\"'\"; //+msg.time;\nmsg.payload = '';\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 290,
+        "y": 260,
+        "wires": [
+            [
+                "7b27ab5a.85b6e4"
+            ]
+        ]
+    },
+    {
+        "id": "7b27ab5a.85b6e4",
+        "type": "influxdb in",
+        "z": "9292e51b.eaf788",
+        "influxdb": "9d8c74dc.570ca8",
+        "name": "influx lookup",
+        "query": "",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "x": 470,
+        "y": 260,
+        "wires": [
+            [
+                "fb4c20b9.91577"
+            ]
+        ]
+    },
+    {
+        "id": "dcf57024.11b3",
+        "type": "mysencap",
+        "z": "9292e51b.eaf788",
+        "name": "",
+        "nodeid": "99",
+        "childid": "2",
+        "subtype": "18",
+        "internal": 0,
+        "ack": false,
+        "msgtype": "1",
+        "presentation": false,
+        "presentationtype": 0,
+        "presentationtext": "",
+        "fullpresentation": false,
+        "firmwarename": "",
+        "firmwareversion": "",
+        "x": 880,
+        "y": 260,
+        "wires": [
+            [
+                "53c8aa80.0c7564"
+            ]
+        ]
+    },
+    {
+        "id": "74c533e0.3cb1cc",
+        "type": "inject",
+        "z": "9292e51b.eaf788",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "5",
+        "x": 130,
+        "y": 260,
+        "wires": [
+            [
+                "877c9a2a.f2b718"
+            ]
+        ]
+    },
+    {
+        "id": "fb4c20b9.91577",
+        "type": "change",
+        "z": "9292e51b.eaf788",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[0].sum",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 640,
+        "y": 260,
+        "wires": [
+            [
+                "dcf57024.11b3"
+            ]
+        ]
+    },
+    {
+        "id": "53c8aa80.0c7564",
+        "type": "mysencode",
+        "z": "9292e51b.eaf788",
+        "name": "",
+        "mqtt": true,
+        "mqtttopic": "mys-in",
+        "x": 1190,
+        "y": 200,
+        "wires": [
+            [
+                "e143de62.fdaf9",
+                "93db9480.3ed028"
+            ]
+        ]
+    },
+    {
+        "id": "e143de62.fdaf9",
+        "type": "mqtt out",
+        "z": "9292e51b.eaf788",
+        "name": "",
+        "topic": "",
+        "qos": "2",
+        "retain": "false",
+        "broker": "4798f2b0.5d747c",
+        "x": 1310,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "651925b2.e10b5c",
+        "type": "comment",
+        "z": "9292e51b.eaf788",
+        "name": "Utility meter input conversion.",
+        "info": "Input from arduino measuring pulses on my utility meter.\n\nFor code / examples, see [this github repository](https://github.com/tbowmo/energyPulseCounter)\n\nBasically converts the input format from the serial port, into a fake mysensors sensor,\nin order to use it in other parts of the nodered flow, as a standard mysensors sensor.\n\nthe incoming serial format is like:\n\nWWW;PPP;EEE\\r\\n\n\nWWW -> Watts\nPPP -> Pulse counts (1 pulse per Wh)\nEEE -> ElapsedkWh calculated by arduino (not used here though);\n\nSplit out into distinct parts, and fed onto the rest of the system as mysensors data on the MQTT bus",
+        "x": 590,
+        "y": 80,
         "wires": []
     }
 ]
