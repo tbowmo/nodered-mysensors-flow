@@ -2084,7 +2084,7 @@
         "type": "debug",
         "z": "d9d4d547.6a9438",
         "name": "",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -2152,11 +2152,12 @@
         "func": "var d = new Date();\n// Get seconds since epoch\nvar secs = Math.round(d.getTime()/1000);\n// Add local time offset\nsecs = secs - d.getTimezoneOffset() * 60;\nmsg.payload = secs;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 520,
+        "x": 640,
         "y": 240,
         "wires": [
             [
-                "743ac734.623e78"
+                "743ac734.623e78",
+                "737e658a.64c55c"
             ]
         ]
     },
@@ -2430,10 +2431,10 @@
         "start": "goldenHourEnd",
         "end": "goldenHour",
         "x": 110,
-        "y": 540,
+        "y": 720,
         "wires": [
             [
-                "69fde5be.6464bc"
+                "6bab362a.1710c8"
             ],
             []
         ]
@@ -2447,25 +2448,11 @@
         "qos": "2",
         "broker": "4798f2b0.5d747c",
         "x": 120,
-        "y": 660,
+        "y": 460,
         "wires": [
             [
                 "d2cb106b.f2fd"
             ]
-        ]
-    },
-    {
-        "id": "6dddda3a.8da344",
-        "type": "function",
-        "z": "d9d4d547.6a9438",
-        "name": "store scene in flow.avctrl",
-        "func": "flow.set(\"avctrl\", msg.payload.activityName);\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 470,
-        "y": 740,
-        "wires": [
-            []
         ]
     },
     {
@@ -2638,7 +2625,7 @@
         "qos": "2",
         "broker": "4798f2b0.5d747c",
         "x": 140,
-        "y": 460,
+        "y": 660,
         "wires": [
             [
                 "1faad09a.219b4f"
@@ -2654,7 +2641,7 @@
         "outputs": 1,
         "noerr": 0,
         "x": 550,
-        "y": 460,
+        "y": 660,
         "wires": [
             [
                 "dbf120d6.901e8"
@@ -2668,7 +2655,7 @@
         "name": "",
         "mqtt": true,
         "x": 360,
-        "y": 460,
+        "y": 660,
         "wires": [
             [
                 "b809b24d.95ec2"
@@ -2702,7 +2689,7 @@
         "tostatus": false,
         "complete": "false",
         "x": 730,
-        "y": 460,
+        "y": 660,
         "wires": []
     },
     {
@@ -4398,8 +4385,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 410,
-        "y": 660,
+        "x": 470,
+        "y": 460,
         "wires": [
             [],
             [
@@ -4434,8 +4421,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 560,
-        "y": 640,
+        "x": 640,
+        "y": 440,
         "wires": [
             [
                 "6c0576fd.05c4e8"
@@ -4451,8 +4438,8 @@
         "qos": "2",
         "retain": "false",
         "broker": "4798f2b0.5d747c",
-        "x": 690,
-        "y": 660,
+        "x": 790,
+        "y": 460,
         "wires": []
     },
     {
@@ -4481,8 +4468,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 560,
-        "y": 680,
+        "x": 640,
+        "y": 480,
         "wires": [
             [
                 "6c0576fd.05c4e8"
@@ -5088,20 +5075,6 @@
         ]
     },
     {
-        "id": "69fde5be.6464bc",
-        "type": "function",
-        "z": "d9d4d547.6a9438",
-        "name": "store sunrise in flow.dayLight",
-        "func": "flow.set(\"daylight\", msg.payload);\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 360,
-        "y": 540,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "d2cb106b.f2fd",
         "type": "json",
         "z": "d9d4d547.6a9438",
@@ -5109,12 +5082,12 @@
         "property": "payload",
         "action": "obj",
         "pretty": false,
-        "x": 270,
-        "y": 660,
+        "x": 330,
+        "y": 460,
         "wires": [
             [
                 "7067eb38.1ac8a4",
-                "6dddda3a.8da344"
+                "7c9713c8.141b3c"
             ]
         ]
     },
@@ -5417,5 +5390,89 @@
         "x": 590,
         "y": 80,
         "wires": []
+    },
+    {
+        "id": "737e658a.64c55c",
+        "type": "debug",
+        "z": "d9d4d547.6a9438",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 790,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "40b30e19.03a88",
+        "type": "comment",
+        "z": "d9d4d547.6a9438",
+        "name": "Stop chromecasts",
+        "info": "Sends quit command to chromecasts, when we switch away from the streaming scenes,\nthis should stop chromecasts from streaming any content.\n",
+        "x": 130,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "188c430.a9272bd",
+        "type": "comment",
+        "z": "d9d4d547.6a9438",
+        "name": "Stores sensor data in a local flow variable",
+        "info": "This is for other automation rules on the page, so they can be used in other parts fo the flow",
+        "x": 200,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "7c9713c8.141b3c",
+        "type": "change",
+        "z": "d9d4d547.6a9438",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "avctrl",
+                "pt": "flow",
+                "to": "payload.activityName",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 500,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6bab362a.1710c8",
+        "type": "change",
+        "z": "d9d4d547.6a9438",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "dayLight",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 370,
+        "y": 720,
+        "wires": [
+            []
+        ]
     }
 ]
