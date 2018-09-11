@@ -42,6 +42,13 @@
         "info": ""
     },
     {
+        "id": "7acba262.c6674c",
+        "type": "tab",
+        "label": "IKEA Lys",
+        "disabled": false,
+        "info": ""
+    },
+    {
         "id": "36f02452.2e99bc",
         "type": "tab",
         "label": "UI"
@@ -68,9 +75,9 @@
         "info": ""
     },
     {
-        "id": "7acba262.c6674c",
+        "id": "be12afc0.d1228",
         "type": "tab",
-        "label": "Dashboard helpers",
+        "label": "Dew point calculation",
         "disabled": false,
         "info": ""
     },
@@ -96,7 +103,7 @@
         "in": [
             {
                 "x": 120,
-                "y": 80,
+                "y": 380,
                 "wires": [
                     {
                         "id": "c4285cac.b7dcb"
@@ -106,18 +113,18 @@
         ],
         "out": [
             {
-                "x": 660,
-                "y": 40,
+                "x": 840,
+                "y": 240,
                 "wires": [
                     {
-                        "id": "a133b28e.29844",
+                        "id": "9b1ad06.4a8493",
                         "port": 0
                     }
                 ]
             },
             {
                 "x": 660,
-                "y": 80,
+                "y": 380,
                 "wires": [
                     {
                         "id": "a133b28e.29844",
@@ -127,11 +134,21 @@
             },
             {
                 "x": 660,
-                "y": 120,
+                "y": 420,
                 "wires": [
                     {
                         "id": "a133b28e.29844",
                         "port": 2
+                    }
+                ]
+            },
+            {
+                "x": 840,
+                "y": 280,
+                "wires": [
+                    {
+                        "id": "9b1ad06.4a8493",
+                        "port": 1
                     }
                 ]
             }
@@ -540,6 +557,17 @@
         "tls": ""
     },
     {
+        "id": "f4336a2f.6fced8",
+        "type": "ui_group",
+        "z": "",
+        "name": "Hønsegården",
+        "tab": "6c5b47d3.832458",
+        "order": 5,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
         "id": "5b8bba4c.a47444",
         "type": "serial in",
         "z": "67deb464.98214c",
@@ -580,12 +608,13 @@
         "id": "aec232d3.2860b",
         "type": "debug",
         "z": "67deb464.98214c",
-        "name": "",
+        "name": "Influx msg",
         "active": false,
         "tosidebar": true,
         "console": false,
+        "tostatus": false,
         "complete": "true",
-        "x": 830,
+        "x": 850,
         "y": 740,
         "wires": []
     },
@@ -606,7 +635,7 @@
         "type": "debug",
         "z": "67deb464.98214c",
         "name": "NRF input",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -841,30 +870,6 @@
                 "dd9af24e.e2395"
             ]
         ]
-    },
-    {
-        "id": "ea57b38e.eecb5",
-        "type": "debug",
-        "z": "67deb464.98214c",
-        "name": "",
-        "active": false,
-        "console": "false",
-        "complete": "true",
-        "x": 590,
-        "y": 200,
-        "wires": []
-    },
-    {
-        "id": "a3d33992.a66ae8",
-        "type": "debug",
-        "z": "67deb464.98214c",
-        "name": "",
-        "active": false,
-        "console": "false",
-        "complete": "true",
-        "x": 590,
-        "y": 120,
-        "wires": []
     },
     {
         "id": "ad8c0dc6.4f64a",
@@ -1521,7 +1526,7 @@
         "wires": [
             [
                 "f11a2832.07d9d8",
-                "eec30a1f.d7c4a8"
+                "98e4708e.a7886"
             ]
         ]
     },
@@ -1565,7 +1570,6 @@
         "y": 240,
         "wires": [
             [
-                "ea57b38e.eecb5",
                 "7535eff3.37e22"
             ]
         ]
@@ -1611,7 +1615,6 @@
         "y": 160,
         "wires": [
             [
-                "a3d33992.a66ae8",
                 "1d6e96fd.d27aa9"
             ]
         ]
@@ -1733,7 +1736,7 @@
         "id": "a5649af7.74fca8",
         "type": "switch",
         "z": "d2be3a2a.67d4b8",
-        "name": "",
+        "name": "admin",
         "property": "payload",
         "propertyType": "msg",
         "rules": [
@@ -1763,9 +1766,7 @@
                 "vt": "str"
             },
             {
-                "t": "eq",
-                "v": "off",
-                "vt": "str"
+                "t": "else"
             }
         ],
         "checkall": "true",
@@ -1924,40 +1925,6 @@
         ]
     },
     {
-        "id": "8d19bab2.8e9f38",
-        "type": "mqtt in",
-        "z": "d9d4d547.6a9438",
-        "name": "",
-        "topic": "chromecast/cast/state",
-        "qos": "2",
-        "broker": "4798f2b0.5d747c",
-        "x": 140,
-        "y": 140,
-        "wires": [
-            [
-                "f518f36d.e50be"
-            ]
-        ]
-    },
-    {
-        "id": "f518f36d.e50be",
-        "type": "function",
-        "z": "d9d4d547.6a9438",
-        "name": "set lights",
-        "func": "var avctrl = global.get(\"avctrl\") || \"OFF\";\nvar daylight = Number(flow.get('daylight') || 0);\nvar msgOut = null\nvar currentLight = Number(flow.get('sensor14_1_3') || 0);\nif ((avctrl === \"stream video\") && \n    (daylight === 0)) {\n\n    if (msg.payload === 'PLAYING') {\n        msgOut = {payload : 5};\n    }\n    if (msg.payload == 'PAUSED' || msg.payload=== 'STOPPED') {\n        msgOut = {payload: 100};\n    }\n    if (msgOut !== null && msgOut.payload !== currentLight) {\n        return msgOut;\n    }\n}\nreturn null;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 340,
-        "y": 140,
-        "wires": [
-            [
-                "72a0f42e.57bf4c",
-                "2c89a82a.ecab58",
-                "dbe26677.cae0b8"
-            ]
-        ]
-    },
-    {
         "id": "c7a4cf85.bac8a",
         "type": "mysencap",
         "z": "d9d4d547.6a9438",
@@ -1974,8 +1941,8 @@
         "fullpresentation": false,
         "firmwarename": "",
         "firmwareversion": "",
-        "x": 700,
-        "y": 100,
+        "x": 740,
+        "y": 140,
         "wires": [
             [
                 "743ac734.623e78"
@@ -1989,8 +1956,8 @@
         "name": "mys-out",
         "mqtt": true,
         "mqtttopic": "mys-out",
-        "x": 860,
-        "y": 140,
+        "x": 900,
+        "y": 180,
         "wires": [
             [
                 "229fa356.e7c70c",
@@ -2007,8 +1974,8 @@
         "qos": "2",
         "retain": "false",
         "broker": "4798f2b0.5d747c",
-        "x": 1010,
-        "y": 160,
+        "x": 1050,
+        "y": 200,
         "wires": []
     },
     {
@@ -2019,8 +1986,8 @@
         "active": false,
         "console": "false",
         "complete": "false",
-        "x": 530,
-        "y": 180,
+        "x": 570,
+        "y": 100,
         "wires": []
     },
     {
@@ -2033,8 +2000,8 @@
         "console": false,
         "tostatus": false,
         "complete": "true",
-        "x": 1010,
-        "y": 120,
+        "x": 1050,
+        "y": 160,
         "wires": []
     },
     {
@@ -2054,8 +2021,8 @@
         "fullpresentation": false,
         "firmwarename": "",
         "firmwareversion": "",
-        "x": 540,
-        "y": 140,
+        "x": 580,
+        "y": 180,
         "wires": [
             [
                 "743ac734.623e78"
@@ -2081,13 +2048,13 @@
         "id": "c11a5ff7.4e5f1",
         "type": "debug",
         "z": "67deb464.98214c",
-        "name": "",
+        "name": "MQTT out",
         "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
         "complete": "true",
-        "x": 350,
+        "x": 360,
         "y": 120,
         "wires": []
     },
@@ -2113,7 +2080,8 @@
         "y": 360,
         "wires": [
             [
-                "e1cbaf9b.7c245"
+                "e1cbaf9b.7c245",
+                "a76ee66b.35b7d8"
             ]
         ]
     },
@@ -2313,14 +2281,15 @@
         "type": "function",
         "z": "d9d4d547.6a9438",
         "name": "Auto power on / off av center",
-        "func": "// Store app for the current device in context\n// So we can retrieve it in other functions\nconst regex = /chromecast\\/(.*)\\//g;\nvar app = msg.payload || 'None'\nm = regex.exec(msg.topic)\ndevice = m[1];\nflow.set(device + \"_app\", app);\nvar avctrl = global.get(\"avctrl\") || \"OFF\";\n\nmsg1 = null;\nmsg2 = null;\n\n// Get current app on the \"other\" chromecast\nother_device = 'audio';\nif (device === 'audio') {\n    other_device = 'cast';\n}\nother_app = flow.get(other_device + '_app') || 'None';\n\n// Start power off countdown if no activity\nif ((app === 'None' || app === 'Backdrop') && \n    (other_app ==='None' || other_app === 'Backdrop') &&\n    avctrl.includes('stream')) {\n    msg1 = {payload: \"off\"};\n} else {\n    msg1 = {reset: \"YES\"};\n}\n\n// If the other chromecast is iddle, then we can start our \"thing\"\nif (other_app === 'None' || other_app === 'Backdrop') {\n    if ((app !== 'None') && (app !== 'Backdrop')) {\n        if (device === 'cast') {\n            msg2 = {payload: 'video'};\n        } else {\n            msg2 = {payload: 'audio'};\n        }\n    }   \n} \n\nreturn [msg1, msg2];",
+        "func": "// Store app for the current device in context\n// So we can retrieve it in other functions\nconst regex = /chromecast\\/(.*)\\//g;\nvar app = msg.payload || 'None'\nm = regex.exec(msg.topic)\ndevice = m[1];\nflow.set(device + \"_app\", app);\nvar avctrl = global.get(\"avctrl\") || \"OFF\";\n\nmsg1 = null;\nmsg2 = null;\n\n// Get current app on the \"other\" chromecast\nother_device = 'audio';\nif (device === 'audio') {\n    other_device = 'cast';\n}\nother_app = flow.get(other_device + '_app') || 'None';\nnode.log('autoshutoff');\nnode.log(app);\nnode.log(other_app);\nnode.log(avctrl);\n// Start power off countdown if no activity\nif ((app === 'None' || app === 'Backdrop') && \n    (other_app ==='None' || other_app === 'Backdrop') &&\n    avctrl.includes('stream')) {\n    msg1 = {payload: \"off\"};\n} else {\n    msg1 = {reset: \"YES\"};\n}\n\n// If the other chromecast is iddle, then we can start our \"thing\"\nif (other_app === 'None' || other_app === 'Backdrop') {\n    if ((app !== 'None') && (app !== 'Backdrop')) {\n        if (device === 'cast') {\n            msg2 = {payload: 'video'};\n        } else {\n            msg2 = {payload: 'audio'};\n        }\n    }   \n} \n\nreturn [msg1, msg2];",
         "outputs": 2,
         "noerr": 0,
         "x": 400,
         "y": 360,
         "wires": [
             [
-                "9f7173a5.0857"
+                "9f7173a5.0857",
+                "1fcb323.25bfbce"
             ],
             [
                 "500d2e4.d03e5d"
@@ -2394,8 +2363,8 @@
         "func": "light = Number(global.get('sensor14_1_3') || 0);\nif (light >0 ) {\n    return msg;\n}\n",
         "outputs": 1,
         "noerr": 0,
-        "x": 540,
-        "y": 100,
+        "x": 580,
+        "y": 140,
         "wires": [
             [
                 "c7a4cf85.bac8a"
@@ -2713,7 +2682,7 @@
         "z": "ca4f572b.274038",
         "name": "",
         "group": "d9490c52.897ce",
-        "order": 3,
+        "order": 5,
         "width": "3",
         "height": "3",
         "gtype": "gage",
@@ -3211,7 +3180,7 @@
         "z": "36f02452.2e99bc",
         "name": "Elforbrug aktuelt",
         "group": "d9490c52.897ce",
-        "order": 2,
+        "order": 3,
         "width": "3",
         "height": "3",
         "gtype": "gage",
@@ -3290,7 +3259,7 @@
         "name": "",
         "mqtt": true,
         "x": 340,
-        "y": 80,
+        "y": 380,
         "wires": [
             [
                 "a133b28e.29844"
@@ -3324,9 +3293,11 @@
         "checkall": "true",
         "outputs": 3,
         "x": 510,
-        "y": 80,
+        "y": 380,
         "wires": [
-            [],
+            [
+                "9b1ad06.4a8493"
+            ],
             [],
             []
         ]
@@ -3345,7 +3316,10 @@
             [
                 "68de03bf.382d8c"
             ],
-            []
+            [],
+            [
+                "f51b6568.3a4f58"
+            ]
         ]
     },
     {
@@ -3383,6 +3357,10 @@
             [
                 "5115f872.4620e8",
                 "6982d022.1b695"
+            ],
+            [
+                "25d7d30a.26ffac",
+                "2a57fcca.e5f8f4"
             ]
         ]
     },
@@ -3452,7 +3430,10 @@
             [
                 "f7105844.05c978"
             ],
-            []
+            [],
+            [
+                "b4b40152.cacdf"
+            ]
         ]
     },
     {
@@ -3537,7 +3518,10 @@
             [
                 "b984d89e.c852d8"
             ],
-            []
+            [],
+            [
+                "d4022586.9648b8"
+            ]
         ]
     },
     {
@@ -3594,7 +3578,7 @@
         "z": "36f02452.2e99bc",
         "name": "Elforbrug dagligt",
         "group": "d9490c52.897ce",
-        "order": 2,
+        "order": 4,
         "width": "3",
         "height": "3",
         "gtype": "gage",
@@ -3656,7 +3640,10 @@
             [
                 "4865b18a.983f4"
             ],
-            []
+            [],
+            [
+                "353e8c59.b58854"
+            ]
         ]
     },
     {
@@ -4331,7 +4318,9 @@
         "overwriteFile": "false",
         "x": 1270,
         "y": 800,
-        "wires": []
+        "wires": [
+            []
+        ]
     },
     {
         "id": "ea6fe8fe.44f818",
@@ -4392,7 +4381,9 @@
         "overwriteFile": "false",
         "x": 1060,
         "y": 880,
-        "wires": []
+        "wires": [
+            []
+        ]
     },
     {
         "id": "37bd13ba.bf02cc",
@@ -4965,8 +4956,8 @@
         "console": false,
         "tostatus": false,
         "complete": "false",
-        "x": 880,
-        "y": 560,
+        "x": 890,
+        "y": 540,
         "wires": []
     },
     {
@@ -5156,8 +5147,7 @@
         "wires": [
             [
                 "1a27e97c.c38e17",
-                "45051934.52aba8",
-                "8d389e7d.5e05d"
+                "45051934.52aba8"
             ]
         ]
     },
@@ -5186,20 +5176,6 @@
                 "26b5be01.132fb2"
             ]
         ]
-    },
-    {
-        "id": "94475286.84cac",
-        "type": "debug",
-        "z": "67deb464.98214c",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "x": 810,
-        "y": 420,
-        "wires": []
     },
     {
         "id": "45051934.52aba8",
@@ -5233,8 +5209,7 @@
         "y": 440,
         "wires": [
             [
-                "1a27e97c.c38e17",
-                "94475286.84cac"
+                "1a27e97c.c38e17"
             ]
         ]
     },
@@ -5943,11 +5918,16 @@
                 "t": "cont",
                 "v": "/spisebord/",
                 "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "/tv/",
+                "vt": "str"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 3,
+        "outputs": 4,
         "x": 430,
         "y": 200,
         "wires": [
@@ -5959,6 +5939,9 @@
             ],
             [
                 "2fc5a5c3.d581fa"
+            ],
+            [
+                "e7541113.57fbc"
             ]
         ]
     },
@@ -6003,7 +5986,7 @@
         "tostatus": false,
         "complete": "true",
         "x": 750,
-        "y": 120,
+        "y": 100,
         "wires": []
     },
     {
@@ -6056,7 +6039,7 @@
         "qos": "2",
         "broker": "4798f2b0.5d747c",
         "x": 140,
-        "y": 440,
+        "y": 420,
         "wires": [
             [
                 "92bd49eb.883998",
@@ -6073,7 +6056,7 @@
         "action": "obj",
         "pretty": false,
         "x": 290,
-        "y": 440,
+        "y": 420,
         "wires": [
             [
                 "a646dc17.498"
@@ -6107,7 +6090,7 @@
         "to": "",
         "reg": false,
         "x": 780,
-        "y": 380,
+        "y": 360,
         "wires": [
             [
                 "a254b86b.f8d1b8",
@@ -6126,7 +6109,7 @@
         "tostatus": false,
         "complete": "true",
         "x": 970,
-        "y": 380,
+        "y": 360,
         "wires": []
     },
     {
@@ -6151,7 +6134,7 @@
         "func": "pl = msg.payload;\nmsg.payload = {\"brightness\": pl.brightness, \"on\": pl.on, \"alive\": pl.alive}; \nif (pl.id === 65537) {\n    msg.topic = \"light/sofabord/state\";\n}\nif (pl.id === 65540) {\n    msg.topic = \"light/spisebord/state\";\n}\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
-        "x": 750,
+        "x": 770,
         "y": 180,
         "wires": [
             [
@@ -6170,7 +6153,7 @@
         "retain": "false",
         "broker": "4798f2b0.5d747c",
         "x": 970,
-        "y": 420,
+        "y": 400,
         "wires": []
     },
     {
@@ -6196,7 +6179,7 @@
         "repair": false,
         "outputs": 2,
         "x": 590,
-        "y": 400,
+        "y": 380,
         "wires": [
             [
                 "1ad87b82.0e4464"
@@ -6233,7 +6216,7 @@
         "to": "",
         "reg": false,
         "x": 780,
-        "y": 420,
+        "y": 400,
         "wires": [
             [
                 "a254b86b.f8d1b8",
@@ -6251,7 +6234,7 @@
         "console": false,
         "tostatus": false,
         "complete": "payload",
-        "x": 770,
+        "x": 790,
         "y": 220,
         "wires": []
     },
@@ -6313,13 +6296,18 @@
                 "t": "cont",
                 "v": "/spisebord/",
                 "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "/tv/",
+                "vt": "str"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 3,
+        "outputs": 4,
         "x": 430,
-        "y": 440,
+        "y": 420,
         "wires": [
             [
                 "1df6b47f.4eeffc"
@@ -6330,6 +6318,11 @@
             [
                 "20de0513.a6603a",
                 "1fc60157.e2341f"
+            ],
+            [
+                "484fd4f.8a79d2c",
+                "85b9fefe.52369",
+                "53f22c32.59cb04"
             ]
         ]
     },
@@ -6343,7 +6336,7 @@
         "connection": "97626318.9b7f2",
         "observe": false,
         "x": 590,
-        "y": 520,
+        "y": 500,
         "wires": [
             []
         ]
@@ -6358,7 +6351,7 @@
         "connection": "97626318.9b7f2",
         "observe": false,
         "x": 600,
-        "y": 480,
+        "y": 460,
         "wires": [
             []
         ]
@@ -6373,7 +6366,7 @@
         "connection": "97626318.9b7f2",
         "observe": false,
         "x": 600,
-        "y": 440,
+        "y": 420,
         "wires": [
             []
         ]
@@ -6389,7 +6382,7 @@
         "tostatus": false,
         "complete": "true",
         "x": 320,
-        "y": 360,
+        "y": 340,
         "wires": []
     },
     {
@@ -7262,20 +7255,6 @@
         "wires": []
     },
     {
-        "id": "8d389e7d.5e05d",
-        "type": "debug",
-        "z": "67deb464.98214c",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "x": 590,
-        "y": 480,
-        "wires": []
-    },
-    {
         "id": "1ebdd70b.08e2b9",
         "type": "debug",
         "z": "9292e51b.eaf788",
@@ -7379,7 +7358,7 @@
         "type": "debug",
         "z": "67deb464.98214c",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -7423,40 +7402,6 @@
         ]
     },
     {
-        "id": "b042d12e.b07b2",
-        "type": "H activity",
-        "z": "d2be3a2a.67d4b8",
-        "name": "thomas",
-        "server": "56b003cf.93c9bc",
-        "activity": "24516381",
-        "label": "Lyt til CD",
-        "x": 480,
-        "y": 20,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "a7634845.276fc8",
-        "type": "inject",
-        "z": "d2be3a2a.67d4b8",
-        "name": "",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 140,
-        "y": 40,
-        "wires": [
-            [
-                "b042d12e.b07b2"
-            ]
-        ]
-    },
-    {
         "id": "3acf5600.83edda",
         "type": "mqtt out",
         "z": "353b452d.9a6efa",
@@ -7465,8 +7410,8 @@
         "qos": "",
         "retain": "",
         "broker": "4798f2b0.5d747c",
-        "x": 1230,
-        "y": 500,
+        "x": 1130,
+        "y": 540,
         "wires": []
     },
     {
@@ -7481,23 +7426,8 @@
         "y": 560,
         "wires": [
             [
-                "cf90fe44.df54c"
-            ]
-        ]
-    },
-    {
-        "id": "cf90fe44.df54c",
-        "type": "mysdecode",
-        "z": "353b452d.9a6efa",
-        "database": "ed2765a5.dc9328",
-        "name": "",
-        "mqtt": true,
-        "enrich": true,
-        "x": 440,
-        "y": 560,
-        "wires": [
-            [
-                "7992ae8a.65d77"
+                "318f34e.2a0d5cc",
+                "3f1c7b26.6eef04"
             ]
         ]
     },
@@ -7518,8 +7448,8 @@
         "id": "f4b897e2.e41428",
         "type": "function",
         "z": "67deb464.98214c",
-        "name": "",
-        "func": "var tags = {};var data = {}\ntags.node = msg.nodeId.toString();\ntags.sensor = msg.childSensorId.toString();\ntags.subType = msg.subTypeStr;\ndata.value=parseFloat(msg.payload);\nif (!isNaN(data.value)) {\n    msg.payload = [data, tags];\n    return msg;\n}\n\n",
+        "name": "Influx",
+        "func": "if (!isNaN(msg.payload)) {\n    var tags = {};\n    var data = {};\n    tags.node = msg.nodeId.toString();\n    tags.sensor = msg.childSensorId.toString();\n    tags.subType = msg.subTypeStr;\n    data.value=Number(msg.payload);\n    msg = {payload:[data, tags]};\n    return msg;\n}\n\n",
         "outputs": 1,
         "noerr": 0,
         "x": 590,
@@ -7559,7 +7489,8 @@
         "y": 600,
         "wires": [
             [
-                "f4b897e2.e41428"
+                "f4b897e2.e41428",
+                "5d0e1c32.a9c3b4"
             ]
         ]
     },
@@ -7567,13 +7498,13 @@
         "id": "94ef2e21.f481",
         "type": "debug",
         "z": "67deb464.98214c",
-        "name": "",
-        "active": false,
+        "name": "influx sensors",
+        "active": true,
         "tosidebar": true,
-        "console": false,
+        "console": true,
         "tostatus": false,
         "complete": "true",
-        "x": 830,
+        "x": 860,
         "y": 560,
         "wires": []
     },
@@ -7581,14 +7512,14 @@
         "id": "82d1c041.0f272",
         "type": "debug",
         "z": "353b452d.9a6efa",
-        "name": "",
-        "active": false,
+        "name": "admin",
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
-        "x": 1250,
-        "y": 540,
+        "complete": "true",
+        "x": 1130,
+        "y": 580,
         "wires": []
     },
     {
@@ -7596,15 +7527,17 @@
         "type": "function",
         "z": "353b452d.9a6efa",
         "name": "Gate logic",
-        "func": "var date = new Date();\nvar current_hour = date.getHours();\n\nvar openState = global.get('sensor21_1_16') || '1';\nif (msg.payload === \"1\" && openState === \"0\") {\n    if (current_hour >= 6) {    \n        return msg;\n    }\n} else if (msg.payload === \"0\" && openState === \"1\") {\n    return msg;    \n}\n",
+        "func": "var date = new Date();\nvar current_hour = date.getHours();\n\nvar openState = global.get('sensor21_1_16') || '1';\nif (msg.payload === \"1\" && openState === \"0\") {\n    if (current_hour >= 6) {  \n        // Do not open before 6am\n        return msg;\n    }\n} else if (msg.payload === \"0\" && openState === \"1\") {\n    return msg;    \n}\n",
         "outputs": 1,
         "noerr": 0,
-        "x": 1040,
-        "y": 520,
+        "x": 940,
+        "y": 600,
         "wires": [
             [
                 "82d1c041.0f272",
-                "3acf5600.83edda"
+                "3acf5600.83edda",
+                "668539d1.f0b7d8",
+                "4df44078.81ea9"
             ]
         ]
     },
@@ -7613,44 +7546,14 @@
         "type": "debug",
         "z": "353b452d.9a6efa",
         "name": "",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
         "complete": "true",
-        "x": 1030,
-        "y": 560,
+        "x": 930,
+        "y": 540,
         "wires": []
-    },
-    {
-        "id": "7992ae8a.65d77",
-        "type": "ui_switch",
-        "z": "353b452d.9a6efa",
-        "name": "",
-        "label": "Hønselem",
-        "group": "d9490c52.897ce",
-        "order": 0,
-        "width": 0,
-        "height": 0,
-        "passthru": false,
-        "decouple": "true",
-        "topic": "",
-        "style": "",
-        "onvalue": "1",
-        "onvalueType": "str",
-        "onicon": "fa-fire",
-        "oncolor": "",
-        "offvalue": "0",
-        "offvalueType": "str",
-        "officon": "close",
-        "offcolor": "",
-        "x": 670,
-        "y": 560,
-        "wires": [
-            [
-                "581a5cc2.e013e4"
-            ]
-        ]
     },
     {
         "id": "581a5cc2.e013e4",
@@ -7662,8 +7565,8 @@
         "name": "Big Timer",
         "lat": "56.76696",
         "lon": "10.15406",
-        "starttime": "360",
-        "endtime": "1350",
+        "starttime": "5000",
+        "endtime": "5001",
         "startoff": 0,
         "endoff": 0,
         "offs": 0,
@@ -7715,8 +7618,8 @@
         "atstart": true,
         "odd": false,
         "even": false,
-        "x": 840,
-        "y": 560,
+        "x": 780,
+        "y": 600,
         "wires": [
             [
                 "3fe0e515.5a651a",
@@ -7730,16 +7633,16 @@
         "id": "ef0a28a0.348f08",
         "type": "inject",
         "z": "353b452d.9a6efa",
-        "name": "",
-        "topic": "mys-out/21/1/1/1/2",
-        "payload": "0",
+        "name": "Åben",
+        "topic": "mys-out/21/1/1/1/16",
+        "payload": "1",
         "payloadType": "str",
         "repeat": "",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 810,
-        "y": 260,
+        "x": 930,
+        "y": 420,
         "wires": [
             [
                 "3acf5600.83edda"
@@ -7750,19 +7653,20 @@
         "id": "50abfbd6.b6e384",
         "type": "inject",
         "z": "353b452d.9a6efa",
-        "name": "",
-        "topic": "mys-out/21/1/1/1/2",
-        "payload": "1",
+        "name": "Luk",
+        "topic": "mys-out/21/1/1/1/16",
+        "payload": "0",
         "payloadType": "str",
         "repeat": "",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 810,
-        "y": 300,
+        "x": 930,
+        "y": 460,
         "wires": [
             [
-                "3acf5600.83edda"
+                "3acf5600.83edda",
+                "3fe0e515.5a651a"
             ]
         ]
     },
@@ -7785,7 +7689,7 @@
         "type": "mqtt in",
         "z": "353b452d.9a6efa",
         "name": "",
-        "topic": "mys-in/21/1/#",
+        "topic": "mys-in/21/#",
         "qos": "2",
         "broker": "4798f2b0.5d747c",
         "x": 230,
@@ -7838,11 +7742,1191 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 800,
-        "y": 340,
+        "x": 960,
+        "y": 500,
         "wires": [
             [
                 "3acf5600.83edda"
+            ]
+        ]
+    },
+    {
+        "id": "ffdd44f4.b43d18",
+        "type": "mqtt in",
+        "z": "353b452d.9a6efa",
+        "name": "",
+        "topic": "dashboard/sensors/21/7/1/+/16",
+        "qos": "2",
+        "broker": "4798f2b0.5d747c",
+        "x": 170,
+        "y": 620,
+        "wires": [
+            [
+                "45511fc7.a3f25"
+            ]
+        ]
+    },
+    {
+        "id": "45511fc7.a3f25",
+        "type": "ui_switch",
+        "z": "353b452d.9a6efa",
+        "name": "",
+        "label": "Fejl status",
+        "group": "f4336a2f.6fced8",
+        "order": 2,
+        "width": "0",
+        "height": "0",
+        "passthru": false,
+        "decouple": "true",
+        "topic": "",
+        "style": "",
+        "onvalue": "1",
+        "onvalueType": "str",
+        "onicon": "error",
+        "oncolor": "#AA5C39",
+        "offvalue": "0",
+        "offvalueType": "str",
+        "officon": "check_circle",
+        "offcolor": "#659933",
+        "x": 410,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "318f34e.2a0d5cc",
+        "type": "debug",
+        "z": "353b452d.9a6efa",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 390,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "4a50ab9f.187ab4",
+        "type": "mqtt in",
+        "z": "353b452d.9a6efa",
+        "name": "",
+        "topic": "dashboard/sensors/21/2/1/+/16",
+        "qos": "2",
+        "broker": "4798f2b0.5d747c",
+        "x": 170,
+        "y": 700,
+        "wires": [
+            [
+                "40a9e020.ae45"
+            ]
+        ]
+    },
+    {
+        "id": "40a9e020.ae45",
+        "type": "ui_switch",
+        "z": "353b452d.9a6efa",
+        "name": "",
+        "label": "Bevægelse",
+        "group": "f4336a2f.6fced8",
+        "order": 3,
+        "width": "0",
+        "height": "0",
+        "passthru": false,
+        "decouple": "true",
+        "topic": "",
+        "style": "",
+        "onvalue": "1",
+        "onvalueType": "str",
+        "onicon": "person",
+        "oncolor": "#659933",
+        "offvalue": "0",
+        "offvalueType": "str",
+        "officon": "person_outline",
+        "offcolor": "#AA5C39",
+        "x": 410,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a76ee66b.35b7d8",
+        "type": "debug",
+        "z": "d9d4d547.6a9438",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 330,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "1fcb323.25bfbce",
+        "type": "debug",
+        "z": "d9d4d547.6a9438",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "x": 630,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "bd56c99b.7870c8",
+        "type": "ui_button",
+        "z": "353b452d.9a6efa",
+        "name": "",
+        "group": "f4336a2f.6fced8",
+        "order": 5,
+        "width": "2",
+        "height": "1",
+        "passthru": false,
+        "label": "{{msg.label}}",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 590,
+        "y": 580,
+        "wires": [
+            [
+                "de2638c5.ef7ed8"
+            ]
+        ]
+    },
+    {
+        "id": "de2638c5.ef7ed8",
+        "type": "function",
+        "z": "353b452d.9a6efa",
+        "name": "Gate logic",
+        "func": "var openState = global.get('sensor21_1_16') || '1';\n\nbMsg = {enabled:false, label:\"Kører\"};\n\nif (openState === \"0\") {\n    msg = {payload: \"1\"};\n\n    \n} else {\n    msg = {payload: \"0\"};    \n}\n\nreturn [msg, bMsg];",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 600,
+        "y": 640,
+        "wires": [
+            [
+                "581a5cc2.e013e4"
+            ],
+            [
+                "bd56c99b.7870c8"
+            ]
+        ]
+    },
+    {
+        "id": "3f1c7b26.6eef04",
+        "type": "function",
+        "z": "353b452d.9a6efa",
+        "name": "Gate logic",
+        "func": "var openState = msg.payload;\nif (openState === \"0\") {\n    return [{payload:'lukket'}, {enabled:true, label:\"Åben\"}];\n        \n} else {\n    return [{payload:'åben'}, {enabled:true, label:\"Luk\"}];\n}\n",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 400,
+        "y": 560,
+        "wires": [
+            [
+                "25a38df8.b32df2"
+            ],
+            [
+                "bd56c99b.7870c8"
+            ]
+        ]
+    },
+    {
+        "id": "25a38df8.b32df2",
+        "type": "ui_text",
+        "z": "353b452d.9a6efa",
+        "group": "f4336a2f.6fced8",
+        "order": 4,
+        "width": "4",
+        "height": "1",
+        "name": "",
+        "label": "Hønselem er ",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "x": 610,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "eca59fbf.2316e",
+        "type": "delay",
+        "z": "353b452d.9a6efa",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "20",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 1360,
+        "y": 620,
+        "wires": [
+            [
+                "c9e389d4.3cac08"
+            ]
+        ]
+    },
+    {
+        "id": "c9e389d4.3cac08",
+        "type": "function",
+        "z": "353b452d.9a6efa",
+        "name": "Check gate message",
+        "func": "lastGateAction = flow.get('lastGateAction');\ncurrentTime = Date.now();\ndiff = (currentTime - lastGateAction) / 1000;\nnode.log(diff);\nif (diff > 15) {\n    node.log('something happened');\n    return msg;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1540,
+        "y": 620,
+        "wires": [
+            [
+                "25778132.e0114e"
+            ]
+        ]
+    },
+    {
+        "id": "4df44078.81ea9",
+        "type": "change",
+        "z": "353b452d.9a6efa",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "lastGateAction",
+                "pt": "flow",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1180,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "668539d1.f0b7d8",
+        "type": "function",
+        "z": "353b452d.9a6efa",
+        "name": "Reset and re-emit message",
+        "func": "node.send({reset:'yes'});\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1140,
+        "y": 620,
+        "wires": [
+            [
+                "eca59fbf.2316e",
+                "539bdcf1.a0c3d4"
+            ]
+        ]
+    },
+    {
+        "id": "539bdcf1.a0c3d4",
+        "type": "debug",
+        "z": "353b452d.9a6efa",
+        "name": "admin",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 1350,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "25778132.e0114e",
+        "type": "debug",
+        "z": "353b452d.9a6efa",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1720,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "b11d1c3b.b75f6",
+        "type": "function",
+        "z": "be12afc0.d1228",
+        "name": "Calc dew point",
+        "func": "var minT = 173; // -100 Deg. C.\nvar maxT = 678;\nvar C_OFFSET = 273.15;\n\n/*\n * Saturation Vapor Pressure formula for range -100..0 Deg. C.\n * This is taken from\n *   ITS-90 Formulations for Vapor Pressure, Frostpoint Temperature,\n *   Dewpoint Temperature, and Enhancement Factors in the Range 100 to +100 C\n * by Bob Hardy\n * as published in \"The Proceedings of the Third International Symposium on Humidity & Moisture\",\n * Teddington, London, England, April 1998\n*/\nvar k0 = -5.8666426e3;\nvar k1 = 2.232870244e1;\nvar k2 = 1.39387003e-2;\nvar k3 = -3.4262402e-5;\nvar k4 = 2.7040955e-8;\nvar k5 = 6.7063522e-1;\n\nfunction pvsIce(T) {\n  lnP = k0/T + k1 + (k2 + (k3 + (k4*T))*T)*T + k5*Math.log(T);\n  return Math.exp(lnP);\n}\n\n/**\n * Saturation Vapor Pressure formula for range 273..678 Deg. K.\n * This is taken from the\n *   Release on the IAPWS Industrial Formulation 1997\n *   for the Thermodynamic Properties of Water and Steam\n * by IAPWS (International Association for the Properties of Water and Steam),\n * Erlangen, Germany, September 1997.\n *\n * This is Equation (30) in Section 8.1 \"The Saturation-Pressure Equation (Basic Equation)\"\n*/\n\nvar n1 = 0.11670521452767e4;\nvar n6 = 0.14915108613530e2;\nvar n2 = -0.72421316703206e6;\nvar n7 = -0.48232657361591e4;\nvar n3 = -0.17073846940092e2;\nvar n8 = 0.40511340542057e6;\nvar n4 = 0.12020824702470e5;\nvar n9 = -0.23855557567849;\nvar n5 = -0.32325550322333e7;\nvar n10 = 0.65017534844798e3;\n\nfunction pvsWater(T) {\n  var th = T+n9/(T-n10);\n  var A = (th+n1)*th+n2;\n  var B = (n3*th+n4)*th+n5;\n  var C = (n6*th+n7)*th+n8;\n\n  var p = 2*C/(-B+Math.sqrt(B*B-4*A*C));\n  p *= p;\n  p *= p;\n  return p*1e6;\n}\n\n/**\n * Compute Saturation Vapor Pressure for minT<T[Deg.K]<maxT.\n */\nfunction PVS(T) {\n  if (T<minT || T>maxT) return NaN;\n  else if (T<C_OFFSET)\n    return pvsIce(T);\n  else\n    return pvsWater(T);\n}\n\n/**\n * Compute dewPoint for given relative humidity RH[%] and temperature T[Deg.K].\n */\nfunction dewPoint(RH,T) {\n  return solve(PVS, RH/100*PVS(T), T);\n}\n\n/**\n * Newton's Method to solve f(x)=y for x with an initial guess of x0.\n */\nfunction solve(f,y,x0) {\n  var x = x0;\n  var maxCount = 10;\n  var count = 0;\n  do {\n    var xNew;\n    var dx = x/1000; \n    var z=f(x);\n    xNew = x + dx*(y-z)/(f(x+dx)-z);\n    if (Math.abs((xNew-x)/xNew)<0.0001) \n      return xNew;\n    else if (count>maxCount) {\n      xnew=NaN; \n      throw new Error(1, \"Solver does not converge.\");\n    }\n    x = xNew;\n    count ++;\n  } while (true);\n}\np = msg.payload;\nmsg.payload = dewPoint(p.RH, p.T + C_OFFSET) - C_OFFSET;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 600,
+        "y": 380,
+        "wires": [
+            [
+                "3702f4e1.be00cc",
+                "eb32fd54.8c003"
+            ]
+        ]
+    },
+    {
+        "id": "e7eace85.b6962",
+        "type": "mqtt in",
+        "z": "be12afc0.d1228",
+        "name": "",
+        "topic": "dashboard/sensors/+/1/1/0/0",
+        "qos": "2",
+        "broker": "4798f2b0.5d747c",
+        "x": 140,
+        "y": 260,
+        "wires": [
+            [
+                "871f830d.a1cef",
+                "a8f6d770.1df028"
+            ]
+        ]
+    },
+    {
+        "id": "871f830d.a1cef",
+        "type": "debug",
+        "z": "be12afc0.d1228",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 390,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "1594535.6096aad",
+        "type": "mqtt in",
+        "z": "be12afc0.d1228",
+        "name": "",
+        "topic": "dashboard/sensors/+/2/1/0/1",
+        "qos": "2",
+        "broker": "4798f2b0.5d747c",
+        "x": 140,
+        "y": 340,
+        "wires": [
+            [
+                "ee35992b.ea6318",
+                "a8f6d770.1df028"
+            ]
+        ]
+    },
+    {
+        "id": "ee35992b.ea6318",
+        "type": "debug",
+        "z": "be12afc0.d1228",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 390,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "6f57b705.8752a8",
+        "type": "function",
+        "z": "be12afc0.d1228",
+        "name": "Assemble humidity and temperature",
+        "func": "let sensor = msg.nodeId;\nlet sensorVar = 'temphum_' + sensor;\n\nlet x = flow.get(sensorVar, null);\nif (!x) {\n    x = {RH: -100, T: -100}\n}\n\nif (msg.subType === 0) {\n    x.T = Number(msg.payload);\n}\nif (msg.subType === 1) {\n    x.RH = Number(msg.payload);\n}\n\nflow.set(sensorVar, x);\nif (sensor === 11) {\nnode.log(sensorVar);\nnode.log(x.RH);\nnode.log(x.T);\n}\nif (x.RH > -100 && x.T > -100) {\n    msg.payload = x;\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 670,
+        "y": 300,
+        "wires": [
+            [
+                "11a2bf02.4ef451",
+                "b11d1c3b.b75f6"
+            ]
+        ]
+    },
+    {
+        "id": "a8f6d770.1df028",
+        "type": "mysdecode",
+        "z": "be12afc0.d1228",
+        "name": "",
+        "mqtt": true,
+        "x": 400,
+        "y": 300,
+        "wires": [
+            [
+                "6f57b705.8752a8",
+                "fc149334.c3ae7"
+            ]
+        ]
+    },
+    {
+        "id": "11a2bf02.4ef451",
+        "type": "debug",
+        "z": "be12afc0.d1228",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 930,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "fc149334.c3ae7",
+        "type": "debug",
+        "z": "be12afc0.d1228",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 570,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "3702f4e1.be00cc",
+        "type": "function",
+        "z": "be12afc0.d1228",
+        "name": "mys-in/<sensorId>/5/1/0/0",
+        "func": "topic = \"mys-in/\"+msg.nodeId+\"/5/1/0/0\";\nmsg.topic = topic;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 830,
+        "y": 380,
+        "wires": [
+            [
+                "3bf7809.4c35b8",
+                "892e9fd0.60d7b"
+            ]
+        ]
+    },
+    {
+        "id": "eb32fd54.8c003",
+        "type": "debug",
+        "z": "be12afc0.d1228",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 770,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "3bf7809.4c35b8",
+        "type": "debug",
+        "z": "be12afc0.d1228",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 1010,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "892e9fd0.60d7b",
+        "type": "mqtt out",
+        "z": "be12afc0.d1228",
+        "name": "",
+        "topic": "",
+        "qos": "0",
+        "retain": "false",
+        "broker": "4798f2b0.5d747c",
+        "x": 1010,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "671f603c.7e90f",
+        "type": "mqtt in",
+        "z": "be12afc0.d1228",
+        "name": "",
+        "topic": "dashboard/sensors/11/#",
+        "qos": "2",
+        "broker": "4798f2b0.5d747c",
+        "x": 310,
+        "y": 120,
+        "wires": [
+            [
+                "87a6c935.e796e8"
+            ]
+        ]
+    },
+    {
+        "id": "87a6c935.e796e8",
+        "type": "debug",
+        "z": "be12afc0.d1228",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 530,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "9b1ad06.4a8493",
+        "type": "switch",
+        "z": "8bc8753a.1ea768",
+        "name": "Temperature split",
+        "property": "childSensorId",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "5",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 690,
+        "y": 260,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "f51b6568.3a4f58",
+        "type": "ui_gauge",
+        "z": "36f02452.2e99bc",
+        "name": "",
+        "group": "e11ff54d.12ad78",
+        "order": 0,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "Dugpunkt",
+        "label": "units",
+        "format": "{{value|number:1}}",
+        "min": 0,
+        "max": "25",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 720,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "b4b40152.cacdf",
+        "type": "ui_gauge",
+        "z": "36f02452.2e99bc",
+        "name": "",
+        "group": "1215f3be.8c080c",
+        "order": 0,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "Dugpunkt",
+        "label": "units",
+        "format": "{{value|number:1}}",
+        "min": 0,
+        "max": "25",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 720,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "d4022586.9648b8",
+        "type": "ui_gauge",
+        "z": "36f02452.2e99bc",
+        "name": "",
+        "group": "58bcd57b.789b2c",
+        "order": 0,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "Dugpunkt",
+        "label": "units",
+        "format": "{{value|number:1}}",
+        "min": 0,
+        "max": "25",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 690,
+        "y": 578,
+        "wires": []
+    },
+    {
+        "id": "353e8c59.b58854",
+        "type": "ui_gauge",
+        "z": "36f02452.2e99bc",
+        "name": "",
+        "group": "d9490c52.897ce",
+        "order": 0,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "Dugpunkt",
+        "label": "units",
+        "format": "{{value|number:1}}",
+        "min": 0,
+        "max": "25",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 660,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "25d7d30a.26ffac",
+        "type": "ui_gauge",
+        "z": "36f02452.2e99bc",
+        "name": "",
+        "group": "85f5cfaa.42289",
+        "order": 7,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "Dugpunkt",
+        "label": "units",
+        "format": "{{value|number:1}}",
+        "min": 0,
+        "max": "25",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 760,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "2a57fcca.e5f8f4",
+        "type": "ui_chart",
+        "z": "36f02452.2e99bc",
+        "name": "",
+        "group": "85f5cfaa.42289",
+        "order": 8,
+        "width": "3",
+        "height": "3",
+        "label": "Dugpunkt",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "86400",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "x": 760,
+        "y": 280,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "5d0e1c32.a9c3b4",
+        "type": "debug",
+        "z": "67deb464.98214c",
+        "name": "logger",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 590,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "3deb70cf.009b5",
+        "type": "mqtt in",
+        "z": "353b452d.9a6efa",
+        "name": "",
+        "topic": "dashboard/sensors/21/3/1/+/16",
+        "qos": "2",
+        "broker": "4798f2b0.5d747c",
+        "x": 170,
+        "y": 780,
+        "wires": [
+            [
+                "89aef6d0.430048"
+            ]
+        ]
+    },
+    {
+        "id": "89aef6d0.430048",
+        "type": "ui_switch",
+        "z": "353b452d.9a6efa",
+        "name": "",
+        "label": "Dør",
+        "group": "f4336a2f.6fced8",
+        "order": 3,
+        "width": "0",
+        "height": "0",
+        "passthru": false,
+        "decouple": "true",
+        "topic": "",
+        "style": "",
+        "onvalue": "1",
+        "onvalueType": "str",
+        "onicon": "lock_open",
+        "oncolor": "#AA5C39",
+        "offvalue": "0",
+        "offvalueType": "str",
+        "officon": "lock",
+        "offcolor": "#659933",
+        "x": 390,
+        "y": 780,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d1c3dfca.29869",
+        "type": "inject",
+        "z": "353b452d.9a6efa",
+        "name": "",
+        "topic": "",
+        "payload": "1",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 570,
+        "y": 360,
+        "wires": [
+            [
+                "3fe0e515.5a651a"
+            ]
+        ]
+    },
+    {
+        "id": "a5fd3138.972fb",
+        "type": "inject",
+        "z": "353b452d.9a6efa",
+        "name": "",
+        "topic": "admin",
+        "payload": "0",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 570,
+        "y": 400,
+        "wires": [
+            [
+                "3fe0e515.5a651a"
+            ]
+        ]
+    },
+    {
+        "id": "e7541113.57fbc",
+        "type": "tradfri",
+        "z": "7acba262.c6674c",
+        "name": "",
+        "deviceId": "65543",
+        "deviceName": "TV højre",
+        "connection": "97626318.9b7f2",
+        "observe": true,
+        "x": 600,
+        "y": 260,
+        "wires": [
+            [
+                "a63f9630.8c9788",
+                "4c4842ef.e2252c"
+            ]
+        ]
+    },
+    {
+        "id": "85b9fefe.52369",
+        "type": "tradfri",
+        "z": "7acba262.c6674c",
+        "name": "",
+        "deviceId": "65543",
+        "deviceName": "TV højre",
+        "connection": "97626318.9b7f2",
+        "observe": false,
+        "x": 600,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "53f22c32.59cb04",
+        "type": "tradfri",
+        "z": "7acba262.c6674c",
+        "name": "",
+        "deviceId": "65544",
+        "deviceName": "TV midt",
+        "connection": "97626318.9b7f2",
+        "observe": false,
+        "x": 600,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "484fd4f.8a79d2c",
+        "type": "tradfri",
+        "z": "7acba262.c6674c",
+        "name": "",
+        "deviceId": "65545",
+        "deviceName": "TV venstre",
+        "connection": "97626318.9b7f2",
+        "observe": false,
+        "x": 610,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d6ff21b7.c335b",
+        "type": "mqtt in",
+        "z": "7acba262.c6674c",
+        "name": "",
+        "topic": "avctrl/out/scene",
+        "qos": "2",
+        "broker": "4798f2b0.5d747c",
+        "x": 200,
+        "y": 820,
+        "wires": [
+            [
+                "f8d07c79.3f779"
+            ]
+        ]
+    },
+    {
+        "id": "f8d07c79.3f779",
+        "type": "json",
+        "z": "7acba262.c6674c",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 370,
+        "y": 820,
+        "wires": [
+            [
+                "cca133f3.045c2",
+                "cd058bf6.a76838"
+            ]
+        ]
+    },
+    {
+        "id": "8d19bab2.8e9f38",
+        "type": "mqtt in",
+        "z": "d9d4d547.6a9438",
+        "name": "",
+        "topic": "chromecast/cast/state",
+        "qos": "2",
+        "broker": "4798f2b0.5d747c",
+        "x": 140,
+        "y": 140,
+        "wires": [
+            [
+                "f518f36d.e50be"
+            ]
+        ]
+    },
+    {
+        "id": "f518f36d.e50be",
+        "type": "function",
+        "z": "d9d4d547.6a9438",
+        "name": "set lights",
+        "func": "var avctrl = global.get(\"avctrl\") || \"OFF\";\nvar daylight = Number(flow.get('daylight') || 0);\nvar msgOut = null;\nvar currentLight = Number(flow.get('sensor14_1_3') || 0);\nif ((avctrl === \"stream video\") && \n    (daylight === 0)) {\n\n    if (msg.payload === 'PLAYING') {\n        msgOut = {payload : 5};\n    }\n    if (msg.payload == 'PAUSED' || msg.payload=== 'STOPPED') {\n        msgOut = {payload: 100};\n    }\n}\nif (msgOut !== null && msgOut.payload === currentLight) {\n    msgOut = null;\n}\nreturn msgOut;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 340,
+        "y": 140,
+        "wires": [
+            [
+                "72a0f42e.57bf4c",
+                "2c89a82a.ecab58",
+                "dbe26677.cae0b8"
+            ]
+        ]
+    },
+    {
+        "id": "229f8903.0245a6",
+        "type": "change",
+        "z": "7acba262.c6674c",
+        "name": "default light settings",
+        "rules": [
+            {
+                "t": "set",
+                "p": "max",
+                "pt": "flow",
+                "to": "{\"brightness\":70, \"transition\": 3}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "min",
+                "pt": "flow",
+                "to": "{\"brightness\":1, \"transition\": 3}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "off",
+                "pt": "flow",
+                "to": "{\"brightness\":0, \"transition\": 3}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5c9cbd11.3e3544",
+        "type": "inject",
+        "z": "7acba262.c6674c",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 130,
+        "y": 660,
+        "wires": [
+            [
+                "229f8903.0245a6"
+            ]
+        ]
+    },
+    {
+        "id": "cca133f3.045c2",
+        "type": "function",
+        "z": "7acba262.c6674c",
+        "name": "Light states TV on/off",
+        "func": "var DiningTable = { topic: \"light/spisebord/set\", payload: null};\nvar CouchTable = { topic: \"light/sofabord/set\", payload: null};\nvar TV = {topic: \"light/tv/set\", payload: null};\nvar lightMax = flow.get('max', {});\nvar lightMin = flow.get('min', {});\nvar lightOff = flow.get('off', {});\nvar activityName = msg.payload.activityName;\nswitch (activityName){\n  case 'OFF':\n    TV['payload'] = lightMax;\n    CouchTable['payload'] = lightMax;\n    DiningTable['payload'] = lightMax;\n    break;\n  case 'WII':\n  case 'DVD':\n  case 'Stream Video':\n    TV['payload'] = lightMin;\n    CouchTable['payload'] = lightMax;\n    DiningTable['payload'] = lightMin;\n    break;\n}\nnode.send(TV);\nnode.send(CouchTable);\nnode.send(DiningTable);\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 560,
+        "y": 820,
+        "wires": [
+            [
+                "577569c2.142898",
+                "7991cf4.828353"
+            ]
+        ]
+    },
+    {
+        "id": "577569c2.142898",
+        "type": "debug",
+        "z": "7acba262.c6674c",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 790,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "54d6dc14.2b28f4",
+        "type": "debug",
+        "z": "7acba262.c6674c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 20,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "cd058bf6.a76838",
+        "type": "debug",
+        "z": "7acba262.c6674c",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 510,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "7991cf4.828353",
+        "type": "mqtt out",
+        "z": "7acba262.c6674c",
+        "name": "",
+        "topic": "",
+        "qos": "0",
+        "retain": "false",
+        "broker": "4798f2b0.5d747c",
+        "x": 790,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "c06c0dcb.adbf8",
+        "type": "function",
+        "z": "7acba262.c6674c",
+        "name": "Light states streaming Media",
+        "func": "var DiningTable = { topic: \"light/spisebord/set\", payload: null};\nvar CouchTable = { topic: \"light/sofabord/set\", payload: null};\nvar TV = {topic: \"light/tv/set\", payload: null};\nvar lightMax = flow.get('max', {});\nvar lightMin = flow.get('min', {});\nvar lightOff = flow.get('off', {});\nvar avctrl = global.get(\"avctrl\") || \"OFF\";\n\nif (avctrl !== \"OFF\") {\n    switch (msg.payload){\n        case 'PLAYING':\n            TV['payload'] = lightOff;\n            CouchTable['payload'] = lightMin;\n            DiningTable['payload'] = lightOff;\n            break;\n        case 'PAUSED':\n        case 'STOPPED':\n            TV['payload'] = lightMin;\n            CouchTable['payload'] = lightMax;\n            DiningTable['payload'] = lightMin;\n            break;\n    }\n}\nnode.send(TV);\nnode.send(CouchTable);\nnode.send(DiningTable);\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 580,
+        "y": 920,
+        "wires": [
+            [
+                "2b91e18a.6e4b9e",
+                "7f794e09.7dd7"
+            ]
+        ]
+    },
+    {
+        "id": "2b91e18a.6e4b9e",
+        "type": "debug",
+        "z": "7acba262.c6674c",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 790,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "a8c23c85.aee87",
+        "type": "debug",
+        "z": "7acba262.c6674c",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 510,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "7f794e09.7dd7",
+        "type": "mqtt out",
+        "z": "7acba262.c6674c",
+        "name": "",
+        "topic": "",
+        "qos": "0",
+        "retain": "false",
+        "broker": "4798f2b0.5d747c",
+        "x": 790,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "fbbb807b.7ab1a",
+        "type": "mqtt in",
+        "z": "7acba262.c6674c",
+        "name": "",
+        "topic": "chromecast/cast/state",
+        "qos": "2",
+        "broker": "4798f2b0.5d747c",
+        "x": 180,
+        "y": 920,
+        "wires": [
+            [
+                "c06c0dcb.adbf8",
+                "a8c23c85.aee87"
             ]
         ]
     }
