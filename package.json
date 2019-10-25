@@ -6,7 +6,7 @@
         "node-red-contrib-harmony": "1.0.7",
         "node-red-contrib-influxdb": "0.2.1",
         "node-red-contrib-slackbot": "1.0.3",
-        "node-red-dashboard": "2.8.2",
+        "node-red-dashboard": "2.17.1",
         "node-red-node-serialport": "0.6.5",
         "node-red-node-twitter": "0.1.12",
         "node-red-node-suncalc": "0.0.10",
